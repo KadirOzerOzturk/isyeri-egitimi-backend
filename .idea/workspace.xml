@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="s3 bucket integrated" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KadirOzerOzturk&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c4c4b847-7ebe-442f-a59c-4a6945abe28d" />
+        <option name="url" value="https://github.com/KadirOzerOzturk/isyeri-egitimi-backend.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2dPIzmFjTiKLMB1pEtyjLZ5GBoV" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.AnnouncementServiceTest.executor": "Run",
+    "JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria.executor": "Run",
+    "JUnit.LoginTest.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.BackendApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend\aws-s3-bucket" />
+      <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.BackendApplication">
+    <configuration name="AnnouncementServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.isyeriegitimi.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.isyeriegitimi.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.isyeriegitimi.backend.AnnouncementServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.isyeriegitimi.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.isyeriegitimi.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.isyeriegitimi.backend.AnnouncementServiceTest" />
+      <option name="METHOD_NAME" value="whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.isyeriegitimi.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.isyeriegitimi.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.isyeriegitimi.backend.LoginTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.isyeriegitimi.backend.BackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.LoginTest" />
+        <item itemvalue="JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria" />
+        <item itemvalue="JUnit.AnnouncementServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-jbr-17.0.9-f644763e9732-e10f1064" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="" />
+      <created>1709903554046</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709903554046</updated>
+      <workItem from="1709903555245" duration="11981000" />
+      <workItem from="1710005230342" duration="5173000" />
+      <workItem from="1710152381034" duration="7839000" />
+      <workItem from="1710271168360" duration="3276000" />
+      <workItem from="1710318340213" duration="615000" />
+      <workItem from="1710408316955" duration="2139000" />
+      <workItem from="1710435573229" duration="2647000" />
+      <workItem from="1710504150103" duration="12373000" />
+      <workItem from="1710577199048" duration="7972000" />
+      <workItem from="1710775211858" duration="271000" />
+      <workItem from="1710956950767" duration="9889000" />
+      <workItem from="1711012767976" duration="29000" />
+      <workItem from="1711012932787" duration="23000" />
+      <workItem from="1711012986330" duration="641000" />
+      <workItem from="1711024919535" duration="2372000" />
+      <workItem from="1711105341504" duration="5756000" />
+      <workItem from="1711563868488" duration="3350000" />
+      <workItem from="1711619244028" duration="4948000" />
+      <workItem from="1711716669860" duration="1145000" />
+      <workItem from="1711719802173" duration="91000" />
+      <workItem from="1711726408092" duration="5555000" />
+      <workItem from="1711996651208" duration="619000" />
+      <workItem from="1712077881607" duration="4926000" />
+      <workItem from="1712129617480" duration="411000" />
+      <workItem from="1712237144887" duration="6307000" />
+      <workItem from="1712488066679" duration="3739000" />
+      <workItem from="1712611158997" duration="683000" />
+      <workItem from="1712687972922" duration="5775000" />
+      <workItem from="1713462738148" duration="1927000" />
+      <workItem from="1713550231410" duration="1759000" />
+      <workItem from="1713615038169" duration="7819000" />
+      <workItem from="1713818303855" duration="19000" />
+      <workItem from="1714980978884" duration="649000" />
+      <workItem from="1715000011838" duration="1035000" />
+      <workItem from="1715169605976" duration="1055000" />
+      <workItem from="1715271022037" duration="90000" />
+      <workItem from="1715271125727" duration="5350000" />
+      <workItem from="1715343432488" duration="832000" />
+      <workItem from="1715438931904" duration="1907000" />
+      <workItem from="1715520286221" duration="7112000" />
+      <workItem from="1715604531261" duration="653000" />
+      <workItem from="1715793881810" duration="7151000" />
+      <workItem from="1715876771245" duration="7105000" />
+      <workItem from="1715954908660" duration="4978000" />
+      <workItem from="1716025822616" duration="104000" />
+      <workItem from="1716026041622" duration="935000" />
+      <workItem from="1716062567974" duration="6457000" />
+      <workItem from="1716113597528" duration="4771000" />
+      <workItem from="1716210240674" duration="273000" />
+      <workItem from="1716232261449" duration="3171000" />
+      <workItem from="1716316128559" duration="4082000" />
+      <workItem from="1716362731136" duration="625000" />
+      <workItem from="1716400810412" duration="6054000" />
+      <workItem from="1716445080126" duration="2284000" />
+      <workItem from="1716472830432" duration="6705000" />
+      <workItem from="1716577326101" duration="5529000" />
+      <workItem from="1716632520530" duration="9429000" />
+      <workItem from="1716891778513" duration="501000" />
+      <workItem from="1716892313629" duration="222000" />
+      <workItem from="1717053317151" duration="26000" />
+      <workItem from="1717481421509" duration="602000" />
+      <workItem from="1717497298224" duration="3710000" />
+      <workItem from="1718624856832" duration="7497000" />
+      <workItem from="1718800604472" duration="2517000" />
+      <workItem from="1720274343911" duration="5735000" />
+      <workItem from="1720438052413" duration="74000" />
+      <workItem from="1720538760991" duration="4322000" />
+      <workItem from="1721737794938" duration="60000" />
+      <workItem from="1722017547730" duration="1060000" />
+      <workItem from="1722082204942" duration="8726000" />
+      <workItem from="1722846798878" duration="764000" />
+      <workItem from="1722854085828" duration="6241000" />
+      <workItem from="1722930936920" duration="1693000" />
+      <workItem from="1722951240788" duration="629000" />
+      <workItem from="1723019695414" duration="2830000" />
+      <workItem from="1723029690937" duration="299000" />
+    </task>
+    <task id="LOCAL-00001" summary="backend giris yapildi">
+      <option name="closed" value="true" />
+      <created>1709997184919</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709997184919</updated>
+    </task>
+    <task id="LOCAL-00002" summary="backend giris yapildi">
+      <option name="closed" value="true" />
+      <created>1710967966626</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710967966626</updated>
+    </task>
+    <task id="LOCAL-00003" summary="kriterleri guncelleme silme ve ogrenci profilinde izleyici bilgileri eklendi">
+      <option name="closed" value="true" />
+      <created>1716072305659</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716072305660</updated>
+    </task>
+    <task id="LOCAL-00004" summary="kriterleri guncelleme silme ve ogrenci profilinde izleyici bilgileri eklendi">
+      <option name="closed" value="true" />
+      <created>1716072452573</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716072452573</updated>
+    </task>
+    <task id="LOCAL-00005" summary="firma basvuru onaylama ve reddetme islemleri tamamlandi">
+      <option name="closed" value="true" />
+      <created>1716124532634</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716124532634</updated>
+    </task>
+    <task id="LOCAL-00006" summary="komisyon grup islemleri tamamlandi">
+      <option name="closed" value="true" />
+      <created>1716481857847</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716481857848</updated>
+    </task>
+    <task id="LOCAL-00007" summary="bazi duzeltmeler yapildi">
+      <option name="closed" value="true" />
+      <created>1718800761157</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1718800761157</updated>
+    </task>
+    <task id="LOCAL-00008" summary="on basvuru islemleri tamamlandi">
+      <option name="closed" value="true" />
+      <created>1720538914119</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720538914119</updated>
+    </task>
+    <task id="LOCAL-00009" summary="on basvuru islemleri tamamlandi">
+      <option name="closed" value="true" />
+      <created>1720538933054</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1720538933054</updated>
+    </task>
+    <task id="LOCAL-00010" summary="student forms added">
+      <option name="closed" value="true" />
+      <created>1722869537068</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869537068</updated>
+    </task>
+    <task id="LOCAL-00011" summary="student forms added">
+      <option name="closed" value="true" />
+      <created>1722869603875</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869603875</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1722869642234</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869642234</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1722869652794</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869652794</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1722869810739</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869810739</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1722869825173</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1722869825173</updated>
+    </task>
+    <task id="LOCAL-00016" summary="gitignore modified">
+      <option name="closed" value="true" />
+      <created>1722931039787</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1722931039787</updated>
+    </task>
+    <task id="LOCAL-00017" summary="gitignore modified">
+      <option name="closed" value="true" />
+      <created>1723029054737</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723029054738</updated>
+    </task>
+    <task id="LOCAL-00018" summary="s3 bucket integrated">
+      <option name="closed" value="true" />
+      <created>1723029984048</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723029984049</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="backend giris yapildi" />
+    <MESSAGE value="kriterleri guncelleme silme ve ogrenci profilinde izleyici bilgileri eklendi" />
+    <MESSAGE value="firma basvuru onaylama ve reddetme islemleri tamamlandi" />
+    <MESSAGE value="komisyon grup islemleri tamamlandi" />
+    <MESSAGE value="bazi duzeltmeler yapildi" />
+    <MESSAGE value="on basvuru islemleri tamamlandi" />
+    <MESSAGE value="student forms added" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <MESSAGE value="gitignore modified" />
+    <MESSAGE value="s3 bucket integrated" />
+    <option name="LAST_COMMIT_MESSAGE" value="s3 bucket integrated" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/Announcement/FavoriteAnnouncementController.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
