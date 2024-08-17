@@ -1,6 +1,9 @@
 package com.isyeriegitimi.backend.aws;
 
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
+import com.isyeriegitimi.backend.dto.PostPhotosDto;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,12 +17,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @RestController
-@RequestMapping("/s3-bucket/")
+@RequestMapping("/s3-bucket")
 public class S3Controller {
 
     private final S3Service s3Service;
@@ -29,15 +34,21 @@ public class S3Controller {
     }
 
 
-
-    @PostMapping(path = "/upload/{category}/{role}/{userId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String uploadFile(@RequestParam("file") MultipartFile file,@PathVariable String category,@PathVariable String userId,@PathVariable String role) throws IOException {
+    @PostMapping(path = "/upload/{folder}/{userId}/{category}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String uploadFile(@RequestParam("file") MultipartFile file,@PathVariable String category,@PathVariable String userId,@PathVariable String folder) throws IOException {
         //s3Service.uploadFile(file.getOriginalFilename(), file);
-        s3Service.uploadFile(role+"-"+userId+"-"+category, file);
-
-
+        s3Service.uploadFile(folder+"/"+userId+"/"+category, file);
         return "File uploaded";
     }
+
+
+    @PostMapping(path = "/upload/posts/{postId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String uploadPostPhotos(@RequestParam("file") MultipartFile file,@PathVariable Long postId) throws IOException {
+        s3Service.uploadFile("posts/"+postId, file);
+        return "File uploaded";
+    }
+
+
     @PostMapping(path = "/upload/forms/{userId}/{studentName}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> uploadForms(
             @RequestParam("form1") MultipartFile form1,
@@ -74,21 +85,26 @@ public class S3Controller {
                 .body(new InputStreamResource(s3Object.getObjectContent()));
     }
 
-    @GetMapping("/view/{fileName}")
-    public ResponseEntity<InputStreamResource> viewFile(@PathVariable String fileName) {
-        var s3Object = s3Service.getFile(fileName);
-        var content = s3Object.getObjectContent();
-        String contentType = s3Object.getObjectMetadata().getContentType(); // Dinamik olarak içerik türünü al
+    @GetMapping("/view/{folder}/{userId}/{category}")
+    public ResponseEntity<InputStreamResource> viewFile(@PathVariable String category,@PathVariable String userId,@PathVariable String folder) {
+        String  fileName=folder+"/"+userId+"/"+category;
+        System.out.println("fileName : "+fileName);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType)) // İçerik türünü dinamik olarak ayarla
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
-                .body(new InputStreamResource(content));
+            var s3Object = s3Service.getFile(fileName);
+            var content = s3Object.getObjectContent();
+            String contentType = s3Object.getObjectMetadata().getContentType();
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                    .body(new InputStreamResource(content));
     }
 
     @GetMapping("/list-files/{folderName}")
     public List<String> listFiles(@PathVariable String folderName) {
+
         return s3Service.listFilesInFolder(folderName);
+
     }
 
     @GetMapping("/list-all-folders")
@@ -96,4 +112,23 @@ public class S3Controller {
         List<String> folders = s3Service.listAllFolders();
         return ResponseEntity.ok(folders);
     }
+
+
+    @GetMapping("/view/posts/{postId}")
+    public ResponseEntity<InputStreamResource> getPostPhotos(@PathVariable Long  postId) {
+        String  fileName="posts/"+postId;
+
+        var s3Object = s3Service.getFile(fileName);
+        var content = s3Object.getObjectContent();
+        String contentType = s3Object.getObjectMetadata().getContentType();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                .body(new InputStreamResource(content));
+    }
+
+
+
+
 }

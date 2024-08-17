@@ -17,8 +17,7 @@ public class AnnouncementCriteriaService {
     private AnnouncementCriteriaRepository announcementCriteriaRepository;
     private AnnouncementRepository announcementRepository;
 
-    @Autowired
-    public AnnouncementCriteriaService(AnnouncementCriteriaRepository announcementCriteriaRepository) {
+    public AnnouncementCriteriaService(AnnouncementCriteriaRepository announcementCriteriaRepository, AnnouncementRepository announcementRepository) {
         this.announcementCriteriaRepository = announcementCriteriaRepository;
         this.announcementRepository = announcementRepository;
     }

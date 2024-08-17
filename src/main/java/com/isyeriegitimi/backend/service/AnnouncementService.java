@@ -1,12 +1,16 @@
 package com.isyeriegitimi.backend.service;
 
+import com.isyeriegitimi.backend.aws.S3Service;
 import com.isyeriegitimi.backend.dto.AnnouncementDto;
 import com.isyeriegitimi.backend.model.Announcement;
 import com.isyeriegitimi.backend.model.AnnouncementCriteria;
 import com.isyeriegitimi.backend.repository.AnnouncementRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -14,12 +18,13 @@ public class AnnouncementService {
 
     private AnnouncementRepository announcementRepository;
     private AnnouncementCriteriaService announcementCriteriaService;
-
+    private S3Service s3Service;
 
     @Autowired
-    public AnnouncementService(AnnouncementRepository announcementRepository, AnnouncementCriteriaService announcementCriteriaService) {
+    public AnnouncementService(AnnouncementRepository announcementRepository, AnnouncementCriteriaService announcementCriteriaService, S3Service s3Service) {
         this.announcementRepository = announcementRepository;
         this.announcementCriteriaService = announcementCriteriaService;
+        this.s3Service = s3Service;
     }
 
     public List<Announcement> getAllAnnouncements() {
@@ -48,7 +53,7 @@ public class AnnouncementService {
         return announcementRepository.findById(announcementId);
     }
 
-    public void save(AnnouncementDto announcementDto) {
+    public Long save(AnnouncementDto announcementDto)  {
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -65,6 +70,7 @@ public class AnnouncementService {
 
         Announcement savedAnnouncement = announcementRepository.save(announcement);
 
+
         // İlan kriterlerini kaydetme
         List<AnnouncementCriteria> announcementCriteriaList = new ArrayList<>();
         for (String criteriaDescription : announcementDto.getAnnouncementCriteria()) {
@@ -74,6 +80,7 @@ public class AnnouncementService {
             announcementCriteriaList.add(criteria);
         }
         announcementCriteriaService.save(announcementCriteriaList,savedAnnouncement.getIlanId());
+return  savedAnnouncement.getIlanId();
     }
 
     public void deleteAnnouncement(Long announcementId) {

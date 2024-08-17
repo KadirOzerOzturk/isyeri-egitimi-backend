@@ -40,14 +40,12 @@ public class AnnouncementController {
 
     }
 
-    @PostMapping("/share")
-    public ResponseEntity<String> shareAnnouncement(@RequestBody AnnouncementDto announcementDto){
-        try {
-                announcementService.save(announcementDto);
-                return ResponseEntity.ok("Succesfully shared");
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    @PostMapping("/share" )
+    public ResponseEntity<?> shareAnnouncement(@RequestBody AnnouncementDto announcementDto){
+
+
+                return ResponseEntity.ok(announcementService.save(announcementDto));
+
     }
     @PutMapping("/update/{announcementId}")
     public ResponseEntity<?> updateAnnouncement(@PathVariable Long announcementId,@RequestBody AnnouncementDto announcementDto){
