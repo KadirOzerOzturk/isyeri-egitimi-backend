@@ -12,7 +12,16 @@ spring:
     url: jdbc:postgresql://localhost:5432/isyeri_egitimi_db
     username: postgres
     password: admin
-
+  app:
+    jwtSecret: mySecretKey123!?$#9123214
+    jwtExpirationMs: 1000*3600*24
+  security:
+    user:
+      name: user
+      password: 123
+security:
+  jwt:
+    secret: "kadirozerkadirozerkadirozerkadirozerkadirozerkadirozerkadirozerk"
   # JPA properties
   jpa:
     hibernate:

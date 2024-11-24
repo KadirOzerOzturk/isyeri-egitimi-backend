@@ -18,13 +18,6 @@ public class CommissionService {
         this.commissionRepository = commissionRepository;
     }
 
-
-
-
-
-
-
-
     public Optional<Commission> getCommissionByCommissionNo(String komisyonNo) {
         return commissionRepository.findByKomisyonNo(komisyonNo);
     }

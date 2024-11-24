@@ -39,8 +39,26 @@ public class CompanyService {
         companyRepository.save(mapToEntity(companyDto));
 
     }
+    public CompanyDto mapToDto(Company company) {
+        if (company == null) {
+            return null; // Avoid NullPointerException
+        }
 
-    private Company mapToEntity(CompanyDto companyDto){
+        CompanyDto companyDto = new CompanyDto();
+        companyDto.setFirmaId(company.getFirmaId());
+        companyDto.setFirmaNo(company.getFirmaNo());
+        companyDto.setFirmaAd(company.getFirmaAd());
+        companyDto.setFirmaAdres(company.getFirmaAdres());
+        companyDto.setFirmaEposta(company.getFirmaEposta());
+        companyDto.setFirmaLogo(company.getFirmaLogo());
+        companyDto.setFirmaHakkinda(company.getFirmaHakkinda());
+        companyDto.setFirmaParola(company.getFirmaParola()); // Note: You may want to avoid sending passwords
+        companyDto.setFirmaSektor(company.getFirmaSektor());
+
+        return companyDto;
+    }
+
+    public Company mapToEntity(CompanyDto companyDto){
         Company company =new Company();
         company.setFirmaId(Long.parseLong(companyDto.getFirmaNo()));
         company.setFirmaAd(companyDto.getFirmaAd());

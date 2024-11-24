@@ -45,7 +45,7 @@ public class LecturerService {
 
     }
 
-    private Lecturer mapToLecturerEntity(LecturerDto  lecturerDto){
+    public Lecturer mapToLecturerEntity(LecturerDto  lecturerDto){
         Lecturer lecturer=new Lecturer();
 
         lecturer.setIzleyiciAd(lecturerDto.getIzleyiciAd());
@@ -59,7 +59,7 @@ public class LecturerService {
 
         return lecturer;
     }
-    private LecturerDto mapToDto(Lecturer lecturer){
+    public LecturerDto mapToDto(Lecturer lecturer){
         LecturerDto lecturerDto=new LecturerDto();
         lecturerDto.setIzleyiciId(lecturer.getIzleyiciId());
         lecturerDto.setIzleyiciHakkinda(lecturer.getIzleyiciHakkinda());
