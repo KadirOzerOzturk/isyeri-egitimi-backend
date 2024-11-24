@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class CompanyService {
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
@@ -42,10 +42,10 @@ public class CompanyService {
 
     private Company mapToEntity(CompanyDto companyDto){
         Company company =new Company();
+        company.setFirmaId(Long.parseLong(companyDto.getFirmaNo()));
         company.setFirmaAd(companyDto.getFirmaAd());
         company.setFirmaAdres(companyDto.getFirmaAdres());
         company.setFirmaEposta(companyDto.getFirmaEposta());
-        company.setFirmaId(companyDto.getFirmaId());
         company.setFirmaLogo(companyDto.getFirmaLogo());
         company.setFirmaHakkinda(companyDto.getFirmaHakkinda());
         company.setFirmaParola(companyDto.getFirmaParola());

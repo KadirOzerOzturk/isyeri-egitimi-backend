@@ -3,9 +3,17 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.51">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>2568</IntrospectionStateNumber>
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+13753||-9223372036854775808|c|G
+13753||10|c|G
+13753||10|C|G
+13753||10|T|G</Grants>
+      <IntrospectionStateNumber>2785</IntrospectionStateNumber>
       <ServerVersion>14.10</ServerVersion>
-      <StartupTime>1719650883</StartupTime>
+      <StartupTime>1724084425</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -801,7 +809,7 @@ false Zulu
 13388||10|C|G
 13388||-9223372036854775808|U|G
 13388||10|U|G</Grants>
-      <IntrospectionStateNumber>2568</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2785</IntrospectionStateNumber>
       <ObjectId>17636</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4251,8 +4259,8 @@ false Zulu
     <schema id="267" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>2568</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-07-07.17:59:33</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>2785</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-08-21.12:12:42</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4305,15 +4313,7 @@ false Zulu
       <StateNumber>1438</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="274" parent="267" name="file_id_seq">
-      <DasType>integer|0s</DasType>
-      <ObjectId>18064</ObjectId>
-      <SequenceIdentity>1</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>2085</StateNumber>
-      <OwnerName>postgres</OwnerName>
-    </sequence>
-    <sequence id="275" parent="267" name="firma_firma_id_seq">
+    <sequence id="274" parent="267" name="firma_firma_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17669</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4321,7 +4321,7 @@ false Zulu
       <StateNumber>1353</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="276" parent="267" name="form_cevap_cevap_id_seq">
+    <sequence id="275" parent="267" name="form_cevap_cevap_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17694</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4329,7 +4329,7 @@ false Zulu
       <StateNumber>1356</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="277" parent="267" name="form_form_id_seq">
+    <sequence id="276" parent="267" name="form_form_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17685</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4337,7 +4337,7 @@ false Zulu
       <StateNumber>1355</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="278" parent="267" name="form_soru_soru_id_seq">
+    <sequence id="277" parent="267" name="form_soru_soru_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17703</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4345,7 +4345,7 @@ false Zulu
       <StateNumber>1357</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="279" parent="267" name="gruptaki_ogrenciler_id_seq">
+    <sequence id="278" parent="267" name="gruptaki_ogrenciler_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>17807</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4353,7 +4353,7 @@ false Zulu
       <StateNumber>1419</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="280" parent="267" name="haftalik_rapor_rapor_id_seq">
+    <sequence id="279" parent="267" name="haftalik_rapor_rapor_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17850</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4361,7 +4361,7 @@ false Zulu
       <StateNumber>1439</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="281" parent="267" name="ilan_ilan_id_seq">
+    <sequence id="280" parent="267" name="ilan_ilan_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17920</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4369,7 +4369,7 @@ false Zulu
       <StateNumber>1453</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="282" parent="267" name="ilan_kriter_kriter_id_seq">
+    <sequence id="281" parent="267" name="ilan_kriter_kriter_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>18123</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4377,7 +4377,7 @@ false Zulu
       <StateNumber>2289</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="283" parent="267" name="izleyici_izleyici_id_seq">
+    <sequence id="282" parent="267" name="izleyici_izleyici_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17710</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4385,7 +4385,7 @@ false Zulu
       <StateNumber>1358</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="284" parent="267" name="komisyon_komisyon_id_seq">
+    <sequence id="283" parent="267" name="komisyon_komisyon_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17719</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4393,7 +4393,7 @@ false Zulu
       <StateNumber>1359</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="285" parent="267" name="ogrenci_gorev_gorev_id_seq">
+    <sequence id="284" parent="267" name="ogrenci_gorev_gorev_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17735</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4401,7 +4401,7 @@ false Zulu
       <StateNumber>1361</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="286" parent="267" name="ogrenci_grup_grup_id_seq">
+    <sequence id="285" parent="267" name="ogrenci_grup_grup_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17814</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4409,7 +4409,7 @@ false Zulu
       <StateNumber>1420</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="287" parent="267" name="ogrenci_seq">
+    <sequence id="286" parent="267" name="ogrenci_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17955</ObjectId>
       <SequenceIdentity>1+50</SequenceIdentity>
@@ -4417,7 +4417,7 @@ false Zulu
       <StateNumber>1553</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="288" parent="267" name="pre_application_id_seq">
+    <sequence id="287" parent="267" name="pre_application_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>26366</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4425,7 +4425,7 @@ false Zulu
       <StateNumber>2558</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="289" parent="267" name="users_seq">
+    <sequence id="288" parent="267" name="users_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>18142</ObjectId>
       <SequenceIdentity>1+50</SequenceIdentity>
@@ -4433,7 +4433,7 @@ false Zulu
       <StateNumber>2399</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="290" parent="267" name="yetenek_skill_id_seq">
+    <sequence id="289" parent="267" name="yetenek_skill_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>17864</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4441,139 +4441,133 @@ false Zulu
       <StateNumber>1441</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <table id="291" parent="267" name="anket">
+    <table id="290" parent="267" name="anket">
       <ObjectId>17638</ObjectId>
       <StateNumber>1363</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="292" parent="267" name="anket_cevap">
+    <table id="291" parent="267" name="anket_cevap">
       <ObjectId>17647</ObjectId>
       <StateNumber>1363</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="293" parent="267" name="anket_soru">
+    <table id="292" parent="267" name="anket_soru">
       <ObjectId>17656</ObjectId>
       <StateNumber>1364</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="294" parent="267" name="basvuru">
+    <table id="293" parent="267" name="basvuru">
       <ObjectId>17993</ObjectId>
       <StateNumber>1952</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="295" parent="267" name="bolum">
+    <table id="294" parent="267" name="bolum">
       <ObjectId>17663</ObjectId>
       <StateNumber>1352</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="296" parent="267" name="favori_ilan">
+    <table id="295" parent="267" name="favori_ilan">
       <ObjectId>17844</ObjectId>
       <StateNumber>1446</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="297" parent="267" name="file">
-      <ObjectId>18065</ObjectId>
-      <StateNumber>2085</StateNumber>
-      <AccessMethodId>2</AccessMethodId>
-      <OwnerName>postgres</OwnerName>
-    </table>
-    <table id="298" parent="267" name="firma">
+    <table id="296" parent="267" name="firma">
       <ObjectId>17670</ObjectId>
       <StateNumber>1987</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="299" parent="267" name="form">
+    <table id="297" parent="267" name="form">
       <ObjectId>17686</ObjectId>
       <StateNumber>1367</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="300" parent="267" name="form_cevap">
+    <table id="298" parent="267" name="form_cevap">
       <ObjectId>17695</ObjectId>
       <StateNumber>1367</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="301" parent="267" name="form_soru">
+    <table id="299" parent="267" name="form_soru">
       <ObjectId>17704</ObjectId>
       <StateNumber>1405</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="302" parent="267" name="gruptaki_ogrenciler">
+    <table id="300" parent="267" name="gruptaki_ogrenciler">
       <ObjectId>17808</ObjectId>
       <StateNumber>1992</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="303" parent="267" name="haftalik_rapor">
+    <table id="301" parent="267" name="haftalik_rapor">
       <ObjectId>17851</ObjectId>
       <StateNumber>1448</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="304" parent="267" name="ilan">
+    <table id="302" parent="267" name="ilan">
       <ObjectId>17921</ObjectId>
       <StateNumber>1454</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="305" parent="267" name="ilan_kriter">
+    <table id="303" parent="267" name="ilan_kriter">
       <ObjectId>18124</ObjectId>
       <StateNumber>2290</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="306" parent="267" name="izleyici">
+    <table id="304" parent="267" name="izleyici">
       <ObjectId>17711</ObjectId>
       <StateNumber>2132</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="307" parent="267" name="komisyon">
+    <table id="305" parent="267" name="komisyon">
       <ObjectId>17720</ObjectId>
       <StateNumber>2294</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="308" parent="267" name="ogrenci">
+    <table id="306" parent="267" name="ogrenci">
       <ObjectId>17728</ObjectId>
       <StateNumber>1886</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="309" parent="267" name="ogrenci_gorev">
+    <table id="307" parent="267" name="ogrenci_gorev">
       <ObjectId>17736</ObjectId>
       <StateNumber>1371</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="310" parent="267" name="ogrenci_grup">
+    <table id="308" parent="267" name="ogrenci_grup">
       <ObjectId>17815</ObjectId>
       <StateNumber>1993</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="311" parent="267" name="pre_application">
+    <table id="309" parent="267" name="pre_application">
       <ObjectId>26367</ObjectId>
       <StateNumber>2558</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="312" parent="267" name="yetenek">
+    <table id="310" parent="267" name="yetenek">
       <ObjectId>17865</ObjectId>
       <StateNumber>1729</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <column id="313" parent="291" name="anket_id">
+    <column id="311" parent="290" name="anket_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;anket_anket_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4582,19 +4576,19 @@ false Zulu
       <SequenceId>17637</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="314" parent="291" name="anket_aciklama">
+    <column id="312" parent="290" name="anket_aciklama">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1349</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="315" parent="291" name="anket_baslik">
+    <column id="313" parent="290" name="anket_baslik">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1349</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="316" parent="291" name="anket_pkey">
+    <index id="314" parent="290" name="anket_pkey">
       <ColNames>anket_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17644</ObjectId>
@@ -4603,14 +4597,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="317" parent="291" name="anket_pkey">
+    <key id="315" parent="290" name="anket_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17645</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1349</StateNumber>
       <UnderlyingIndexId>17644</UnderlyingIndexId>
     </key>
-    <column id="318" parent="292" name="cevap_id">
+    <column id="316" parent="291" name="cevap_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;anket_cevap_cevap_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4619,51 +4613,51 @@ false Zulu
       <SequenceId>17646</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="319" parent="292" name="cevap">
+    <column id="317" parent="291" name="cevap">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1350</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="320" parent="292" name="kullanici_id">
+    <column id="318" parent="291" name="kullanici_id">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
       <StateNumber>1350</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="321" parent="292" name="kullanici_rol">
+    <column id="319" parent="291" name="kullanici_rol">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1350</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="322" parent="292" name="anket_id">
+    <column id="320" parent="291" name="anket_id">
       <DasType>bigint|0s</DasType>
       <Position>5</Position>
       <StateNumber>1350</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="323" parent="292" name="soru_id">
+    <column id="321" parent="291" name="soru_id">
       <DasType>bigint|0s</DasType>
       <Position>6</Position>
       <StateNumber>1350</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="324" parent="292" name="fkjwoe6gb18it8labrh831podap">
+    <foreign-key id="322" parent="291" name="fkjwoe6gb18it8labrh831podap">
       <ColNames>anket_id</ColNames>
       <ObjectId>17751</ObjectId>
       <StateNumber>1363</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17638</RefTableId>
     </foreign-key>
-    <foreign-key id="325" parent="292" name="fkfv8ckvdsofn9uxvw2ygkovc9g">
+    <foreign-key id="323" parent="291" name="fkfv8ckvdsofn9uxvw2ygkovc9g">
       <ColNames>soru_id</ColNames>
       <ObjectId>17756</ObjectId>
       <StateNumber>1364</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17656</RefTableId>
     </foreign-key>
-    <index id="326" parent="292" name="anket_cevap_pkey">
+    <index id="324" parent="291" name="anket_cevap_pkey">
       <ColNames>cevap_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17653</ObjectId>
@@ -4672,14 +4666,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="327" parent="292" name="anket_cevap_pkey">
+    <key id="325" parent="291" name="anket_cevap_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17654</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1350</StateNumber>
       <UnderlyingIndexId>17653</UnderlyingIndexId>
     </key>
-    <column id="328" parent="293" name="soru_id">
+    <column id="326" parent="292" name="soru_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;anket_soru_soru_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4688,33 +4682,33 @@ false Zulu
       <SequenceId>17655</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="329" parent="293" name="soru_metni">
+    <column id="327" parent="292" name="soru_metni">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1351</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="330" parent="293" name="soru_no">
+    <column id="328" parent="292" name="soru_no">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>1351</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="331" parent="293" name="anket_id">
+    <column id="329" parent="292" name="anket_id">
       <DasType>bigint|0s</DasType>
       <Position>4</Position>
       <StateNumber>1351</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="332" parent="293" name="fkqwkjxubx3sallgk3rynh1deux">
+    <foreign-key id="330" parent="292" name="fkqwkjxubx3sallgk3rynh1deux">
       <ColNames>anket_id</ColNames>
       <ObjectId>17761</ObjectId>
       <StateNumber>1365</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17638</RefTableId>
     </foreign-key>
-    <index id="333" parent="293" name="anket_soru_pkey">
+    <index id="331" parent="292" name="anket_soru_pkey">
       <ColNames>soru_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17660</ObjectId>
@@ -4723,14 +4717,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="334" parent="293" name="anket_soru_pkey">
+    <key id="332" parent="292" name="anket_soru_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17661</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1351</StateNumber>
       <UnderlyingIndexId>17660</UnderlyingIndexId>
     </key>
-    <column id="335" parent="294" name="basvuru_id">
+    <column id="333" parent="293" name="basvuru_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;basvuru_basvuru_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4739,58 +4733,58 @@ false Zulu
       <SequenceId>17992</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="336" parent="294" name="basvuru_tarihi">
+    <column id="334" parent="293" name="basvuru_tarihi">
       <DasType>timestamp(6)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1946</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="337" parent="294" name="firma_id">
+    <column id="335" parent="293" name="firma_id">
       <DasType>bigint|0s</DasType>
       <Position>4</Position>
       <StateNumber>1946</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="338" parent="294" name="ilan_id">
+    <column id="336" parent="293" name="ilan_id">
       <DasType>bigint|0s</DasType>
       <Position>5</Position>
       <StateNumber>1946</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="339" parent="294" name="ogrenci_no">
+    <column id="337" parent="293" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>6</Position>
       <StateNumber>1946</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="340" parent="294" name="basvuru_durum">
+    <column id="338" parent="293" name="basvuru_durum">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>1952</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="341" parent="294" name="fk723qxnebsu6lv7trnir1a73ot">
+    <foreign-key id="339" parent="293" name="fk723qxnebsu6lv7trnir1a73ot">
       <ColNames>firma_id</ColNames>
       <ObjectId>17999</ObjectId>
       <StateNumber>1947</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17670</RefTableId>
     </foreign-key>
-    <foreign-key id="342" parent="294" name="fkdh8b0a6suanrsxcou9ux3fgfc">
+    <foreign-key id="340" parent="293" name="fkdh8b0a6suanrsxcou9ux3fgfc">
       <ColNames>ilan_id</ColNames>
       <ObjectId>18004</ObjectId>
       <StateNumber>1948</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17921</RefTableId>
     </foreign-key>
-    <foreign-key id="343" parent="294" name="fkfjs1beqjfyx7w9vumksyyc0dx">
+    <foreign-key id="341" parent="293" name="fkfjs1beqjfyx7w9vumksyyc0dx">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>18009</ObjectId>
       <StateNumber>1949</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <index id="344" parent="294" name="basvuru_pkey">
+    <index id="342" parent="293" name="basvuru_pkey">
       <ColNames>basvuru_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17997</ObjectId>
@@ -4799,14 +4793,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="345" parent="294" name="basvuru_pkey">
+    <key id="343" parent="293" name="basvuru_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17998</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1946</StateNumber>
       <UnderlyingIndexId>17997</UnderlyingIndexId>
     </key>
-    <column id="346" parent="295" name="bolum_id">
+    <column id="344" parent="294" name="bolum_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;bolum_bolum_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4815,13 +4809,13 @@ false Zulu
       <SequenceId>17662</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="347" parent="295" name="bolum_ad">
+    <column id="345" parent="294" name="bolum_ad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1352</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="348" parent="295" name="bolum_pkey">
+    <index id="346" parent="294" name="bolum_pkey">
       <ColNames>bolum_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17667</ObjectId>
@@ -4830,14 +4824,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="349" parent="295" name="bolum_pkey">
+    <key id="347" parent="294" name="bolum_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17668</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1352</StateNumber>
       <UnderlyingIndexId>17667</UnderlyingIndexId>
     </key>
-    <column id="350" parent="296" name="favori_id">
+    <column id="348" parent="295" name="favori_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;favori_ilan_favori_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4846,33 +4840,33 @@ false Zulu
       <SequenceId>17843</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="351" parent="296" name="ilan_id">
+    <column id="349" parent="295" name="ilan_id">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
       <StateNumber>1438</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="352" parent="296" name="ogrenci_no">
+    <column id="350" parent="295" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
       <StateNumber>1438</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="353" parent="296" name="fk7p6dsmgk3yn1gao5od020gn12">
+    <foreign-key id="351" parent="295" name="fk7p6dsmgk3yn1gao5od020gn12">
       <ColNames>ilan_id</ColNames>
       <ObjectId>17934</ObjectId>
       <StateNumber>1455</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17921</RefTableId>
     </foreign-key>
-    <foreign-key id="354" parent="296" name="fk6q7js2fioa2iexc5wrys3f40c">
+    <foreign-key id="352" parent="295" name="fk6q7js2fioa2iexc5wrys3f40c">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>17892</ObjectId>
       <StateNumber>1447</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <index id="355" parent="296" name="favori_ilan_pkey">
+    <index id="353" parent="295" name="favori_ilan_pkey">
       <ColNames>favori_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17848</ObjectId>
@@ -4881,51 +4875,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="356" parent="296" name="favori_ilan_pkey">
+    <key id="354" parent="295" name="favori_ilan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17849</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1438</StateNumber>
       <UnderlyingIndexId>17848</UnderlyingIndexId>
     </key>
-    <column id="357" parent="297" name="id">
-      <DasType>integer|0s</DasType>
-      <DefaultExpression>nextval(&apos;file_id_seq&apos;::regclass)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>2085</StateNumber>
-      <SequenceId>18064</SequenceId>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="358" parent="297" name="name">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>2</Position>
-      <StateNumber>2085</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="359" parent="297" name="url">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>3</Position>
-      <StateNumber>2085</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <index id="360" parent="297" name="file_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18071</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>2085</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="361" parent="297" name="file_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18072</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>2085</StateNumber>
-      <UnderlyingIndexId>18071</UnderlyingIndexId>
-    </key>
-    <column id="362" parent="298" name="firma_id">
+    <column id="355" parent="296" name="firma_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;firma_firma_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4934,55 +4891,55 @@ false Zulu
       <SequenceId>17669</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="363" parent="298" name="firma_ad">
+    <column id="356" parent="296" name="firma_ad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="364" parent="298" name="firma_adres">
+    <column id="357" parent="296" name="firma_adres">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="365" parent="298" name="firma_eposta">
+    <column id="358" parent="296" name="firma_eposta">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="366" parent="298" name="firma_hakkinda">
+    <column id="359" parent="296" name="firma_hakkinda">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="367" parent="298" name="firma_logo">
+    <column id="360" parent="296" name="firma_logo">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="368" parent="298" name="firma_parola">
+    <column id="361" parent="296" name="firma_parola">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="369" parent="298" name="firma_sektor">
+    <column id="362" parent="296" name="firma_sektor">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
       <StateNumber>1353</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="370" parent="298" name="firma_no">
+    <column id="363" parent="296" name="firma_no">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
       <StateNumber>1987</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="371" parent="298" name="firma_pkey">
+    <index id="364" parent="296" name="firma_pkey">
       <ColNames>firma_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17676</ObjectId>
@@ -4991,14 +4948,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="372" parent="298" name="firma_pkey">
+    <key id="365" parent="296" name="firma_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17677</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1353</StateNumber>
       <UnderlyingIndexId>17676</UnderlyingIndexId>
     </key>
-    <column id="373" parent="299" name="form_id">
+    <column id="366" parent="297" name="form_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;form_form_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5007,19 +4964,19 @@ false Zulu
       <SequenceId>17685</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="374" parent="299" name="form_aciklama">
+    <column id="367" parent="297" name="form_aciklama">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1355</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="375" parent="299" name="form_baslik">
+    <column id="368" parent="297" name="form_baslik">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1355</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="376" parent="299" name="form_pkey">
+    <index id="369" parent="297" name="form_pkey">
       <ColNames>form_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17692</ObjectId>
@@ -5028,14 +4985,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="377" parent="299" name="form_pkey">
+    <key id="370" parent="297" name="form_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17693</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1355</StateNumber>
       <UnderlyingIndexId>17692</UnderlyingIndexId>
     </key>
-    <column id="378" parent="300" name="cevap_id">
+    <column id="371" parent="298" name="cevap_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;form_cevap_cevap_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5044,51 +5001,51 @@ false Zulu
       <SequenceId>17694</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="379" parent="300" name="cevap">
+    <column id="372" parent="298" name="cevap">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1356</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="380" parent="300" name="kullanici_id">
+    <column id="373" parent="298" name="kullanici_id">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
       <StateNumber>1356</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="381" parent="300" name="kullanici_rol">
+    <column id="374" parent="298" name="kullanici_rol">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1356</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="382" parent="300" name="form_id">
+    <column id="375" parent="298" name="form_id">
       <DasType>bigint|0s</DasType>
       <Position>5</Position>
       <StateNumber>1356</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="383" parent="300" name="soru_id">
+    <column id="376" parent="298" name="soru_id">
       <DasType>bigint|0s</DasType>
       <Position>6</Position>
       <StateNumber>1356</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="384" parent="300" name="fkctrc0c31832iy0tl2gmu04ib4">
+    <foreign-key id="377" parent="298" name="fkctrc0c31832iy0tl2gmu04ib4">
       <ColNames>form_id</ColNames>
       <ObjectId>17771</ObjectId>
       <StateNumber>1367</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17686</RefTableId>
     </foreign-key>
-    <foreign-key id="385" parent="300" name="fkcm8aprequ7w0sirnhrg206i4b">
+    <foreign-key id="378" parent="298" name="fkcm8aprequ7w0sirnhrg206i4b">
       <ColNames>soru_id</ColNames>
       <ObjectId>17776</ObjectId>
       <StateNumber>1368</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17704</RefTableId>
     </foreign-key>
-    <index id="386" parent="300" name="form_cevap_pkey">
+    <index id="379" parent="298" name="form_cevap_pkey">
       <ColNames>cevap_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17701</ObjectId>
@@ -5097,14 +5054,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="387" parent="300" name="form_cevap_pkey">
+    <key id="380" parent="298" name="form_cevap_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17702</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1356</StateNumber>
       <UnderlyingIndexId>17701</UnderlyingIndexId>
     </key>
-    <column id="388" parent="301" name="soru_id">
+    <column id="381" parent="299" name="soru_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;form_soru_soru_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5113,33 +5070,33 @@ false Zulu
       <SequenceId>17703</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="389" parent="301" name="soru_metni">
+    <column id="382" parent="299" name="soru_metni">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1357</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="390" parent="301" name="soru_no">
+    <column id="383" parent="299" name="soru_no">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>1357</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="391" parent="301" name="form_id">
+    <column id="384" parent="299" name="form_id">
       <DasType>bigint|0s</DasType>
       <Position>4</Position>
       <StateNumber>1392</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="392" parent="301" name="fk5e9952qvnvq09h41af16q1eec">
+    <foreign-key id="385" parent="299" name="fk5e9952qvnvq09h41af16q1eec">
       <ColNames>form_id</ColNames>
       <ObjectId>17781</ObjectId>
       <StateNumber>1369</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17686</RefTableId>
     </foreign-key>
-    <index id="393" parent="301" name="form_soru_pkey">
+    <index id="386" parent="299" name="form_soru_pkey">
       <ColNames>soru_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17708</ObjectId>
@@ -5148,14 +5105,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="394" parent="301" name="form_soru_pkey">
+    <key id="387" parent="299" name="form_soru_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17709</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1357</StateNumber>
       <UnderlyingIndexId>17708</UnderlyingIndexId>
     </key>
-    <column id="395" parent="302" name="id">
+    <column id="388" parent="300" name="id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;gruptaki_ogrenciler_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5164,33 +5121,33 @@ false Zulu
       <SequenceId>17807</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="396" parent="302" name="ogrenci_no">
+    <column id="389" parent="300" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
       <StateNumber>1419</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="397" parent="302" name="grup_id">
+    <column id="390" parent="300" name="grup_id">
       <DasType>integer|0s</DasType>
       <Position>3</Position>
       <StateNumber>1992</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="398" parent="302" name="fk5bg254y7ah4qvdy42nisdlg8j">
+    <foreign-key id="391" parent="300" name="fk5bg254y7ah4qvdy42nisdlg8j">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>17821</ObjectId>
       <StateNumber>1421</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <foreign-key id="399" parent="302" name="fkdfgfo9wvuny8vo64bd23k10cm">
+    <foreign-key id="392" parent="300" name="fkdfgfo9wvuny8vo64bd23k10cm">
       <ColNames>grup_id</ColNames>
       <ObjectId>18055</ObjectId>
       <StateNumber>1993</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17815</RefTableId>
     </foreign-key>
-    <index id="400" parent="302" name="gruptaki_ogrenciler_pkey">
+    <index id="393" parent="300" name="gruptaki_ogrenciler_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17812</ObjectId>
@@ -5199,14 +5156,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="401" parent="302" name="gruptaki_ogrenciler_pkey">
+    <key id="394" parent="300" name="gruptaki_ogrenciler_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17813</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1419</StateNumber>
       <UnderlyingIndexId>17812</UnderlyingIndexId>
     </key>
-    <column id="402" parent="303" name="rapor_id">
+    <column id="395" parent="301" name="rapor_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;haftalik_rapor_rapor_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5215,32 +5172,32 @@ false Zulu
       <SequenceId>17850</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="403" parent="303" name="rapor_icerigi">
+    <column id="396" parent="301" name="rapor_icerigi">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1439</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="404" parent="303" name="tarih">
+    <column id="397" parent="301" name="tarih">
       <DasType>timestamp(6)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1439</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="405" parent="303" name="ogrenci_no">
+    <column id="398" parent="301" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>4</Position>
       <StateNumber>1439</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="406" parent="303" name="fkhsm90qse7notldyrrib6i6460">
+    <foreign-key id="399" parent="301" name="fkhsm90qse7notldyrrib6i6460">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>17897</ObjectId>
       <StateNumber>1448</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <index id="407" parent="303" name="haftalik_rapor_pkey">
+    <index id="400" parent="301" name="haftalik_rapor_pkey">
       <ColNames>rapor_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17855</ObjectId>
@@ -5249,14 +5206,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="408" parent="303" name="haftalik_rapor_pkey">
+    <key id="401" parent="301" name="haftalik_rapor_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17856</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1439</StateNumber>
       <UnderlyingIndexId>17855</UnderlyingIndexId>
     </key>
-    <column id="409" parent="304" name="ilan_id">
+    <column id="402" parent="302" name="ilan_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;ilan_ilan_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5265,50 +5222,50 @@ false Zulu
       <SequenceId>17920</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="410" parent="304" name="aciklama">
+    <column id="403" parent="302" name="aciklama">
       <DasType>varchar(1000)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1967</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="411" parent="304" name="baslangic_tarihi">
+    <column id="404" parent="302" name="baslangic_tarihi">
       <DasType>timestamp(6)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1453</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="412" parent="304" name="baslik">
+    <column id="405" parent="302" name="baslik">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1453</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="413" parent="304" name="bitis_tarihi">
+    <column id="406" parent="302" name="bitis_tarihi">
       <DasType>timestamp(6)|0s</DasType>
       <Position>5</Position>
       <StateNumber>1453</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="414" parent="304" name="post_baslik">
+    <column id="407" parent="302" name="post_baslik">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>1453</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="415" parent="304" name="firma_id">
+    <column id="408" parent="302" name="firma_id">
       <DasType>bigint|0s</DasType>
       <Position>7</Position>
       <StateNumber>1453</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="416" parent="304" name="fkgsxd8rmxkletqdlfn7ayp66lh">
+    <foreign-key id="409" parent="302" name="fkgsxd8rmxkletqdlfn7ayp66lh">
       <ColNames>firma_id</ColNames>
       <ObjectId>17939</ObjectId>
       <StateNumber>1456</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17670</RefTableId>
     </foreign-key>
-    <index id="417" parent="304" name="ilan_pkey">
+    <index id="410" parent="302" name="ilan_pkey">
       <ColNames>ilan_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17927</ObjectId>
@@ -5317,14 +5274,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="418" parent="304" name="ilan_pkey">
+    <key id="411" parent="302" name="ilan_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17928</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1453</StateNumber>
       <UnderlyingIndexId>17927</UnderlyingIndexId>
     </key>
-    <column id="419" parent="305" name="kriter_id">
+    <column id="412" parent="303" name="kriter_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;ilan_kriter_kriter_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5333,26 +5290,26 @@ false Zulu
       <SequenceId>18123</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="420" parent="305" name="kriter_aciklama">
+    <column id="413" parent="303" name="kriter_aciklama">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>2289</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="421" parent="305" name="ilan_id">
+    <column id="414" parent="303" name="ilan_id">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
       <StateNumber>2289</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="422" parent="305" name="fklyjngq31cfb36ldsox3viyh97">
+    <foreign-key id="415" parent="303" name="fklyjngq31cfb36ldsox3viyh97">
       <ColNames>ilan_id</ColNames>
       <ObjectId>18130</ObjectId>
       <StateNumber>2290</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17921</RefTableId>
     </foreign-key>
-    <index id="423" parent="305" name="ilan_kriter_pkey">
+    <index id="416" parent="303" name="ilan_kriter_pkey">
       <ColNames>kriter_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>18128</ObjectId>
@@ -5361,14 +5318,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="424" parent="305" name="ilan_kriter_pkey">
+    <key id="417" parent="303" name="ilan_kriter_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>18129</ObjectId>
       <Primary>1</Primary>
       <StateNumber>2289</StateNumber>
       <UnderlyingIndexId>18128</UnderlyingIndexId>
     </key>
-    <column id="425" parent="306" name="izleyici_id">
+    <column id="418" parent="304" name="izleyici_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;izleyici_izleyici_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5377,49 +5334,49 @@ false Zulu
       <SequenceId>17710</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="426" parent="306" name="izleyici_ad">
+    <column id="419" parent="304" name="izleyici_ad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1358</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="427" parent="306" name="izleyici_eposta">
+    <column id="420" parent="304" name="izleyici_eposta">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1358</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="428" parent="306" name="izleyici_parola">
+    <column id="421" parent="304" name="izleyici_parola">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1358</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="429" parent="306" name="izleyici_soyad">
+    <column id="422" parent="304" name="izleyici_soyad">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>1358</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="430" parent="306" name="izleyici_no">
+    <column id="423" parent="304" name="izleyici_no">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>1988</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="431" parent="306" name="izleyici_fakulte">
+    <column id="424" parent="304" name="izleyici_fakulte">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>2131</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="432" parent="306" name="izleyici_hakkinda">
+    <column id="425" parent="304" name="izleyici_hakkinda">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
       <StateNumber>2132</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="433" parent="306" name="izleyici_pkey">
+    <index id="426" parent="304" name="izleyici_pkey">
       <ColNames>izleyici_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17717</ObjectId>
@@ -5428,14 +5385,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="434" parent="306" name="izleyici_pkey">
+    <key id="427" parent="304" name="izleyici_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17718</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1358</StateNumber>
       <UnderlyingIndexId>17717</UnderlyingIndexId>
     </key>
-    <column id="435" parent="307" name="komisyon_id">
+    <column id="428" parent="305" name="komisyon_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;komisyon_komisyon_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5444,43 +5401,43 @@ false Zulu
       <SequenceId>17719</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="436" parent="307" name="komisyon_ad">
+    <column id="429" parent="305" name="komisyon_ad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="437" parent="307" name="komisyon_eposta">
+    <column id="430" parent="305" name="komisyon_eposta">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="438" parent="307" name="komisyon_parola">
+    <column id="431" parent="305" name="komisyon_parola">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="439" parent="307" name="komisyon_soyad">
+    <column id="432" parent="305" name="komisyon_soyad">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>1359</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="440" parent="307" name="komisyon_no">
+    <column id="433" parent="305" name="komisyon_no">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>2284</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="441" parent="307" name="komisyon_hakkinda">
+    <column id="434" parent="305" name="komisyon_hakkinda">
       <DasType>varchar(1000)|0s</DasType>
       <Position>7</Position>
       <StateNumber>2296</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="442" parent="307" name="komisyon_pkey">
+    <index id="435" parent="305" name="komisyon_pkey">
       <ColNames>komisyon_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17726</ObjectId>
@@ -5489,106 +5446,106 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="443" parent="307" name="komisyon_pkey">
+    <key id="436" parent="305" name="komisyon_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17727</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1359</StateNumber>
       <UnderlyingIndexId>17726</UnderlyingIndexId>
     </key>
-    <column id="444" parent="308" name="ogrenci_no">
+    <column id="437" parent="306" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="445" parent="308" name="ogrenci_ad">
+    <column id="438" parent="306" name="ogrenci_ad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="446" parent="308" name="ogrenci_adres">
+    <column id="439" parent="306" name="ogrenci_adres">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="447" parent="308" name="ogrenci_agno">
+    <column id="440" parent="306" name="ogrenci_agno">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="448" parent="308" name="ogrenci_eposta">
+    <column id="441" parent="306" name="ogrenci_eposta">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="449" parent="308" name="ogrenci_fakulte">
+    <column id="442" parent="306" name="ogrenci_fakulte">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="450" parent="308" name="ogrenci_fotograf">
+    <column id="443" parent="306" name="ogrenci_fotograf">
       <DasType>varchar(100000)|0s</DasType>
       <Position>7</Position>
       <StateNumber>1887</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="451" parent="308" name="ogrenci_hakkinda">
+    <column id="444" parent="306" name="ogrenci_hakkinda">
       <DasType>varchar(1000)|0s</DasType>
       <Position>8</Position>
       <StateNumber>1557</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="452" parent="308" name="ogrenci_kimlik_no">
+    <column id="445" parent="306" name="ogrenci_kimlik_no">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="453" parent="308" name="ogrenci_parola">
+    <column id="446" parent="306" name="ogrenci_parola">
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="454" parent="308" name="ogrenci_sinif">
+    <column id="447" parent="306" name="ogrenci_sinif">
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="455" parent="308" name="ogrenci_soyad">
+    <column id="448" parent="306" name="ogrenci_soyad">
       <DasType>varchar(255)|0s</DasType>
       <Position>12</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="456" parent="308" name="ogrenci_tel_no">
+    <column id="449" parent="306" name="ogrenci_tel_no">
       <DasType>varchar(255)|0s</DasType>
       <Position>13</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="457" parent="308" name="firma_id">
+    <column id="450" parent="306" name="firma_id">
       <DasType>bigint|0s</DasType>
       <Position>14</Position>
       <StateNumber>1360</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="458" parent="308" name="fkr98y6xnlytjdh7779hqwcqba3">
+    <foreign-key id="451" parent="306" name="fkr98y6xnlytjdh7779hqwcqba3">
       <ColNames>firma_id</ColNames>
       <ObjectId>17786</ObjectId>
       <StateNumber>1370</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17670</RefTableId>
     </foreign-key>
-    <index id="459" parent="308" name="ogrenci_pkey">
+    <index id="452" parent="306" name="ogrenci_pkey">
       <ColNames>ogrenci_no</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17733</ObjectId>
@@ -5597,14 +5554,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="460" parent="308" name="ogrenci_pkey">
+    <key id="453" parent="306" name="ogrenci_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17734</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1360</StateNumber>
       <UnderlyingIndexId>17733</UnderlyingIndexId>
     </key>
-    <column id="461" parent="309" name="gorev_id">
+    <column id="454" parent="307" name="gorev_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;ogrenci_gorev_gorev_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5613,32 +5570,32 @@ false Zulu
       <SequenceId>17735</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="462" parent="309" name="gorev_durumu">
+    <column id="455" parent="307" name="gorev_durumu">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1361</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="463" parent="309" name="gorev_metni">
+    <column id="456" parent="307" name="gorev_metni">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>1361</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="464" parent="309" name="ogrenci_no">
+    <column id="457" parent="307" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>4</Position>
       <StateNumber>1361</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="465" parent="309" name="fki1q4dg364bvp4471ydu9s5e0h">
+    <foreign-key id="458" parent="307" name="fki1q4dg364bvp4471ydu9s5e0h">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>17791</ObjectId>
       <StateNumber>1371</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <index id="466" parent="309" name="ogrenci_gorev_pkey">
+    <index id="459" parent="307" name="ogrenci_gorev_pkey">
       <ColNames>gorev_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17742</ObjectId>
@@ -5647,14 +5604,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="467" parent="309" name="ogrenci_gorev_pkey">
+    <key id="460" parent="307" name="ogrenci_gorev_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17743</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1361</StateNumber>
       <UnderlyingIndexId>17742</UnderlyingIndexId>
     </key>
-    <column id="468" parent="310" name="grup_id">
+    <column id="461" parent="308" name="grup_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;ogrenci_grup_grup_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5663,20 +5620,20 @@ false Zulu
       <SequenceId>17814</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="469" parent="310" name="izleyici_id">
+    <column id="462" parent="308" name="izleyici_id">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
       <StateNumber>1420</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="470" parent="310" name="fkb4yxe40f0gdnga3ir5ehcmpoy">
+    <foreign-key id="463" parent="308" name="fkb4yxe40f0gdnga3ir5ehcmpoy">
       <ColNames>izleyici_id</ColNames>
       <ObjectId>17831</ObjectId>
       <StateNumber>1423</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17711</RefTableId>
     </foreign-key>
-    <index id="471" parent="310" name="ogrenci_grup_pkey">
+    <index id="464" parent="308" name="ogrenci_grup_pkey">
       <ColNames>grup_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>18053</ObjectId>
@@ -5685,14 +5642,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="472" parent="310" name="ogrenci_grup_pkey">
+    <key id="465" parent="308" name="ogrenci_grup_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>18054</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1993</StateNumber>
       <UnderlyingIndexId>18053</UnderlyingIndexId>
     </key>
-    <column id="473" parent="311" name="id">
+    <column id="466" parent="309" name="id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;pre_application_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5701,85 +5658,85 @@ false Zulu
       <SequenceId>26366</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="474" parent="311" name="ad_soyad">
+    <column id="467" parent="309" name="ad_soyad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="475" parent="311" name="basarisiz_dersler">
+    <column id="468" parent="309" name="basarisiz_dersler">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="476" parent="311" name="eposta">
+    <column id="469" parent="309" name="eposta">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="477" parent="311" name="firmada_staj_yapma_istegi">
+    <column id="470" parent="309" name="firmada_staj_yapma_istegi">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="478" parent="311" name="genel_not_ortalamasi">
+    <column id="471" parent="309" name="genel_not_ortalamasi">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="479" parent="311" name="ogrenci_numarasi">
+    <column id="472" parent="309" name="ogrenci_numarasi">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="480" parent="311" name="ozel_durumlar">
+    <column id="473" parent="309" name="ozel_durumlar">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="481" parent="311" name="protokol_durumu">
+    <column id="474" parent="309" name="protokol_durumu">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="482" parent="311" name="sirket_bilgisi">
+    <column id="475" parent="309" name="sirket_bilgisi">
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="483" parent="311" name="tck_numarasi">
+    <column id="476" parent="309" name="tck_numarasi">
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="484" parent="311" name="telefon">
+    <column id="477" parent="309" name="telefon">
       <DasType>varchar(255)|0s</DasType>
       <Position>12</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="485" parent="311" name="tercih_edilen_donem">
+    <column id="478" parent="309" name="tercih_edilen_donem">
       <DasType>varchar(255)|0s</DasType>
       <Position>13</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="486" parent="311" name="zorunlu_staj_gun_sayisi">
+    <column id="479" parent="309" name="zorunlu_staj_gun_sayisi">
       <DasType>varchar(255)|0s</DasType>
       <Position>14</Position>
       <StateNumber>2558</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="487" parent="311" name="pre_application_pkey">
+    <index id="480" parent="309" name="pre_application_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>26373</ObjectId>
@@ -5788,14 +5745,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="488" parent="311" name="pre_application_pkey">
+    <key id="481" parent="309" name="pre_application_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>26374</ObjectId>
       <Primary>1</Primary>
       <StateNumber>2558</StateNumber>
       <UnderlyingIndexId>26373</UnderlyingIndexId>
     </key>
-    <column id="489" parent="312" name="skill_id">
+    <column id="482" parent="310" name="skill_id">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>nextval(&apos;yetenek_skill_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5804,32 +5761,32 @@ false Zulu
       <SequenceId>17864</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="490" parent="312" name="aciklama">
+    <column id="483" parent="310" name="aciklama">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1441</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="491" parent="312" name="ogrenci_no">
+    <column id="484" parent="310" name="ogrenci_no">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
       <StateNumber>1441</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="492" parent="312" name="seviye">
+    <column id="485" parent="310" name="seviye">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>1729</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="493" parent="312" name="fk66pt3819gk10c8htihtcly6k4">
+    <foreign-key id="486" parent="310" name="fk66pt3819gk10c8htihtcly6k4">
       <ColNames>ogrenci_no</ColNames>
       <ObjectId>17907</ObjectId>
       <StateNumber>1450</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>17728</RefTableId>
     </foreign-key>
-    <index id="494" parent="312" name="yetenek_pkey">
+    <index id="487" parent="310" name="yetenek_pkey">
       <ColNames>skill_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17869</ObjectId>
@@ -5838,7 +5795,7 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="495" parent="312" name="yetenek_pkey">
+    <key id="488" parent="310" name="yetenek_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>17870</ObjectId>
       <Primary>1</Primary>

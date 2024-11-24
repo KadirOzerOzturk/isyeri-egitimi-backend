@@ -29,13 +29,13 @@ public class CommissionService {
         return commissionRepository.findByKomisyonNo(komisyonNo);
     }
 
-    public CommissionDto getCommissionById(Long commissionId) {
+    public Optional<CommissionDto> getCommissionById(Long commissionId) {
         Optional<Commission>  commission =commissionRepository.findById(commissionId);
         if (commission.isEmpty()){
-            return null
-                    ;
+            return null;
         }
-        return mapToDto(commission.get());
+
+        return Optional.ofNullable(mapToDto(commission.get()));
     }
 
 
@@ -71,6 +71,8 @@ public class CommissionService {
         commission.setKomisyonHakkinda(commissionDto.getKomisyonHakkinda());
         return  commission;
     }
+
+
 }
 
 

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CommissionLoginDto {
 
-    private String komisyonNo;
+    private Long komisyonId;
 
     private String komisyonParola;
 }

@@ -2,7 +2,6 @@ package com.isyeriegitimi.backend.controller;
 
 
 import com.isyeriegitimi.backend.dto.*;
-import com.isyeriegitimi.backend.model.Commission;
 import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.model.Lecturer;
 import com.isyeriegitimi.backend.model.Student;
@@ -10,7 +9,6 @@ import com.isyeriegitimi.backend.service.CommissionService;
 import com.isyeriegitimi.backend.service.CompanyService;
 import com.isyeriegitimi.backend.service.LecturerService;
 import com.isyeriegitimi.backend.service.StudentService;
-import com.isyeriegitimi.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,20 +123,14 @@ public class AuthController {
     }
     @PostMapping("/commission-login")
     public ResponseEntity<?> commissionLogin(@RequestBody CommissionLoginDto commissionLoginDto){
-        Optional<Commission> existingCommission=commissionService.getCommissionByCommissionNo(commissionLoginDto.getKomisyonNo());
+        Optional<CommissionDto> existingCommission=commissionService.getCommissionById(commissionLoginDto.getKomisyonId());
         if (existingCommission.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Commission no not found");
 
         }
         if (existingCommission.get().getKomisyonParola().equals(commissionLoginDto.getKomisyonParola())){
-            CommissionDto commissionDto=new CommissionDto();
-            commissionDto.setKomisyonAd(existingCommission.get().getKomisyonAd());
-            commissionDto.setKomisyonId(existingCommission.get().getKomisyonId());
-            commissionDto.setKomisyonEposta(existingCommission.get().getKomisyonEposta());
-            commissionDto.setKomisyonNo(existingCommission.get().getKomisyonNo());
-            commissionDto.setKomisyonSoyad(existingCommission.get().getKomisyonSoyad());
-            commissionDto.setKomisyonParola(existingCommission.get().getKomisyonParola());
-            return ResponseEntity.ok(commissionDto);
+
+            return ResponseEntity.ok(existingCommission);
         }
         else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password is not correct");
