@@ -7,9 +7,9 @@ import java.util.Date;
 
 @Data
 public class WeeklyReportDto {
-    private Long raporId;
-    private String raporIcerigi;
+    private Long reportId;
+    private String report;
 
-    private Student ogrenci;
-    private Date tarih;
+    private Student student;
+    private Date reportDate;
 }

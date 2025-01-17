@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
@@ -14,14 +16,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "ogrenci_gorev")
 public class StudentTask {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gorevId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID taskId;
 
     @ManyToOne
     @JoinColumn(name = "ogrenci_no")
     private Student student;
 
-    private String gorevMetni;
-    private String gorevDurumu;
+    private String taskDescription;
+    private String taskStatus;
 
 }

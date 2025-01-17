@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -15,20 +17,20 @@ import lombok.NoArgsConstructor;
 public class PreApplication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID preApplicationId;
 
-    private String ogrenciNumarasi;
-    private String adSoyad;
-    private String tckNumarasi;
-    private String eposta;
-    private String telefon;
-    private String genelNotOrtalamasi;
-    private String tercihEdilenDonem;
-    private String basarisizDersler;
-    private String sirketBilgisi;
-    private String protokolDurumu;
-    private String zorunluStajGunSayisi;
-    private String firmadaStajYapmaIstegi;
-    private String ozelDurumlar;
+    private String studentNumber;
+    private String fullName;
+    private String idNumber;
+    private String email;
+    private String phone;
+    private String gpa;
+    private String preferredTerm;
+    private String failedCourses;
+    private String companyInfo;
+    private String protocolStatus;
+    private String mandatoryInternshipDays;
+    private String internshipRequestAtCompany;
+    private String specialConditions;
 }

@@ -6,22 +6,41 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "firma")
+@Table(name = "company")
 public class Company {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long firmaId;
-    private String firmaNo;
-    private String firmaEposta;
-    private String firmaParola;
-    private String firmaAd;
-    private String firmaAdres;
-    private String firmaLogo;
-    private String firmaSektor;
-    private String firmaHakkinda;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID companyId;
+
+    @Column(name = "company_number", nullable = false, unique = true)
+    private String companyNumber;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "logo")
+    private String logo;
+
+    @Column(name = "sector")
+    private String sector;
+
+    @Column(name = "about")
+    private String about;
 }

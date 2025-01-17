@@ -4,9 +4,12 @@ import com.isyeriegitimi.backend.model.Announcement;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface AnnouncementRepository extends JpaRepository<Announcement,Long> {
+public interface AnnouncementRepository extends JpaRepository<Announcement, UUID> {
 
-    List<Announcement> getAnnouncementByFirmaFirmaId(Long firmaId);
-    int countByIlanId(Long ilanId);
+
+    List<Announcement> getAnnouncementByCompanyCompanyId(UUID companyId);
+    int countByAnnouncementId(UUID ilanId);
 }
+

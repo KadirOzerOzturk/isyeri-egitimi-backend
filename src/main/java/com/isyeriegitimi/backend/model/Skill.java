@@ -6,20 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "yetenek")
+@Table(name = "skill")
 public class Skill {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long skillId;
-    @ManyToOne
-    @JoinColumn(name = "ogrenci_no")
-    private Student ogrenci;
-    private String aciklama;
-    private String seviye;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID skillId;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    private String description;
+    private String level;
 }

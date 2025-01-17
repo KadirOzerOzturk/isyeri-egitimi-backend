@@ -6,20 +6,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface ApplicationRepository extends JpaRepository<Application,Long> {
-    List<Application> findAllByIlanIlanId(Long id);
-    List<Application> findAllByOgrenciOgrenciNo(Long studentNo);
+public interface ApplicationRepository extends JpaRepository<Application, UUID> {
 
-    Optional<Application> findByBasvuruId(Long applicationId);
+    List<Application> findAllByAnnouncement_AnnouncementId(UUID id);
+    List<Application> findAllByStudent_StudentNumber(String studentNo);
+
+    Optional<Application> findByApplicationId(UUID applicationId);
 
     @Transactional
-    void deleteAllByOgrenciOgrenciNoAndAndIlanIlanId(Long studentNo,Long announcementId);
+    void deleteAllByStudentStudentNumberAndAnnouncementAnnouncementId(String studentNo,UUID announcementId);
     @Transactional
-    List<Application> findAllByOgrenciOgrenciNoAndFirmaFirmaId(Long studentNo,Long companyId);
-
-
-
+    List<Application> findAllByStudent_StudentNumberAndCompanyCompanyId(String studentNo,UUID companyId);
 
 
 }

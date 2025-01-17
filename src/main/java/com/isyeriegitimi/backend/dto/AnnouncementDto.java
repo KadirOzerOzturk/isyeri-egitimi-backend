@@ -10,11 +10,11 @@ import java.util.List;
 public class AnnouncementDto {
 
 
-    private Company firma;
-    private Date baslangic_tarihi;
-    private Date bitis_tarihi;
-    private String baslik;
-    private String aciklama;
-    private String postBaslik;
+    private Company company;
+    private Date startDate;
+    private Date endDate;
+    private String title;
+    private String description;
+    private String postTitle;
     private List<String> announcementCriteria;
 }

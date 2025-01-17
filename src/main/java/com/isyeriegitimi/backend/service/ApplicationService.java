@@ -1,5 +1,7 @@
 package com.isyeriegitimi.backend.service;
 
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Announcement;
 import com.isyeriegitimi.backend.model.Application;
 import com.isyeriegitimi.backend.model.Student;
@@ -10,10 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ApplicationService {
@@ -29,66 +28,86 @@ public class ApplicationService {
         this.announcementRepository = announcementRepository;
     }
 
-
-
-
-
-    public List<Application> getApplicationsByAnnouncementId(Long id){
-        return applicationRepository.findAllByIlanIlanId(id);
-    }
-
-
-    public List<Application> getApplicationsByStudentNo(Long studentNo) {
-        return applicationRepository.findAllByOgrenciOgrenciNo(studentNo);
-
-    }
-
-    public String saveApplication(Long studentNo, Long announcementId) {
-        Optional<Student> student=studentRepository.findByOgrenciNo(studentNo);
-        Optional<Announcement> announcement=announcementRepository.findById(announcementId);
-        if (student.isEmpty() && announcement.isEmpty()){
-            return "Not Found";
+    public List<Application> getApplicationsByAnnouncementId(UUID id){
+        try {
+            List<Application> applications = applicationRepository.findAllByAnnouncement_AnnouncementId(id);
+            if (applications.isEmpty()) {
+                throw new ResourceNotFoundException("Applications", "announcementId", id.toString());
+            }
+            return applications;
         }
-        Application application=Application.builder()
-                .firma(announcement.get().getFirma())
-                .ilan(announcement.get())
-                .ogrenci(student.get())
-                .basvuruTarihi(new Date())
-                .basvuruDurum("Firma onayı bekleniyor.")
+        catch (Exception e) {
+            throw new InternalServerErrorException("Applications could not be fetched.");
+        }
+    }
+
+
+    public List<Application> getApplicationsByStudentNo(String studentNo) {
+        try {
+            List<Application> applications = applicationRepository.findAllByStudent_StudentNumber(studentNo);
+            if (applications.isEmpty()) {
+                throw new ResourceNotFoundException("Applications", "studentNo", studentNo);
+            }
+            return applications;
+        }catch (Exception e){
+            throw new InternalServerErrorException("Applications could not be fetched.");
+        }
+    }
+
+   public void saveApplication(String studentNo, UUID announcementId) {
+    try {
+        Optional<Student> student = studentRepository.findByStudentNumber(studentNo);
+        Optional<Announcement> announcement = announcementRepository.findById(announcementId);
+        if (student.isEmpty() && announcement.isEmpty()) {
+        }
+        Application application = Application.builder()
+                .company(announcement.get().getCompany())
+                .announcement(announcement.get())
+                .student(student.get())
+                .applicationDate(new Date())
+                .applicationStatus("Firma onayı bekleniyor.")
                 .build();
         applicationRepository.save(application);
-        return "Application saved";
+    } catch (Exception e) {
+        throw new InternalServerErrorException("Application could not be saved.");
     }
+}
 
-    public String deleteApplication(Long studentNo, Long announcementId) {
-
-
-        applicationRepository.deleteAllByOgrenciOgrenciNoAndAndIlanIlanId(studentNo,announcementId);
-    return "Succesfully deleted.";
-
+    public void deleteApplication(String studentNo, UUID announcementId) {
+        try {
+            applicationRepository.deleteAllByStudentStudentNumberAndAnnouncementAnnouncementId(studentNo,announcementId);
+        }catch (Exception e){
+            throw new InternalServerErrorException("Application could not be deleted.");
+        }
     }
 
     @Transactional
-    public List<Application> getApplicationsByStudentNoAndCompanyId(Long studentNo, Long companyId) {
+    public List<Application> getApplicationsByStudentNoAndCompanyId(String studentNo, UUID companyId) {
         try {
-            return applicationRepository.findAllByOgrenciOgrenciNoAndFirmaFirmaId(studentNo,companyId);
-
+            List<Application> applications = applicationRepository.findAllByStudent_StudentNumberAndCompanyCompanyId(studentNo, companyId);
+            if (applications.isEmpty()) {
+                throw new ResourceNotFoundException("Applications", "studentNo and companyId", studentNo + " and " + companyId);
+            }
+            return applications;
         }
         catch (Exception e){
-            e.printStackTrace();
-            return Collections.emptyList();
+            return null;
         }
     }
     @Transactional
-    public String updateApplication( String applicationStatus,Long applicationId) {
-        Optional<Application> existingApplication=applicationRepository.findByBasvuruId(applicationId);
-        if (existingApplication.isEmpty() ){
-            return "Not Found";
+    public void updateApplication(String applicationStatus, UUID applicationId) {
+    try {
+        Optional<Application> existingApplication = applicationRepository.findByApplicationId(applicationId);
+        if (existingApplication.isEmpty()) {
+            throw new ResourceNotFoundException("Application", "id", applicationId.toString());
         }
-        Application application = existingApplication.get(); // Existing application object
-        application.setBasvuruDurum(applicationStatus); // Update the application status
+        Application application = existingApplication.get();
+        application.setApplicationStatus(applicationStatus);
 
         applicationRepository.save(application);
-        return "Application updated";
+
+    } catch (Exception e) {
+        throw new InternalServerErrorException("Application could not be updated.");
     }
+}
 }

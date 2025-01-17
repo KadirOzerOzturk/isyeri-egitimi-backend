@@ -6,20 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ilan_kriter")
+@Table(name = "announcement_criteria")
 public class AnnouncementCriteria {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long kriterId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID criteriaId;
 
     @ManyToOne
-    @JoinColumn(name = "ilan_id" )
-    private Announcement ilan;
+    @JoinColumn(name = "announcement_id")
+    private Announcement announcement;
 
-    private String kriterAciklama;
+    private String criteriaDescription;
 }

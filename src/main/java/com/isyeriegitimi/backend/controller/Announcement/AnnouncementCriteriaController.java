@@ -2,13 +2,14 @@ package com.isyeriegitimi.backend.controller.Announcement;
 
 
 import com.isyeriegitimi.backend.model.AnnouncementCriteria;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.service.AnnouncementCriteriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.UUID;
 @RestController
 @RequestMapping("/announcementCriteria")
 public class AnnouncementCriteriaController {
@@ -21,30 +22,20 @@ public class AnnouncementCriteriaController {
     }
 
     @PostMapping("/save/{announcementId}")
-    public ResponseEntity<String> saveCriteria(@RequestBody List<AnnouncementCriteria>  announcementCriteria,@PathVariable Long announcementId){
-        try {
-            announcementCriteriaService.save(announcementCriteria,announcementId);
-            return ResponseEntity.ok().body("Successfully saved");
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Criteria could not saved");
-        }
+    public ResponseEntity<ApiResponse<String>> saveCriteria(@RequestBody List<AnnouncementCriteria> announcementCriteria, @PathVariable UUID announcementId) {
+        announcementCriteriaService.save(announcementCriteria, announcementId);
+        return ResponseEntity.ok(ApiResponse.success(null, "Criteria saved successfully."));
     }
 
     @GetMapping("/{announcementId}")
-    public ResponseEntity<?> getCriteriaByAnnouncementId(@PathVariable Long announcementId){
-        try {
+    public ResponseEntity<ApiResponse<List<AnnouncementCriteria>>> getCriteriaByAnnouncementId(@PathVariable UUID announcementId) {
 
-            return ResponseEntity.ok().body(announcementCriteriaService.getCriteriaByAnnouncementId(announcementId));
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body("Criteria could not saved");
-        }
+        return ResponseEntity.ok(ApiResponse.success( announcementCriteriaService.getCriteriaByAnnouncementId(announcementId), "Criteria fetched successfully."));
     }
+
     @DeleteMapping("/delete/{criteriaId}")
-    public ResponseEntity<String> deleteCriteria(@PathVariable Long criteriaId){
-        try {
-            return ResponseEntity.ok(announcementCriteriaService.deleteCriterias(criteriaId));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ApiResponse<String>> deleteCriteria(@PathVariable UUID criteriaId) {
+        return ResponseEntity.ok(ApiResponse.success(null,"Criteria deleted successfully."));
+
     }
 }

@@ -3,10 +3,12 @@ package com.isyeriegitimi.backend.dto;
 import com.isyeriegitimi.backend.model.Lecturer;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class StudentGroupDto {
-    private int grupId;
+    private UUID groupId;
 
-    private Lecturer izleyici;
+    private Lecturer lecturer;
 
 }

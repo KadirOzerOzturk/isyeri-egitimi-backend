@@ -4,10 +4,13 @@ import com.isyeriegitimi.backend.model.AnnouncementCriteria;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface AnnouncementCriteriaRepository extends JpaRepository<AnnouncementCriteria ,Long > {
+public interface AnnouncementCriteriaRepository extends JpaRepository<AnnouncementCriteria , UUID> {
 
-    List<AnnouncementCriteria> getAnnouncementCriteriaByIlanIlanId(Long id);
-    void  deleteAllByIlan_IlanId(Long announcementId);
-    void deleteByKriterId(Long criteriaId);
+
+
+    List<AnnouncementCriteria> getAnnouncementCriteriaByAnnouncementAnnouncementId(UUID id);
+    void  deleteAllByAnnouncement_AnnouncementId(UUID announcementId);
+    void deleteAllByCriteriaId(UUID criteriaId);
 }

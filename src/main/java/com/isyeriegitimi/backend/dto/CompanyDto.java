@@ -5,18 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CompanyDto {
-    private Long firmaId;
-    private String firmaNo;
-    private String firmaEposta;
-    private String firmaParola;
-    private String firmaAd;
-    private String firmaAdres;
-    private String firmaLogo;
-    private String firmaSektor;
-    private String firmaHakkinda;
+    private UUID companyId;
+    private String companyNumber;
+    private String name;
+    private String email;
+    private String address;
+    private String sector;
+    private String about;
+    private String logo;
 }

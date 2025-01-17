@@ -1,6 +1,8 @@
 package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.SkillDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Skill;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.repository.SkillRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SkillService {
@@ -26,30 +29,42 @@ public class SkillService {
 
     public void saveSkill(SkillDto skillDto){
         try {
-            Student student=studentRepository.findByOgrenciNo(skillDto.getOgrenci().getOgrenciNo()).orElseThrow(()-> new RuntimeException("User Not Found"));
+            Student student=studentRepository.findByStudentNumber(skillDto.getStudent().getStudentNumber())
+                    .orElseThrow(()-> new ResourceNotFoundException("Student","studentNumber",skillDto.getStudent().getStudentNumber()));
 
             Skill skill=Skill
                     .builder()
-                    .ogrenci(student)
+                    .student(student)
                     .skillId(skillDto.getSkillId())
-                    .aciklama(skillDto.getAciklama())
-                    .seviye(skillDto.getSeviye())
+                    .description(skillDto.getDescription())
+                    .level(skillDto.getLevel())
                     .build();
             skillRepository.save(skill);
         }catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Error saving skill", e);
+            throw new InternalServerErrorException("Error saving skill : "+ e.getMessage());
         }
     }
 
-    public List<Skill> getSkills(Long studentNo) {
+    public List<Skill> getSkills(String studentNo) {
+        try {
 
-        return skillRepository.findAllByOgrenci_OgrenciNo(studentNo);
+            List<Skill> skillList = skillRepository.findAllByStudent_StudentNumber(studentNo);
+            if (skillList.isEmpty()) {
+                throw new ResourceNotFoundException("Skill", "studentNo", studentNo);
+            }
+            return skillList;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the skills: " + e.getMessage());
+        }
     }
 
-    public void deleteSkill(Long studentNo, Long skillId) {
+    public void deleteSkill(String studentNo, UUID skillId) {
         try {
-            Skill skill=skillRepository.findByOgrenci_OgrenciNoAndSkillId(studentNo,skillId);
+            Skill skill=skillRepository.findByStudent_StudentNumberAndSkillId(studentNo,skillId);
+            if(skill==null){
+                throw new ResourceNotFoundException("Skill","studentNo",studentNo);
+            }
             skillRepository.delete(skill);
 
         }catch (Exception e){

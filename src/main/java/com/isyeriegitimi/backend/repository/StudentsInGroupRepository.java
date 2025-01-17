@@ -6,12 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface StudentsInGroupRepository extends JpaRepository<StudentInGroup,Integer> {
+public interface StudentsInGroupRepository extends JpaRepository<StudentInGroup, UUID> {
 
-    List<StudentInGroup>  findAllByStudentGroupGrupId(int groupId);
-    Optional<StudentInGroup> findByStudentOgrenciNo(Long studentNo);
-    void deleteByStudentOgrenciNo(Long studentNo);
+
     @Transactional
-    void deleteAllByStudentGroupGrupId(Long groupId);
+    void deleteAllByStudentGroupGroupId(UUID groupId);
+    List<StudentInGroup>  findAllByStudentGroupGroupId(UUID groupId);
+    Optional<StudentInGroup> findByStudent_StudentNumber(String studentNo);
+    void deleteByStudentStudentNumber(String studentNo);
+
+
 }

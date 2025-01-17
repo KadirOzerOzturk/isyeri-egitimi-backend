@@ -5,16 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CommissionDto {
-    private Long komisyonId;
-    private String komisyonEposta;
-    private String komisyonParola;
-    private String komisyonAd;
-    private String komisyonSoyad;
-    private String komisyonNo;
-    private String komisyonHakkinda;
+    private UUID commissionId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String commissionNumber;
+    private String about;
 }

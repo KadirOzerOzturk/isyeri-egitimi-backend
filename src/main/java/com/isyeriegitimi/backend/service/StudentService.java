@@ -2,6 +2,8 @@ package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.LecturerDto;
 import com.isyeriegitimi.backend.dto.StudentDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentInGroup;
 import com.isyeriegitimi.backend.repository.StudentRepository;
@@ -26,57 +28,90 @@ public class StudentService {
         this.studentsInGroupRepository = studentsInGroupRepository;
     }
 
-    public Optional<Student> getStudentByStudentNo(Long studentNo){
-        return studentRepository.findByOgrenciNo(studentNo);
+    public Optional<Student> getStudentByStudentNo(String studentNo){
+        return studentRepository.findByStudentNumber(studentNo);
     }
-    public String save(StudentDto studentDto ,Long studentNo) {
+    public String save(StudentDto studentDto ,String studentNo) {
 
-            Optional<Student> existingStudent = studentRepository.findByOgrenciNo(studentNo);
-
-            if (existingStudent.isPresent()) {
-                Student student = new Student();
-                student.setOgrenciNo(studentDto.getOgrenciNo());
-                student.setOgrenciAd(studentDto.getOgrenciAd());
-                student.setOgrenciSoyad(studentDto.getOgrenciSoyad());
-                student.setOgrenciEposta(studentDto.getOgrenciEposta());
-                student.setOgrenciTelNo(studentDto.getOgrenciTelNo());
-                student.setOgrenciKimlikNo(studentDto.getOgrenciKimlikNo());
-                student.setOgrenciAdres(studentDto.getOgrenciAdres());
-                student.setOgrenciAgno(studentDto.getOgrenciAgno());
-                student.setOgrenciParola(studentDto.getOgrenciParola());
-                student.setOgrenciSinif(studentDto.getOgrenciSinif());
-                student.setOgrenciFotograf(studentDto.getOgrenciFotograf());
-                student.setOgrenciFakulte(studentDto.getOgrenciFakulte());
-                student.setOgrenciHakkinda(studentDto.getOgrenciHakkinda());
-                student.setFirma(studentDto.getFirma());
-                studentRepository.save(student);
+            try {
+                Optional<Student> existingStudent = studentRepository.findByStudentNumber(studentNo);
+                if (existingStudent.isPresent()) {
+                    Student student = new Student();
+                    student.setStudentNumber(studentDto.getStudentNumber());
+                    student.setFirstName(studentDto.getFirstName());
+                    student.setLastName(studentDto.getLastName());
+                    student.setEmail(studentDto.getEmail());
+                    student.setPhoneNumber(studentDto.getPhoneNumber());
+                    student.setGpa(studentDto.getGpa());
+                    student.setGrade(studentDto.getGrade());
+                    student.setFaculty(studentDto.getFaculty());
+                    student.setAbout(studentDto.getAbout());
+                    student.setCompany(studentDto.getCompany());
+                    studentRepository.save(student);
+                }else{
+                    throw new ResourceNotFoundException("Student", "studentNo", studentNo);
+                }
+                return "Student updated successfully";
+            }catch (Exception e){
+                throw new InternalServerErrorException("An error occurred while updating the student: " + e.getMessage());
+            }
+    }
+    public List<StudentDto> getAllStudents() {
+        try {
+            List<Student> studentList = studentRepository.findAll();
+            if (studentList.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "studentList", null);
+            }
+            List<StudentDto> studentDtoList = studentList.stream()
+                    .map(student -> mapToDto(student))
+                    .collect(Collectors.toList());
+            return studentDtoList;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
-        return "success";
     }
 
+    public List<StudentDto> getAllStudentsWithoutGroup() {
+        try {
+            List<Student> studentList = studentRepository.findAll();
+            if (studentList.isEmpty()) {
+                throw new ResourceNotFoundException("StudentList");
+            }
+            List<StudentInGroup> studentInGroupList = studentsInGroupRepository.findAll();
+            if (studentInGroupList.isEmpty()) {
+                throw new ResourceNotFoundException("StudentInGroupList");
+            }
+            Set<String> studentNumbersInGroup = studentInGroupList.stream()
+                    .map(studentInGroup -> studentInGroup.getStudent().getStudentNumber())
+                    .collect(Collectors.toSet());
 
+            List<Student> studentsWithoutGroup = studentList.stream()
+                    .filter(student -> !studentNumbersInGroup.contains(student.getStudentNumber()))
+                    .collect(Collectors.toList());
+            List<StudentDto> studentDtoList =studentsWithoutGroup.stream().map(student -> mapToDto(student)).collect(Collectors.toList());
 
-
+            return studentDtoList;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
+    }
     public Student mapDtoToEntity(StudentDto studentDto) {
         if (studentDto == null) {
             return null;
         }
 
         Student student = new Student();
-        student.setOgrenciNo(studentDto.getOgrenciNo());
-        student.setOgrenciAd(studentDto.getOgrenciAd());
-        student.setOgrenciSoyad(studentDto.getOgrenciSoyad());
-        student.setOgrenciEposta(studentDto.getOgrenciEposta());
-        student.setOgrenciTelNo(studentDto.getOgrenciTelNo());
-        student.setOgrenciKimlikNo(studentDto.getOgrenciKimlikNo());
-        student.setOgrenciAdres(studentDto.getOgrenciAdres());
-        student.setOgrenciAgno(studentDto.getOgrenciAgno());
-        student.setOgrenciParola(studentDto.getOgrenciParola());
-        student.setOgrenciSinif(studentDto.getOgrenciSinif());
-        student.setOgrenciFotograf(studentDto.getOgrenciFotograf());
-        student.setOgrenciFakulte(studentDto.getOgrenciFakulte());
-        student.setOgrenciHakkinda(studentDto.getOgrenciHakkinda());
-        student.setFirma(studentDto.getFirma());
+        student.setStudentNumber(studentDto.getStudentNumber());
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setEmail(studentDto.getEmail());
+        student.setPhoneNumber(studentDto.getPhoneNumber());
+        student.setGpa(studentDto.getGpa());
+        student.setGrade(studentDto.getGrade());
+        student.setFaculty(studentDto.getFaculty());
+        student.setAbout(studentDto.getAbout());
+        student.setCompany(studentDto.getCompany());
+
 
         return student;
     }
@@ -87,47 +122,20 @@ public class StudentService {
         }
 
         StudentDto studentDto = new StudentDto();
-        studentDto.setOgrenciNo(student.getOgrenciNo());
-        studentDto.setOgrenciAd(student.getOgrenciAd());
-        studentDto.setOgrenciSoyad(student.getOgrenciSoyad());
-        studentDto.setOgrenciEposta(student.getOgrenciEposta());
-        studentDto.setOgrenciTelNo(student.getOgrenciTelNo());
-        studentDto.setOgrenciKimlikNo(student.getOgrenciKimlikNo());
-        studentDto.setOgrenciAdres(student.getOgrenciAdres());
-        studentDto.setOgrenciAgno(student.getOgrenciAgno());
-        studentDto.setOgrenciParola(student.getOgrenciParola());
-        studentDto.setOgrenciSinif(student.getOgrenciSinif());
-        studentDto.setOgrenciFotograf(student.getOgrenciFotograf());
-        studentDto.setOgrenciFakulte(student.getOgrenciFakulte());
-        studentDto.setOgrenciHakkinda(student.getOgrenciHakkinda());
-        studentDto.setFirma(student.getFirma());
+        studentDto.setStudentNumber(student.getStudentNumber());
+        studentDto.setFirstName(student.getFirstName());
+        studentDto.setLastName(student.getLastName());
+        studentDto.setEmail(student.getEmail());
+        studentDto.setPhoneNumber(student.getPhoneNumber());
+        studentDto.setGpa(student.getGpa());
+        studentDto.setGrade(student.getGrade());
+        studentDto.setFaculty(student.getFaculty());
+        studentDto.setAbout(student.getAbout());
+        studentDto.setCompany(student.getCompany());
+
 
         return studentDto;
     }
 
-    public List<StudentDto> getAllStudents() {
-        List<Student> studentList = studentRepository.findAll();
-        List<StudentDto> studentDtoList = studentList.stream()
-                .map(student -> mapToDto(student))
-                .collect(Collectors.toList());
-        return studentDtoList;
-    }
 
-    public List<StudentDto> getAllStudentsWithoutGroup() {
-        List<Student> studentList = studentRepository.findAll();
-        List<StudentInGroup> studentInGroupList = studentsInGroupRepository.findAll();
-
-        // Collect the student numbers of students who are in a group into a set
-        Set<Long> studentNumbersInGroup = studentInGroupList.stream()
-                .map(studentInGroup -> studentInGroup.getStudent().getOgrenciNo())
-                .collect(Collectors.toSet());
-
-        // Filter out students whose numbers are in the set
-        List<Student> studentsWithoutGroup = studentList.stream()
-                .filter(student -> !studentNumbersInGroup.contains(student.getOgrenciNo()))
-                .collect(Collectors.toList());
-        List<StudentDto> studentDtoList =studentsWithoutGroup.stream().map(student -> mapToDto(student)).collect(Collectors.toList());
-
-        return studentDtoList;
-    }
 }

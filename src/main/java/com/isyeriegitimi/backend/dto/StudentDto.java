@@ -8,21 +8,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class StudentDto {
-    private Long ogrenciNo;
-    private String ogrenciAd;
-    private String ogrenciSoyad;
-    private String ogrenciEposta;
-    private String ogrenciTelNo;
-    private String ogrenciKimlikNo;
-    private String ogrenciAdres;
-    private String ogrenciAgno;
-    private String ogrenciParola;
-    private String ogrenciSinif;
-    private String ogrenciFotograf;
-    private String ogrenciFakulte;
-    private String ogrenciHakkinda;
-    private Company firma;
+    private String studentNumber;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String gpa;
+    private String grade;
+    private String faculty;
+    private String about;
+
+    private Company company;
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
@@ -14,13 +16,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "favori_ilan")
 public class FavoriteAnnouncement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long favoriId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID favoriteID;
     @ManyToOne
     @JoinColumn(name = "ogrenci_no")
-    private Student ogrenci;
+    private Student student;
     @ManyToOne
     @JoinColumn(name = "ilan_id")
-    private Announcement ilan;
+    private Announcement announcement;
 
 }

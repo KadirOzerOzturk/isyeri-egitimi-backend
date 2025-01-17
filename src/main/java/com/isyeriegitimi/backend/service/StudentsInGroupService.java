@@ -1,6 +1,8 @@
 package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.StudentInGroupDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Lecturer;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentGroup;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentsInGroupService {
@@ -34,28 +37,62 @@ public class StudentsInGroupService {
         this.studentGroupRepository = studentGroupRepository;
     }
 
-    public List<StudentInGroup> getStudentsByGroupId(int groupId) {
-        return studentsInGroupRepository.findAllByStudentGroupGrupId(groupId);
+    public List<StudentInGroup> getStudentsByGroupId(UUID groupId) {
+        try {
+            List<StudentInGroup> studentsInGroup = studentsInGroupRepository.findAllByStudentGroupGroupId(groupId);
+            if (studentsInGroup.isEmpty()) {
+                throw new ResourceNotFoundException("Students", "groupId", groupId.toString());
+            }
+            return studentsInGroup;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
     }
 
     public List<StudentInGroup> findAll() {
-        return studentsInGroupRepository.findAll();
-    }
-
-
-    public String addStudentToGroup(Long groupId, Long studentNo) {
-        Optional<Student>  student=studentRepository.findByOgrenciNo(studentNo);
-        Optional<StudentGroup>  studentGroup=studentGroupRepository.findById(groupId);
-        if (student.isEmpty()|| studentGroup.isEmpty()){
-            return "Student or student group not found";
+        try {
+            List<StudentInGroup> studentsInGroup = studentsInGroupRepository.findAll();
+            if (studentsInGroup.isEmpty()) {
+                throw new ResourceNotFoundException("Students", "students", "No students found");
+            }
+            return studentsInGroup;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
-        StudentInGroup studentInGroup = new StudentInGroup();
-        studentInGroup.setStudent(student.get());
-        studentInGroup.setStudentGroup(studentGroup.get());
-        studentsInGroupRepository.save(studentInGroup);
-        return "Successfully added";
     }
 
+    public String addStudentToGroup(UUID groupId, String studentNo) {
+        try {
+            Optional<StudentGroup>  studentGroup=studentGroupRepository.findById(groupId);
+            if (studentGroup.isEmpty()) {
+                throw new ResourceNotFoundException("StudentGroup", "groupId", groupId.toString());
+            }
+            Optional<Student>  student=studentRepository.findByStudentNumber(studentNo);
+            if (student.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "studentNo", studentNo);
+            }
+            StudentInGroup studentInGroup = new StudentInGroup();
+            studentInGroup.setStudent(student.get());
+            studentInGroup.setStudentGroup(studentGroup.get());
+            studentsInGroupRepository.save(studentInGroup);
+            return "Successfully added";
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while adding the student: " + e.getMessage());
+        }
+    }
+    @Transactional
+    public String deleteStudentFromGroup( String studentNo) {
+        try {
+            Optional<Student>  student=studentRepository.findByStudentNumber(studentNo);
+            if (student.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "studentNo", studentNo);
+            }
+            studentsInGroupRepository.deleteByStudentStudentNumber(studentNo);
+            return "Student successfully deleted from group ";
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while deleting the student: " + e.getMessage());
+        }
+    }
     private StudentInGroupDto mapToDto(StudentInGroup studentInGroup){
         StudentInGroupDto  studentInGroupDto=new StudentInGroupDto();
         studentInGroupDto.setStudentGroup(studentInGroup.getStudentGroup());
@@ -71,9 +108,5 @@ public class StudentsInGroupService {
         return  studentInGroup;
     }
 
-    @Transactional
-    public String deleteStudent( Long studentNo) {
-        studentsInGroupRepository.deleteByStudentOgrenciNo(studentNo);
-        return "Student successfully deleted from group ";
-    }
+
 }

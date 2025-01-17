@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
@@ -14,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "anket_cevap")
 public class SurveyAnswer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cevapId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID cevapId;
 
     @ManyToOne
     @JoinColumn(name = "anket_id")
@@ -25,7 +27,7 @@ public class SurveyAnswer {
     @JoinColumn(name = "soru_id")
     private SurveyQuestion surveyQuestion;
 
-    private Long kullaniciId;
-    private String kullaniciRol;
-    private String cevap;
+    private UUID userId;
+    private String userRole;
+    private String answer;
 }

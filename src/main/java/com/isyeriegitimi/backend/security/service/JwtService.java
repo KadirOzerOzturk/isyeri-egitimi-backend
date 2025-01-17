@@ -1,5 +1,7 @@
 package com.isyeriegitimi.backend.security.service;
 
+import com.isyeriegitimi.backend.exceptions.JwtExpiredException;
+import com.isyeriegitimi.backend.exceptions.JwtInvalidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,13 +28,20 @@ public class JwtService {
     }
 
     private <T> T exportToken(String token, Function<Claims, T> claimsTFunction) {
-        final Claims claims = Jwts.parserBuilder() // Use parserBuilder instead of parser
-                .setSigningKey(getKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claimsTFunction.apply(claims);
+        try {
+            final Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claimsTFunction.apply(claims);
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            throw new JwtExpiredException("JWT token has expired.");
+        } catch (Exception e) {
+            throw new JwtInvalidException("JWT token is invalid.");
+        }
     }
+
 
     private Key getKey() {
         byte[] key = Decoders.BASE64.decode(SECRET_KEY);

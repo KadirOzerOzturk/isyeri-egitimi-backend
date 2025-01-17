@@ -1,6 +1,5 @@
 package com.isyeriegitimi.backend.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,23 +7,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ilan")
+@Table(name = "announcement")
 public class Announcement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ilanId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID announcementId;
+
     @ManyToOne
-    @JoinColumn(name = "firma_id")
-    private Company firma;
-    private Date baslangic_tarihi;
-    private Date bitis_tarihi;
-    private String baslik;
-    private String aciklama;
-    private String postBaslik;
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    private Date startDate;
+    private Date endDate;
+    private String title;
+    private String description;
+    private String postTitle;
 }

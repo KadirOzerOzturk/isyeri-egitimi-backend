@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.FavoriteAnnouncementDto;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.FavoriteAnnouncement;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.repository.FavoriteAnnouncementRepository;
@@ -8,9 +9,7 @@ import com.isyeriegitimi.backend.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FavoriteAnnouncementService {
@@ -26,29 +25,33 @@ public class FavoriteAnnouncementService {
 
 
 
-    public List<FavoriteAnnouncement> getFavoriteAnnouncements(Long studentNo){
+    public List<FavoriteAnnouncement> getFavoriteAnnouncements(String studentNo){
         List<FavoriteAnnouncement> favorites = favoriteAnnouncementRepository.findAll();
-
+        if (favorites.isEmpty()) {
+            throw new ResourceNotFoundException("FavoriteAnnouncement", "studentNo", studentNo);
+        }
         Collections.sort(favorites, new Comparator<FavoriteAnnouncement>() {
             @Override
             public int compare(FavoriteAnnouncement f1, FavoriteAnnouncement f2) {
-                return f2.getIlan().getBaslangic_tarihi().compareTo(f1.getIlan().getBaslangic_tarihi());
+                return f2.getAnnouncement().getStartDate().compareTo(f1.getAnnouncement().getStartDate());
             }
         });
         return favorites;
     }
 
-    public void save(FavoriteAnnouncementDto favoriteAnnouncementDto){
+    public UUID save(FavoriteAnnouncementDto favoriteAnnouncementDto){
         try{
-            Student student=studentRepository.findByOgrenciNo(favoriteAnnouncementDto.getOgrenci().getOgrenciNo()).orElseThrow(()-> new RuntimeException("User Not Found"));
+            Student student=studentRepository.findByStudentNumber(favoriteAnnouncementDto.getStudent().getStudentNumber()).
+                    orElseThrow(()-> new ResourceNotFoundException("Student","studentNo",favoriteAnnouncementDto.getStudent().getStudentNumber()));
 
             FavoriteAnnouncement favoriteAnnouncement=FavoriteAnnouncement
                     .builder()
-                    .ogrenci(student)
-                    .favoriId(favoriteAnnouncementDto.getFavoriId())
-                    .ilan(favoriteAnnouncementDto.getIlan())
+                    .student(student)
+                    .favoriteID(favoriteAnnouncementDto.getFavoriteId())
+                    .announcement(favoriteAnnouncementDto.getAnnouncement())
                     .build();
             favoriteAnnouncementRepository.save(favoriteAnnouncement);
+            return favoriteAnnouncement.getFavoriteID();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -56,13 +59,11 @@ public class FavoriteAnnouncementService {
         }
     }
 
-    public void deleteFavoriteAnnouncement(Long studentNo, Long announcementId) {
+    public void deleteFavoriteAnnouncement(String studentNo, UUID announcementId) {
         try {
-            // Favori ilanı bul
-            FavoriteAnnouncement favoriteAnnouncement = favoriteAnnouncementRepository.findByOgrenci_OgrenciNoAndIlan_IlanId(studentNo, announcementId)
-                    .orElseThrow(() -> new RuntimeException("Favorite announcement not found"));
 
-            // Favoriyi sil
+            FavoriteAnnouncement favoriteAnnouncement = favoriteAnnouncementRepository.findByStudent_StudentNumberAndAnnouncement_AnnouncementId(studentNo, announcementId)
+                    .orElseThrow(() -> new RuntimeException("Favorite announcement not found"));
             favoriteAnnouncementRepository.delete(favoriteAnnouncement);
         } catch (Exception e) {
             throw new RuntimeException("Error removing favorite", e);

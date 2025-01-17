@@ -1,6 +1,8 @@
 package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.StudentGroupDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Lecturer;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentGroup;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentGroupsService {
@@ -27,46 +30,61 @@ public class StudentGroupsService {
         this.lecturerRepository = lecturerRepository;
         this.studentsInGroupRepository = studentsInGroupRepository;
     }
-
-
-
-
-    public List<StudentGroup> getGroupsByLecturerId(Long lecturerId) {
-        return studentGroupRepository.findAllByIzleyiciIzleyiciId(lecturerId);
-    }
-
-
-    public List<StudentGroup> getAllGroups() {
-
-        return studentGroupRepository.findAll();
-
-    }
-
-    public String createGroup(Long lectuererId) {
-        Optional<Lecturer> lecturer=lecturerRepository.findById(lectuererId);
-        if (lecturer.isPresent()){
-            StudentGroup studentGroup=new StudentGroup();
-            studentGroup.setIzleyici(lecturer.get());
-            studentGroupRepository.save(studentGroup);
+    public List<StudentGroup> getGroupsByLecturerId(UUID lecturerId) {
+        try {
+            List<StudentGroup> studentGroups = studentGroupRepository.findAllByLecturerLecturerId(lecturerId);
+            if (studentGroups.isEmpty()) {
+                throw new ResourceNotFoundException("StudentGroup", "lecturerId", lecturerId.toString());
             }
-        return "Successfully saved";
-
+            return studentGroups;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the student groups: " + e.getMessage());
+        }
     }
-    public String  deleteGroup(Long groupId) {
-        studentsInGroupRepository.deleteAllByStudentGroupGrupId(groupId);
-        studentGroupRepository.deleteById(groupId);
-        return "Group successfully deleted.";
+    public List<StudentGroup> getAllGroups() {
+        try {
+            return studentGroupRepository.findAll();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the student groups: " + e.getMessage());
+
+        }
+    }
+    public String createGroup(UUID lecturerId) {
+        try {
+            Optional<Lecturer> lecturer = lecturerRepository.findById(lecturerId);
+            if (lecturer.isPresent()) {
+                StudentGroup studentGroup = new StudentGroup();
+                studentGroup.setLecturer(lecturer.get());
+                studentGroupRepository.save(studentGroup);
+                return "Successfully saved";
+            } else {
+                throw new ResourceNotFoundException("Lecturer", "lecturerId", lecturerId.toString());
+            }
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while creating the group: " + e.getMessage());
+
+        }
+    }
+    public String deleteGroup(UUID groupId) {
+        try {
+            studentsInGroupRepository.deleteAllByStudentGroupGroupId(groupId);
+            studentGroupRepository.deleteById(groupId);
+            return "Group successfully deleted.";
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while deleting the group: " + e.getMessage());
+
+        }
     }
     private StudentGroup mapToEntity(StudentGroupDto studentGroupDto){
         StudentGroup studentGroup=new StudentGroup();
-        studentGroup.setGrupId(studentGroupDto.getGrupId());
-        studentGroup.setIzleyici(studentGroupDto.getIzleyici());
+        studentGroup.setGroupId(studentGroupDto.getGroupId());
+        studentGroup.setLecturer(studentGroupDto.getLecturer());
         return studentGroup;
     }
     private StudentGroupDto mapToDto(StudentGroup studentGroup){
         StudentGroupDto studentGroupDto=new StudentGroupDto();
-        studentGroupDto.setGrupId(studentGroup.getGrupId());
-        studentGroupDto.setIzleyici(studentGroup.getIzleyici());
+        studentGroupDto.setGroupId(studentGroup.getGroupId());
+        studentGroupDto.setLecturer(studentGroup.getLecturer());
         return studentGroupDto;
     }
 

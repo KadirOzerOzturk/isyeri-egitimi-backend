@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface LecturerRepository extends JpaRepository<Lecturer,Long> {
-
-    Optional<Lecturer> findByIzleyiciNo(String lecturerNo);
-
-    Optional<Lecturer> findByIzleyiciId(Long izleyiciId);
-    List<StudentGroup> findAllByIzleyiciId(Long id);
+public interface LecturerRepository extends JpaRepository<Lecturer,UUID> {
 
 
+    Optional<Lecturer> findByLecturerNumber(String lecturerNo);
+
+    Optional<Lecturer> findByLecturerId(UUID lecturerId);
+    List<StudentGroup> findAllByLecturerId(UUID id);
 
 }

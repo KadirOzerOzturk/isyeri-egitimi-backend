@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: development
+  web:
+    resources:
+      add-mappings: true
+
   servlet:
     multipart:
       enabled: true
@@ -12,16 +16,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/isyeri_egitimi_db
     username: postgres
     password: admin
-  app:
-    jwtSecret: mySecretKey123!?$#9123214
-    jwtExpirationMs: 1000*3600*24
-  security:
-    user:
-      name: user
-      password: 123
-security:
-  jwt:
-    secret: "kadirozerkadirozerkadirozerkadirozerkadirozerkadirozerkadirozerk"
   # JPA properties
   jpa:
     hibernate:
@@ -34,6 +28,17 @@ security:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
+  app:
+    jwtSecret: mySecretKey123!?$#9123214
+    jwtExpirationMs: 1000*3600*24
+  security:
+    user:
+      name: user
+      password: 123
+security:
+  jwt:
+    secret: "kadirozerkadirozerkadirozerkadirozerkadirozerkadirozerkadirozerk"
+
 logging:
   level:
     org:
@@ -49,3 +54,6 @@ aws:
     key: 6KiP4Dlb4Q7/tI6QtwC7B5Y/z7vxCZ+GoCz3T9mY
   s3:
     bucket: isyeri-egitimi
+springdoc:
+  packages-to-scan: com.isyeriegitimi.backend.controller
+

@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller;
 
 import com.isyeriegitimi.backend.dto.WeeklyReportDto;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.WeeklyReport;
 import com.isyeriegitimi.backend.service.WeeklyReportService;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/report")
@@ -23,43 +25,26 @@ public class WeeklyReportController {
 
 
     @PostMapping("/saveReport")
-    public ResponseEntity<?> saveReport(@RequestBody WeeklyReportDto weeklyReportDto){
-        try {
-            weeklyReportService.save(weeklyReportDto);
-            return ResponseEntity.ok("Weekly report saved succesfully");
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving weekly report ");
+    public ResponseEntity<ApiResponse<?>> saveReport(@RequestBody WeeklyReportDto weeklyReportDto){
 
-
-        }
+            return ResponseEntity.ok(ApiResponse.success(weeklyReportService.save(weeklyReportDto),"Report saved successfully"));
     }
     @GetMapping("/{studentNo}")
-    public ResponseEntity<List<WeeklyReport>> getReports(@PathVariable Long studentNo){
-        return ResponseEntity.ok(weeklyReportService.getAllReportsByStudentNo(studentNo));
+    public ResponseEntity<ApiResponse<List<WeeklyReport>>> getReports(@PathVariable String studentNo){
+        return ResponseEntity.ok(ApiResponse.success(weeklyReportService.getAllReportsByStudentNo(studentNo),"Reports fetched successfully"));
     }
     @PutMapping("/update/{reportId}")
-    public ResponseEntity<String> updateReport(@PathVariable Long reportId,@RequestBody WeeklyReportDto weeklyReportDto){
-        Optional<WeeklyReport> existingReport=weeklyReportService.getReportById(reportId);
-        if (existingReport.isPresent())
-        {
-            WeeklyReport report= new WeeklyReport();
-            report.setRaporId(reportId);
-            report.setOgrenci(weeklyReportDto.getOgrenci());
-            report.setTarih(existingReport.get().getTarih());
-            report.setRaporIcerigi(weeklyReportDto.getRaporIcerigi());
-            weeklyReportService.update(report);
-            return ResponseEntity.ok("Succesfully updated");
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ApiResponse<String>> updateReport(@PathVariable UUID reportId, @RequestBody WeeklyReportDto weeklyReportDto){
+
+            weeklyReportService.update(reportId, weeklyReportDto);
+            return ResponseEntity.ok(ApiResponse.success(null,"Report updated successfully"));
+
     }
     @DeleteMapping("delete/{studentNo}/{reportId}")
-    public ResponseEntity<?> deleteWeeklyReport(@PathVariable Long studentNo, @PathVariable Long reportId) {
-        try {
+    public ResponseEntity<ApiResponse<?>> deleteWeeklyReport(@PathVariable String studentNo, @PathVariable UUID reportId) {
+
             weeklyReportService.deleteWeeklyReport(studentNo, reportId);
-            return ResponseEntity.ok("Report removed successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing report");
-        }
+            return ResponseEntity.ok(ApiResponse.success(null, "Report deleted successfully"));
+
     }
 }

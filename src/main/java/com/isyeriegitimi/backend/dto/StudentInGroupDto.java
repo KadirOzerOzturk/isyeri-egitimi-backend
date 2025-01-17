@@ -6,10 +6,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class StudentInGroupDto {
 
-    int id;
+    UUID id;
     private StudentGroup studentGroup;
     private Student student;
 

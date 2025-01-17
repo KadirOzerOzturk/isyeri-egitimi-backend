@@ -1,13 +1,19 @@
 package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.CompanyDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.repository.CompanyRepository;
+import com.isyeriegitimi.backend.security.dto.UserRequest;
+import com.isyeriegitimi.backend.security.enums.Role;
+import com.isyeriegitimi.backend.security.repository.UserRepository;
+import com.isyeriegitimi.backend.security.service.AuthenticationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.UUID;
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
@@ -16,63 +22,85 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public List<Company> getAllCompanies(){
-        return companyRepository.findAll();
+    public List<Company> getAllCompanies() {
+        try {
+            List<Company> companies = companyRepository.findAll();
+            if (companies.isEmpty()) {
+                throw new ResourceNotFoundException("Companies", "No companies found", "404");
+            }
+            return companies;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching companies : "+e.getMessage());
+        }
     }
 
-    public Optional<Company> getCompanyById(Long companyId) {
-        return companyRepository.findByFirmaId(companyId);
+    public Company getCompanyById(UUID companyId) {
+        return companyRepository.findByCompanyId(companyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Company", "Company ID", companyId.toString()));
     }
 
-    public Optional<Company> getCompanyByCompanyNo(String firmaNo) {
-        return companyRepository.findByFirmaNo(firmaNo);
+    public Company getCompanyByCompanyNo(String companyNo) {
+        return companyRepository.findByCompanyNumber(companyNo)
+                .orElseThrow(() -> new ResourceNotFoundException("Company", "Company Number", companyNo));
     }
 
     public void update(Company company) {
-        Optional<Company> exitingStudent=companyRepository.findByFirmaId(company.getFirmaId());
-        if (exitingStudent.isPresent()){
+        if (!companyRepository.existsById(company.getCompanyId())) {
+            throw new ResourceNotFoundException("Company", "Company ID", company.getCompanyId().toString());
+        }
+        try {
             companyRepository.save(company);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while updating the company: " + e.getMessage());
+        }
+    }
+
+    public void delete(UUID companyId) {
+        if (!companyRepository.existsById(companyId)) {
+            throw new ResourceNotFoundException("Company", "Company ID", companyId.toString());
+        }
+        try {
+            companyRepository.deleteById(companyId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while deleting the company: " + e.getMessage());
         }
     }
 
     public void save(CompanyDto companyDto) {
         companyRepository.save(mapToEntity(companyDto));
-
+        // TODO: Save the user to the authentication service
     }
+
+
     public CompanyDto mapToDto(Company company) {
         if (company == null) {
-            return null; // Avoid NullPointerException
+            return null;
         }
 
         CompanyDto companyDto = new CompanyDto();
-        companyDto.setFirmaId(company.getFirmaId());
-        companyDto.setFirmaNo(company.getFirmaNo());
-        companyDto.setFirmaAd(company.getFirmaAd());
-        companyDto.setFirmaAdres(company.getFirmaAdres());
-        companyDto.setFirmaEposta(company.getFirmaEposta());
-        companyDto.setFirmaLogo(company.getFirmaLogo());
-        companyDto.setFirmaHakkinda(company.getFirmaHakkinda());
-        companyDto.setFirmaParola(company.getFirmaParola()); // Note: You may want to avoid sending passwords
-        companyDto.setFirmaSektor(company.getFirmaSektor());
+        companyDto.setCompanyId(company.getCompanyId());
+        companyDto.setCompanyNumber(company.getCompanyNumber());
+        companyDto.setName(company.getName());
+        companyDto.setEmail(company.getEmail());
+        companyDto.setAddress(company.getAddress());
+        companyDto.setSector(company.getSector());
+        companyDto.setAbout(company.getAbout());
+        companyDto.setLogo(company.getLogo());
 
         return companyDto;
     }
 
     public Company mapToEntity(CompanyDto companyDto){
         Company company =new Company();
-        company.setFirmaId(Long.parseLong(companyDto.getFirmaNo()));
-        company.setFirmaAd(companyDto.getFirmaAd());
-        company.setFirmaAdres(companyDto.getFirmaAdres());
-        company.setFirmaEposta(companyDto.getFirmaEposta());
-        company.setFirmaLogo(companyDto.getFirmaLogo());
-        company.setFirmaHakkinda(companyDto.getFirmaHakkinda());
-        company.setFirmaParola(companyDto.getFirmaParola());
-        company.setFirmaSektor(companyDto.getFirmaSektor());
-        company.setFirmaNo(companyDto.getFirmaNo());
+        company.setCompanyId(companyDto.getCompanyId());
+        company.setCompanyNumber(companyDto.getCompanyNumber());
+        company.setName(companyDto.getName());
+        company.setEmail(companyDto.getEmail());
+        company.setAddress(companyDto.getAddress());
+        company.setSector(companyDto.getSector());
+        company.setAbout(companyDto.getAbout());
+        company.setLogo(companyDto.getLogo());
         return company;
     }
 
-    public void delete(Long companyId) {
-        companyRepository.deleteById(companyId);
-    }
 }

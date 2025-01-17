@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface FavoriteAnnouncementRepository extends JpaRepository<FavoriteAnnouncement,Long> {
+public interface FavoriteAnnouncementRepository extends JpaRepository<FavoriteAnnouncement, UUID> {
 
-    List<FavoriteAnnouncement> findByOgrenci_OgrenciNo(Long studentNo);
-    Optional<FavoriteAnnouncement> findByOgrenci_OgrenciNoAndIlan_IlanId(Long studentNo, Long ilanId);
+    List<FavoriteAnnouncement> findByStudent_StudentNumber(String studentNo);
+    Optional<FavoriteAnnouncement> findByStudent_StudentNumberAndAnnouncement_AnnouncementId(String studentNo, UUID announcementId);
 }

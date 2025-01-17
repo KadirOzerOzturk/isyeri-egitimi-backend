@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
@@ -14,9 +16,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "anket")
 public class Survey {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long anketId;
-    private String anketBaslik;
-    private String anketAciklama;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    private String title ;
+    private String description;
 
 }

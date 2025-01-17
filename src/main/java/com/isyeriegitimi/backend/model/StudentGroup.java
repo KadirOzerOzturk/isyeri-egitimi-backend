@@ -1,25 +1,25 @@
 package com.isyeriegitimi.backend.model;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ogrenci_grup")
+@Table(name = "student_group")
 public class StudentGroup {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int grupId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID groupId;
 
     @ManyToOne
-    @JoinColumn(name = "izleyici_id")
-    private Lecturer izleyici;
-
-
-
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
 }

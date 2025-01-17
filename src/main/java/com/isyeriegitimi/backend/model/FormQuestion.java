@@ -6,21 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "form_soru")
+@Table(name = "form_question")
 public class FormQuestion {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long soruId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID questionId;
 
     @ManyToOne
     @JoinColumn(name = "form_id")
-    private Form form ;
+    private Form form;
 
-    private int soruNo;
-    private String soruMetni;
+    private int questionNumber;
+    private String questionText;
 }

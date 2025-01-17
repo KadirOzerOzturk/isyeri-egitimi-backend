@@ -5,17 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class LecturerDto {
-    private Long izleyiciId;
-    private String izleyiciAd;
-    private String izleyiciSoyad;
-    private String izleyiciEposta;
-    private String izleyiciParola;
-    private String izleyiciFakulte;
-    private String izleyiciHakkinda;
-    private String izleyiciNo;
+    private UUID lecturerId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String faculty;
+    private String about;
+    private String lecturerNumber;
 }

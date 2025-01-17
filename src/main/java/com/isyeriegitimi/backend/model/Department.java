@@ -6,16 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "bolum")
+@Table(name = "department")
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bolumId;
-    private String bolumAd;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID departmentId;
 
+    private String departmentName;
 }

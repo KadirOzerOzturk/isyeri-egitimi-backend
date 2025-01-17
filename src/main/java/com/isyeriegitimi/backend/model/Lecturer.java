@@ -6,22 +6,37 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "izleyici")
+@Table(name = "lecturer")
 public class Lecturer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long izleyiciId;
-    private String izleyiciAd;
-    private String izleyiciSoyad;
-    private String izleyiciEposta;
-    private String izleyiciParola;
-    private String izleyiciFakulte;
-    private String izleyiciHakkinda;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID lecturerId;
 
-    private String izleyiciNo;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "faculty")
+    private String faculty;
+
+    @Column(name = "about")
+    private String about;
+
+    @Column(name = "lecturer_number", unique = true)
+    private String lecturerNumber;
 }

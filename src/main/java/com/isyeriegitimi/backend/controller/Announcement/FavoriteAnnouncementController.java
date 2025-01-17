@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller.Announcement;
 
 import com.isyeriegitimi.backend.dto.FavoriteAnnouncementDto;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.FavoriteAnnouncement;
 import com.isyeriegitimi.backend.service.FavoriteAnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/favorites")
 public class FavoriteAnnouncementController {
 
-    private FavoriteAnnouncementService favoriteAnnouncementService;
+    private final FavoriteAnnouncementService favoriteAnnouncementService;
 
     @Autowired
     public FavoriteAnnouncementController(FavoriteAnnouncementService favoriteAnnouncementService) {
@@ -22,29 +24,30 @@ public class FavoriteAnnouncementController {
     }
 
     @GetMapping("/{studentNo}")
-    public List<FavoriteAnnouncement> getFavoriteAnnouncements(@PathVariable Long studentNo) {
-        return favoriteAnnouncementService.getFavoriteAnnouncements(studentNo);
+    public ResponseEntity<ApiResponse<List<FavoriteAnnouncement>>> getFavoriteAnnouncements(@PathVariable String studentNo) {
+        List<FavoriteAnnouncement> favorites = favoriteAnnouncementService.getFavoriteAnnouncements(studentNo);
+        return ResponseEntity.ok(ApiResponse.success(favorites, "Favorites retrieved successfully"));
     }
-    @PostMapping("/setFavorite")
-    public ResponseEntity<?> setFavorite(@RequestBody FavoriteAnnouncementDto favoriteAnnouncementDto){
-        try {
-            favoriteAnnouncementService.save(favoriteAnnouncementDto);
-            return ResponseEntity.ok("Favorite saved successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving favorite ");
-        }
 
+    @PostMapping("/setFavorite")
+    public ResponseEntity<ApiResponse<UUID>> setFavorite(@RequestBody FavoriteAnnouncementDto favoriteAnnouncementDto) {
+        try {
+
+            return ResponseEntity.ok(ApiResponse.success(favoriteAnnouncementService.save(favoriteAnnouncementDto), "Favorite saved successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error("Error saving favorite", HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        }
     }
+
     @DeleteMapping("/{studentNo}/{announcementId}")
-    public ResponseEntity<?> deleteFavorite(@PathVariable Long studentNo, @PathVariable Long announcementId) {
+    public ResponseEntity<ApiResponse<String>> deleteFavorite(@PathVariable String studentNo, @PathVariable UUID announcementId) {
         try {
             favoriteAnnouncementService.deleteFavoriteAnnouncement(studentNo, announcementId);
-            return ResponseEntity.ok("Favorite removed successfully");
+            return ResponseEntity.ok(ApiResponse.success(null, "Favorite removed successfully"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing favorite");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error("Error removing favorite", HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
-
-
-
 }

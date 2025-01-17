@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -16,11 +17,11 @@ import java.util.Date;
 @Table(name = "haftalik_rapor")
 public class WeeklyReport {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long raporId;
-    private String raporIcerigi;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID reportId;
+    private String report;
     @ManyToOne
     @JoinColumn(name = "ogrenci_no")
-    private Student ogrenci;
-    private Date tarih;
+    private Student student;
+    private Date reportDate;
 }

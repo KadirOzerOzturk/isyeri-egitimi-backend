@@ -4,12 +4,14 @@ import com.isyeriegitimi.backend.model.Announcement;
 import com.isyeriegitimi.backend.model.Student;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class FavoriteAnnouncementDto {
-    private Long favoriId;
+    private UUID favoriteId;
 
-    private Student ogrenci;
+    private Student student;
 
-    private Announcement ilan;
+    private Announcement announcement;
 
 }

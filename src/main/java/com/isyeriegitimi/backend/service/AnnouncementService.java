@@ -2,8 +2,11 @@ package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.aws.S3Service;
 import com.isyeriegitimi.backend.dto.AnnouncementDto;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Announcement;
 import com.isyeriegitimi.backend.model.AnnouncementCriteria;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.repository.AnnouncementRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,96 +15,96 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-
 @Service
 public class AnnouncementService {
 
-    private AnnouncementRepository announcementRepository;
-    private AnnouncementCriteriaService announcementCriteriaService;
-    private S3Service s3Service;
+    private final AnnouncementRepository announcementRepository;
+    private final AnnouncementCriteriaService announcementCriteriaService;
+
 
     @Autowired
-    public AnnouncementService(AnnouncementRepository announcementRepository, AnnouncementCriteriaService announcementCriteriaService, S3Service s3Service) {
+    public AnnouncementService(AnnouncementRepository announcementRepository, AnnouncementCriteriaService announcementCriteriaService) {
         this.announcementRepository = announcementRepository;
         this.announcementCriteriaService = announcementCriteriaService;
-        this.s3Service = s3Service;
+
     }
 
     public List<Announcement> getAllAnnouncements() {
-        List<Announcement> announcements = announcementRepository.findAll();
-
-        // Başlangıç tarihine göre yeniden eskiye doğru sıralama işlemi
-        announcements.sort(Comparator.comparing(Announcement::getBaslangic_tarihi).reversed());
-
-        return announcements;
-    }
-
-    public List<Announcement> getAnnouncementsByCompanyId(Long companyId) {
-        List<Announcement> announcements = announcementRepository.getAnnouncementByFirmaFirmaId(companyId);
-
         try {
-            // Başlangıç tarihine göre yeniden eskiye doğru sıralama işlemi
-            announcements.sort(Comparator.comparing(Announcement::getBaslangic_tarihi).reversed()); // This is where the error occurs
-
-        }catch (Exception e){
-
+            List<Announcement> announcements = announcementRepository.findAll();
+            announcements.sort(Comparator.comparing(Announcement::getStartDate).reversed());
+            return announcements;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Announcements could not be fetched.");
         }
-        return announcements;
     }
 
-    public Optional<Announcement> getAnnouncementsById(Long announcementId) {
-        return announcementRepository.findById(announcementId);
-    }
-
-    public Long save(AnnouncementDto announcementDto)  {
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, 30);
-        Date bitisTarihi = calendar.getTime();
-
-        Announcement announcement = new Announcement();
-        announcement.setAciklama(announcementDto.getAciklama());
-        announcement.setBaslik(announcementDto.getBaslik());
-        announcement.setFirma(announcementDto.getFirma());
-        announcement.setBaslangic_tarihi(date);
-        announcement.setBitis_tarihi(bitisTarihi);
-        announcement.setPostBaslik(announcementDto.getPostBaslik());
-
-        Announcement savedAnnouncement = announcementRepository.save(announcement);
-
-
-        // İlan kriterlerini kaydetme
-        List<AnnouncementCriteria> announcementCriteriaList = new ArrayList<>();
-        for (String criteriaDescription : announcementDto.getAnnouncementCriteria()) {
-            AnnouncementCriteria criteria = new AnnouncementCriteria();
-            criteria.setIlan(savedAnnouncement);
-            criteria.setKriterAciklama(criteriaDescription);
-            announcementCriteriaList.add(criteria);
+    public List<Announcement> getAnnouncementsByCompanyId(UUID companyId) {
+        try {
+            List<Announcement> announcements = announcementRepository.getAnnouncementByCompanyCompanyId(companyId);
+            if (announcements.isEmpty()) {
+                throw new ResourceNotFoundException("Announcement", "companyId", companyId.toString());
+            }
+            announcements.sort(Comparator.comparing(Announcement::getStartDate).reversed());
+            return announcements;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Announcements could not be fetched.");
         }
-        announcementCriteriaService.save(announcementCriteriaList,savedAnnouncement.getIlanId());
-return  savedAnnouncement.getIlanId();
     }
 
-    public void deleteAnnouncement(Long announcementId) {
-        announcementCriteriaService.deleteAllCriteriasByAnnouncementId(announcementId);
-        announcementRepository.deleteById(announcementId);
-
+    public Announcement getAnnouncementsById(UUID announcementId) {
+        return announcementRepository.findById(announcementId)
+                .orElseThrow(() -> new ResourceNotFoundException("Announcement", "id", announcementId.toString()));
     }
 
-    public void updateAnnouncement(Long announcementId, AnnouncementDto announcementDto) {
-        Optional<Announcement> existingAnnouncement=announcementRepository.findById(announcementId);
-        if (existingAnnouncement.isEmpty()){
-            return;
+    public UUID save(AnnouncementDto announcementDto) {
+        try {
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, 30);
+            Date endDate = calendar.getTime();
+
+            Announcement announcement = Announcement.builder()
+                    .company(announcementDto.getCompany())
+                    .startDate(date)
+                    .endDate(endDate)
+                    .title(announcementDto.getTitle())
+                    .description(announcementDto.getDescription())
+                    .postTitle(announcementDto.getPostTitle())
+                    .build();
+
+            Announcement savedAnnouncement = announcementRepository.save(announcement);
+            return savedAnnouncement.getAnnouncementId();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Announcement could not be saved.");
         }
-        Announcement announcement=new Announcement();
-        announcement.setIlanId(announcementId);
-        announcement.setAciklama(announcementDto.getAciklama());
-        announcement.setBaslik(announcementDto.getBaslik());
-        announcement.setFirma(announcementDto.getFirma());
-        announcement.setBaslangic_tarihi(existingAnnouncement.get().getBaslangic_tarihi());
-        announcement.setBitis_tarihi(existingAnnouncement.get().getBitis_tarihi());
-        announcement.setPostBaslik(announcementDto.getPostBaslik());
-        announcementRepository.save(announcement);
+    }
+
+    public void deleteAnnouncement(UUID announcementId) {
+        try {
+            announcementCriteriaService.deleteAllCriteriasByAnnouncementId(announcementId);
+            announcementRepository.deleteById(announcementId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Announcement could not be deleted.");
+        }
+    }
+
+    public void updateAnnouncement(UUID announcementId, AnnouncementDto announcementDto) {
+        Optional<Announcement> existingAnnouncement = announcementRepository.findById(announcementId);
+        if (existingAnnouncement.isEmpty()) {
+            throw new ResourceNotFoundException("Announcement", "id", announcementId.toString());
+        }
+        try {
+            Announcement announcement = existingAnnouncement.get();
+            announcement.setCompany(announcementDto.getCompany());
+            announcement.setTitle(announcementDto.getTitle());
+            announcement.setDescription(announcementDto.getDescription());
+            announcement.setPostTitle(announcementDto.getPostTitle());
+            announcementRepository.save(announcement);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Announcement could not be updated.");
+        }
     }
 }
+

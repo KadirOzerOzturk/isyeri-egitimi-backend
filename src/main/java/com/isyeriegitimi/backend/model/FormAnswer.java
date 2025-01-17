@@ -1,33 +1,33 @@
 package com.isyeriegitimi.backend.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "form_cevap")
+@Table(name = "form_answer")
 public class FormAnswer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cevapId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID answerId;
 
     @ManyToOne
     @JoinColumn(name = "form_id")
     private Form form;
 
     @ManyToOne
-    @JoinColumn(name = "soru_id")
+    @JoinColumn(name = "question_id")
     private FormQuestion formQuestion;
 
-    private Long kullaniciId;
-    private String kullaniciRol;
-    private String cevap;
-
+    private UUID userId;
+    private String userRole;
+    private String answer;
 }

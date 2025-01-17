@@ -7,31 +7,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "basvuru")
+@Table(name = "application")
 public class Application {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long basvuruId;
-    private Date basvuruTarihi;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID applicationId;
+
+    private Date applicationDate;
 
     @ManyToOne
-    @JoinColumn(name = "ilan_id")
-    private Announcement ilan;
+    @JoinColumn(name = "announcement_id")
+    private Announcement announcement;
 
     @ManyToOne
-    @JoinColumn(name = "firma_id")
-    private Company firma;
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @ManyToOne
-    @JoinColumn(name = "ogrenci_no")
-    private Student ogrenci;
-    private String basvuruDurum;
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-
+    private String applicationStatus;
 }

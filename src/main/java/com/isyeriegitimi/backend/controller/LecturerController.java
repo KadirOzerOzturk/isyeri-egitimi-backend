@@ -1,15 +1,15 @@
 package com.isyeriegitimi.backend.controller;
 
 import com.isyeriegitimi.backend.dto.LecturerDto;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.Lecturer;
-import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.service.LecturerService;
-import com.isyeriegitimi.backend.service.StudentsInGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/lecturer")
@@ -23,36 +23,25 @@ public class LecturerController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAllLecturer(){
-
-        try {
-            return ResponseEntity.ok( lecturerService.getAllLecturer());
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    public ResponseEntity<ApiResponse<?>> getAllLecturer(){
+        return ResponseEntity.ok(ApiResponse.success(lecturerService.getAllLecturers(),"Lecturers fetched successfully"));
     }
     @GetMapping("/{lecturerId}")
-    public Optional<Lecturer> getLecturerById(@PathVariable Long lecturerId){
+    public ResponseEntity<ApiResponse<Lecturer>> getLecturerById(@PathVariable UUID lecturerId){
 
-        return lecturerService.getLecturerByLecturerId(lecturerId);
+        return ResponseEntity.ok(ApiResponse.success(lecturerService.getLecturerByLecturerId(lecturerId).get(),"Lecturer fetched successfully"));
     }
     @PutMapping("/update/{lecturerId}")
-    public ResponseEntity<?> updateLecturer(@PathVariable Long lecturerId , @RequestBody LecturerDto lecturerDto){
+    public ResponseEntity<?> updateLecturer(@PathVariable UUID lecturerId , @RequestBody LecturerDto lecturerDto){
 
-        try {
-            lecturerService.update(lecturerId,lecturerDto);
-            return ResponseEntity.ok("Successfully updated");
-        }catch (Exception e){
+            lecturerService.updateLecturer(lecturerId,lecturerDto);
+            return ResponseEntity.ok(ApiResponse.success(null,"Lecturer updated successfully"));
 
-                return ResponseEntity.internalServerError().body(e.getMessage());
-        }
     }
     @GetMapping("/getLecturerOfStudent/{studentNo}")
-    public ResponseEntity<?> getLecturerOfStudentByStudentNo(@PathVariable Long studentNo){
-        try {
-            return ResponseEntity.ok(lecturerService.getLecturerOfStudentByStudentNo(studentNo));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body("Student has not a group");
-        }
+    public ResponseEntity<?> getLecturerOfStudentByStudentNo(@PathVariable String studentNo){
+
+         return ResponseEntity.ok(ApiResponse.success(lecturerService.getLecturerOfStudentByStudentNumber(studentNo),"Lecturer fetched successfully"));
+
     }
 }

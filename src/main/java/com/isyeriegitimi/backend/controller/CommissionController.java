@@ -2,10 +2,14 @@ package com.isyeriegitimi.backend.controller;
 
 
 import com.isyeriegitimi.backend.dto.CommissionDto;
+import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.service.CommissionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -21,22 +25,14 @@ public class CommissionController {
 
 
     @GetMapping("/{commissionId}")
-    public ResponseEntity<?> getCommissionById(@PathVariable Long  commissionId){
+    public ResponseEntity<ApiResponse<?>> getCommissionById(@PathVariable @Valid UUID commissionId){
 
-        try {
-            return ResponseEntity.ok(commissionService.getCommissionById(commissionId));
-        }
-        catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+        return ResponseEntity.ok(ApiResponse.success(commissionService.getCommissionById(commissionId),"Commission fetched successfully"));
     }
     @PutMapping("/update/{commissionId}")
-    public ResponseEntity<?> updateCommission(@PathVariable Long commissionId,@RequestBody CommissionDto commissionDto){
-        try {
-            commissionService.update(commissionId,commissionDto);
-            return ResponseEntity.ok("Successfully Updated");
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    public ResponseEntity<ApiResponse<?>> updateCommission(@PathVariable UUID commissionId,@RequestBody CommissionDto commissionDto){
+        commissionService.update(commissionId,commissionDto);
+        return ResponseEntity.ok(ApiResponse.success(null,"Commission updated successfully"));
+
     }
 }

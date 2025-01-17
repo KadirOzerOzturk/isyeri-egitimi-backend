@@ -4,10 +4,11 @@ import com.isyeriegitimi.backend.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface SkillRepository extends JpaRepository<Skill,Long> {
+public interface SkillRepository extends JpaRepository<Skill, UUID> {
 
-    List<Skill> findAllByOgrenci_OgrenciNo(Long studentNo);
+    List<Skill> findAllByStudent_StudentNumber(String studentNo);
 
-    Skill findByOgrenci_OgrenciNoAndSkillId(Long studentNo, Long skillId);
+    Skill findByStudent_StudentNumberAndSkillId(String studentNo, UUID skillId);
 }
