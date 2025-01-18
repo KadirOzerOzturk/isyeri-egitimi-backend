@@ -14,14 +14,14 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "haftalik_rapor")
+@Table(name = "weekly_report")
 public class WeeklyReport {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID reportId;
     private String report;
     @ManyToOne
-    @JoinColumn(name = "ogrenci_no")
+    @JoinColumn(name = "student_id")
     private Student student;
     private Date reportDate;
 }

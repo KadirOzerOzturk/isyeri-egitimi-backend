@@ -13,16 +13,16 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "favori_ilan")
+@Table(name = "favorite_announcement")
 public class FavoriteAnnouncement {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID favoriteID;
     @ManyToOne
-    @JoinColumn(name = "ogrenci_no")
+    @JoinColumn(name = "student_id")
     private Student student;
     @ManyToOne
-    @JoinColumn(name = "ilan_id")
+    @JoinColumn(name = "announcement_id")
     private Announcement announcement;
 
 }

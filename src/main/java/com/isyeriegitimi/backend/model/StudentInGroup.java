@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "gruptaki_ogrenciler")
+@Table(name = "student_in_group")
 public class StudentInGroup {
 
     @Id
@@ -25,7 +25,7 @@ public class StudentInGroup {
     private StudentGroup studentGroup;
 
     @ManyToOne
-    @JoinColumn(name = "ogrenci_no")
+    @JoinColumn(name = "student_id")
     private Student student;
 
 }

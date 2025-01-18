@@ -13,18 +13,18 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "anket_cevap")
+@Table(name = "survey_answer")
 public class SurveyAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID cevapId;
+    private UUID answerId;
 
     @ManyToOne
-    @JoinColumn(name = "anket_id")
+    @JoinColumn(name = "survey_id")
     private Survey survey;
 
     @ManyToOne
-    @JoinColumn(name = "soru_id")
+    @JoinColumn(name = "question_id")
     private SurveyQuestion surveyQuestion;
 
     private UUID userId;
