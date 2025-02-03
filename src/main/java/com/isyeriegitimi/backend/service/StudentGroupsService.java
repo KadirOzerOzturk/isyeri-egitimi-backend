@@ -33,9 +33,7 @@ public class StudentGroupsService {
     public List<StudentGroup> getGroupsByLecturerId(UUID lecturerId) {
         try {
             List<StudentGroup> studentGroups = studentGroupRepository.findAllByLecturerLecturerId(lecturerId);
-            if (studentGroups.isEmpty()) {
-                throw new ResourceNotFoundException("StudentGroup", "lecturerId", lecturerId.toString());
-            }
+
             return studentGroups;
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the student groups: " + e.getMessage());

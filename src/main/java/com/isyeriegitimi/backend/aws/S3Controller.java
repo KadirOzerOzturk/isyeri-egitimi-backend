@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/s3-bucket")
@@ -29,10 +30,14 @@ public class S3Controller {
         s3Service.uploadFile(folder+"/"+userId+"/"+category, file);
         return "File uploaded";
     }
-
+    @PostMapping(path = "/upload/{userId}/{fileName}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String uploadFile(@RequestParam("file") MultipartFile file,@PathVariable String userId,@PathVariable String fileName) throws IOException {
+        s3Service.uploadFile(userId+"/"+fileName, file);
+        return "File uploaded";
+    }
 
     @PostMapping(path = "/upload/posts/{postId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String uploadPostPhotos(@RequestParam("file") MultipartFile file,@PathVariable Long postId) throws IOException {
+    public String uploadPostPhotos(@RequestParam("file") MultipartFile file,@PathVariable UUID postId) throws IOException {
         s3Service.uploadFile("posts/"+postId, file);
         return "File uploaded";
     }
@@ -46,7 +51,7 @@ public class S3Controller {
             @RequestParam("idCopy") MultipartFile idCopy,
             @RequestParam("eligibility") MultipartFile eligibility,
             @RequestParam("reportForm") MultipartFile reportForm,
-            @PathVariable String userId,
+            @PathVariable UUID userId,
             @PathVariable String studentName) throws IOException {
 
         try {
@@ -63,9 +68,9 @@ public class S3Controller {
         }
     }
 
-    @GetMapping("/download/{studentNo}/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable Long studentNo) {
-        S3Object s3Object = s3Service.getFile(studentNo.toString() + "/" + fileName);
+    @GetMapping("/download/{studentID}/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable UUID studentID) {
+        S3Object s3Object = s3Service.getFile(studentID + "/" + fileName);
         String contentType = s3Object.getObjectMetadata().getContentType();
 
         return ResponseEntity.ok()
@@ -104,7 +109,7 @@ public class S3Controller {
 
 
     @GetMapping("/view/posts/{postId}")
-    public ResponseEntity<InputStreamResource> getPostPhotos(@PathVariable Long  postId) {
+    public ResponseEntity<InputStreamResource> getPostPhotos(@PathVariable UUID  postId) {
         String  fileName="posts/"+postId;
 
         var s3Object = s3Service.getFile(fileName);
@@ -116,8 +121,16 @@ public class S3Controller {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
                 .body(new InputStreamResource(content));
     }
-
-
+    @DeleteMapping("/delete/{folder}/{userId}/{category}")
+    public String deleteFile(@PathVariable String category,@PathVariable String userId,@PathVariable String folder) {
+        s3Service.deleteFile(folder+"/"+userId+"/"+category);
+        return "File deleted";
+    }
+    @DeleteMapping("/delete/{studentId}/{fileName}")
+    public String deleteFile(@PathVariable String studentId,@PathVariable String fileName) {
+        s3Service.deleteFile(studentId+"/"+fileName);
+        return "File deleted";
+    }
 
 
 }

@@ -35,9 +35,6 @@ public class Company {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "logo")
-    private String logo;
-
     @Column(name = "sector")
     private String sector;
 

@@ -38,10 +38,14 @@ public class LecturerController {
             return ResponseEntity.ok(ApiResponse.success(null,"Lecturer updated successfully"));
 
     }
-    @GetMapping("/getLecturerOfStudent/{studentNo}")
-    public ResponseEntity<?> getLecturerOfStudentByStudentNo(@PathVariable String studentNo){
+    @GetMapping("/getLecturerOfStudent/{studentId}")
+    public ResponseEntity<?> getLecturerOfStudentByStudentNo(@PathVariable UUID studentId){
 
-         return ResponseEntity.ok(ApiResponse.success(lecturerService.getLecturerOfStudentByStudentNumber(studentNo),"Lecturer fetched successfully"));
+         return ResponseEntity.ok(ApiResponse.success(lecturerService.getLecturerOfStudentByStudentId(studentId),"Lecturer fetched successfully"));
 
+    }
+    @PostMapping("/saveLecturer")
+    public ResponseEntity<ApiResponse<?>> saveLecturer(@RequestBody LecturerDto lecturerDto) {
+        return ResponseEntity.ok(ApiResponse.success(lecturerService.save(lecturerDto), "Lecturer created successfully"));
     }
 }

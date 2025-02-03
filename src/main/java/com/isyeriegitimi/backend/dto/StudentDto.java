@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDto {
+    private String studentId;
     private String studentNumber;
     private String firstName;
     private String lastName;
@@ -20,6 +21,7 @@ public class StudentDto {
     private String grade;
     private String faculty;
     private String about;
-
+    private String password;
     private Company company;
+    private String identityNumber;
 }

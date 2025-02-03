@@ -45,9 +45,7 @@ public class AnnouncementCriteriaService {
     public List<AnnouncementCriteria> getCriteriaByAnnouncementId(UUID id) {
         try {
             List<AnnouncementCriteria> criteriaList = announcementCriteriaRepository.getAnnouncementCriteriaByAnnouncementAnnouncementId(id);
-            if (criteriaList.isEmpty()) {
-                throw new ResourceNotFoundException("Announcement Criteria", "announcementId", id.toString());
-            }
+
             return criteriaList;
         } catch (Exception e) {
             throw new InternalServerErrorException("Failed to get criterias: " + e.getMessage());

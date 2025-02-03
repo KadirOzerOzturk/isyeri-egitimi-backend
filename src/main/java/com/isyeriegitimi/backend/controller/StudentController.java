@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/students")
@@ -37,13 +38,17 @@ public class StudentController {
     }
 
 
-    @PutMapping("/update/{studentNo}")
-    public ResponseEntity<ApiResponse<String>> updateUser(@RequestBody StudentDto studentDto, @PathVariable String studentNo) {
+    @PutMapping("/update/{studentId}")
+    public ResponseEntity<ApiResponse<String>> updateUser(@RequestBody StudentDto studentDto, @PathVariable UUID  studentId) {
 
-            studentService.save(studentDto,studentNo);
+            studentService.update(studentDto,studentId);
             return ResponseEntity.ok(ApiResponse.success(null,"Student updated successfully"));
 
     }
+     @PostMapping("/saveStudent")
+     public ResponseEntity<ApiResponse<?>> saveStudent(@RequestBody StudentDto studentDto) {
+                return ResponseEntity.ok(ApiResponse.success( studentService.save(studentDto), "Student created successfully"));
+        }
 
 
 }

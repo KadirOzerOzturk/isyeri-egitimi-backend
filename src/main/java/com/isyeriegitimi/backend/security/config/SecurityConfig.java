@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +28,8 @@ public class SecurityConfig {
         httpSecurity
                 .csrf()
                 .disable()
+                .cors()
+                .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
@@ -39,5 +43,18 @@ public class SecurityConfig {
                 .accessDeniedHandler(customAccessDeniedHandler);
 
         return httpSecurity.build();
+    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")  // Tüm endpointlere CORS izinleri verir
+                        .allowedOrigins("http://localhost:3000")  // React frontend'in çalıştığı URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")  // İzin verilen HTTP metodları
+                        .allowedHeaders("*")  // İzin verilen başlıklar
+                        .allowCredentials(true);  // Kimlik doğrulama bilgileri (cookie, token vb.)
+            }
+        };
     }
 }

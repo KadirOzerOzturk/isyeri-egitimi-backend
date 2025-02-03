@@ -7,19 +7,19 @@ import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.repository.CompanyRepository;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.enums.Role;
-import com.isyeriegitimi.backend.security.repository.UserRepository;
 import com.isyeriegitimi.backend.security.service.AuthenticationService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
+    private final AuthenticationService authenticationService;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, AuthenticationService authenticationService) {
         this.companyRepository = companyRepository;
+        this.authenticationService = authenticationService;
     }
 
     public List<Company> getAllCompanies() {
@@ -66,10 +66,14 @@ public class CompanyService {
         }
     }
 
-    public void save(CompanyDto companyDto) {
+  public void save(CompanyDto companyDto) {
+    try {
         companyRepository.save(mapToEntity(companyDto));
-        // TODO: Save the user to the authentication service
+        authenticationService.save(new UserRequest(companyDto.getEmail(), companyDto.getPassword(), Role.COMPANY.toString()));
+    } catch (Exception e) {
+        throw new InternalServerErrorException("An error occurred while saving the company: " + e.getMessage());
     }
+}
 
 
     public CompanyDto mapToDto(Company company) {
@@ -85,7 +89,6 @@ public class CompanyService {
         companyDto.setAddress(company.getAddress());
         companyDto.setSector(company.getSector());
         companyDto.setAbout(company.getAbout());
-        companyDto.setLogo(company.getLogo());
 
         return companyDto;
     }
@@ -94,12 +97,12 @@ public class CompanyService {
         Company company =new Company();
         company.setCompanyId(companyDto.getCompanyId());
         company.setCompanyNumber(companyDto.getCompanyNumber());
+        company.setPassword(companyDto.getPassword());
         company.setName(companyDto.getName());
         company.setEmail(companyDto.getEmail());
         company.setAddress(companyDto.getAddress());
         company.setSector(companyDto.getSector());
         company.setAbout(companyDto.getAbout());
-        company.setLogo(companyDto.getLogo());
         return company;
     }
 

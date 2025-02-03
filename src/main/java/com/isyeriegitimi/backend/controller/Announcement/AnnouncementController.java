@@ -27,6 +27,7 @@ public class AnnouncementController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Announcement>>> getAllAnnouncements() {
+
         return ResponseEntity.ok(ApiResponse.success(announcementService.getAllAnnouncements(), "Announcements fetched successfully."));
     }
 

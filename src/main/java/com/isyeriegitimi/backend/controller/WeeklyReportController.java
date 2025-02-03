@@ -29,9 +29,9 @@ public class WeeklyReportController {
 
             return ResponseEntity.ok(ApiResponse.success(weeklyReportService.save(weeklyReportDto),"Report saved successfully"));
     }
-    @GetMapping("/{studentNo}")
-    public ResponseEntity<ApiResponse<List<WeeklyReport>>> getReports(@PathVariable String studentNo){
-        return ResponseEntity.ok(ApiResponse.success(weeklyReportService.getAllReportsByStudentNo(studentNo),"Reports fetched successfully"));
+    @GetMapping("/{studentId}")
+    public ResponseEntity<ApiResponse<List<WeeklyReport>>> getReports(@PathVariable UUID studentId){
+        return ResponseEntity.ok(ApiResponse.success(weeklyReportService.getAllReportsByStudentId(studentId),"Reports fetched successfully"));
     }
     @PutMapping("/update/{reportId}")
     public ResponseEntity<ApiResponse<String>> updateReport(@PathVariable UUID reportId, @RequestBody WeeklyReportDto weeklyReportDto){
@@ -40,10 +40,10 @@ public class WeeklyReportController {
             return ResponseEntity.ok(ApiResponse.success(null,"Report updated successfully"));
 
     }
-    @DeleteMapping("delete/{studentNo}/{reportId}")
-    public ResponseEntity<ApiResponse<?>> deleteWeeklyReport(@PathVariable String studentNo, @PathVariable UUID reportId) {
+    @DeleteMapping("delete/{studentId}/{reportId}")
+    public ResponseEntity<ApiResponse<?>> deleteWeeklyReport(@PathVariable UUID studentId, @PathVariable UUID reportId) {
 
-            weeklyReportService.deleteWeeklyReport(studentNo, reportId);
+            weeklyReportService.deleteWeeklyReport(studentId, reportId);
             return ResponseEntity.ok(ApiResponse.success(null, "Report deleted successfully"));
 
     }

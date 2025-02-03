@@ -6,6 +6,9 @@ import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.Commission;
 import com.isyeriegitimi.backend.repository.CommissionRepository;
+import com.isyeriegitimi.backend.security.dto.UserRequest;
+import com.isyeriegitimi.backend.security.enums.Role;
+import com.isyeriegitimi.backend.security.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,12 @@ import java.util.UUID;
 public class CommissionService {
 
     private final CommissionRepository commissionRepository;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public CommissionService(CommissionRepository commissionRepository) {
+    public CommissionService(CommissionRepository commissionRepository, AuthenticationService authenticationService) {
         this.commissionRepository = commissionRepository;
+        this.authenticationService = authenticationService;
     }
 
     public Commission getCommissionByCommissionNo(String commissionNo) {
@@ -68,6 +73,16 @@ public class CommissionService {
             throw new InternalServerErrorException("An error occurred while fetching the commissions: " + e.getMessage());
         }
     }
+    public UUID save(CommissionDto commissionDto) {
+        try {
+            Commission commission = mapToEntity(commissionDto);
+            commissionRepository.save(commission);
+            authenticationService.save(new UserRequest(commission.getEmail(), commission.getPassword(), Role.COMMISSION.toString()));
+            return commission.getCommissionId();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while saving the commission: " + e.getMessage());
+        }
+    }
     public CommissionDto mapToDto(Commission commission){
         CommissionDto commissionDto=new CommissionDto();
         commissionDto.setCommissionId(commission.getCommissionId());
@@ -86,9 +101,11 @@ public class CommissionService {
         commission.setCommissionNumber(commissionDto.getCommissionNumber());
         commission.setEmail(commissionDto.getEmail());
         commission.setAbout(commissionDto.getAbout());
+        commission.setPassword(commissionDto.getPassword());
 
         return  commission;
     }
+
 
 
 }

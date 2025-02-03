@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.repository;
 
+import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentInGroup;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,5 @@ public interface StudentsInGroupRepository extends JpaRepository<StudentInGroup,
     List<StudentInGroup>  findAllByStudentGroupGroupId(UUID groupId);
     Optional<StudentInGroup> findByStudent_StudentNumber(String studentNo);
     void deleteByStudentStudentNumber(String studentNo);
-
-
+    Optional<StudentInGroup> findByStudent_StudentId(UUID uuid);
 }

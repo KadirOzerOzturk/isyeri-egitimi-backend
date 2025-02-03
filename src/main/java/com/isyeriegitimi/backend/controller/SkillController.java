@@ -29,13 +29,13 @@ public class SkillController {
             skillService.saveSkill(skillDto);
             return ResponseEntity.ok(ApiResponse.success(null,"Skill saved successfully"));
     }
-    @GetMapping("/getSkills/{studentNo}")
-    public ResponseEntity<ApiResponse<List<Skill>>> getSkill(@PathVariable String studentNo){
-        return ResponseEntity.ok(ApiResponse.success(skillService.getSkills(studentNo),"Skills fetched successfully"));
+    @GetMapping("/getSkills/{studentId}")
+    public ResponseEntity<ApiResponse<List<Skill>>> getSkill(@PathVariable UUID studentId){
+        return ResponseEntity.ok(ApiResponse.success(skillService.getSkills(studentId),"Skills fetched successfully"));
     }
-    @DeleteMapping("/delete/{studentNo}/{skillId}")
-    public ResponseEntity<ApiResponse<?>> deleteSkill(@PathVariable String studentNo,@PathVariable UUID skillId ){
-            skillService.deleteSkill(studentNo, skillId);
+    @DeleteMapping("/delete/{studentId}/{skillId}")
+    public ResponseEntity<ApiResponse<?>> deleteSkill(@PathVariable UUID studentId,@PathVariable UUID skillId ){
+            skillService.deleteSkill(studentId, skillId);
             return ResponseEntity.ok(ApiResponse.success(null, "Skill removed successfully"));
 
     }

@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface CommissionRepository extends JpaRepository<Commission, UUID> {
     Optional<Commission> findByCommissionNumber(String commissionNumber);
+    Optional<Commission> findByEmail(String email);
 }

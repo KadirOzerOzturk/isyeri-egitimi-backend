@@ -12,6 +12,7 @@ public interface ApplicationRepository extends JpaRepository<Application, UUID> 
 
     List<Application> findAllByAnnouncement_AnnouncementId(UUID id);
     List<Application> findAllByStudent_StudentNumber(String studentNo);
+    List<Application> findAllByStudent_StudentId(UUID studentId);
 
     Optional<Application> findByApplicationId(UUID applicationId);
 
@@ -19,6 +20,8 @@ public interface ApplicationRepository extends JpaRepository<Application, UUID> 
     void deleteAllByStudentStudentNumberAndAnnouncementAnnouncementId(String studentNo,UUID announcementId);
     @Transactional
     List<Application> findAllByStudent_StudentNumberAndCompanyCompanyId(String studentNo,UUID companyId);
+    @Transactional
+    List<Application> findAllByStudent_StudentIdAndCompanyCompanyId(UUID studentId,UUID companyId);
 
 
 }

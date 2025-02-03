@@ -5,6 +5,8 @@ spring:
     resources:
       add-mappings: true
 
+
+
   servlet:
     multipart:
       enabled: true
@@ -13,9 +15,9 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/isyeri_egitimi_db
+    url: jdbc:postgresql://isyeri-egitimi-db.c9c00uwao83r.eu-north-1.rds.amazonaws.com/isyeri_egitimi_db
     username: postgres
-    password: admin
+    password: 8FOJ833oCZxfNHsWaf35
   # JPA properties
   jpa:
     hibernate:
@@ -28,17 +30,15 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-  app:
-    jwtSecret: mySecretKey123!?$#9123214
-    jwtExpirationMs: 1000*3600*24
+
   security:
     user:
       name: user
       password: 123
 security:
   jwt:
-    secret: "kadirozerkadirozerkadirozerkadirozerkadirozerkadirozerkadirozerk"
-
+    secret: "rnhx6OPzdG/WGj7uWgKbOwcqZHf3KpsW9HPTHXkbguXKXD2Vb9N03nu/ZxmWud6Z"
+    expiration: 86400000
 logging:
   level:
     org:

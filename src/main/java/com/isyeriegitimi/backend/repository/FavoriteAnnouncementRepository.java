@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface FavoriteAnnouncementRepository extends JpaRepository<FavoriteAnnouncement, UUID> {
 
-    List<FavoriteAnnouncement> findByStudent_StudentNumber(String studentNo);
-    Optional<FavoriteAnnouncement> findByStudent_StudentNumberAndAnnouncement_AnnouncementId(String studentNo, UUID announcementId);
+    List<FavoriteAnnouncement> findByStudent_StudentId(UUID studentId);
+    Optional<FavoriteAnnouncement> findByStudent_StudentIdAndAnnouncement_AnnouncementId(UUID studentId, UUID announcementId);
 }

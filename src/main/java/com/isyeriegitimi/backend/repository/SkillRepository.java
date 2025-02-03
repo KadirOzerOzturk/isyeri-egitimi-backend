@@ -9,6 +9,8 @@ import java.util.UUID;
 public interface SkillRepository extends JpaRepository<Skill, UUID> {
 
     List<Skill> findAllByStudent_StudentNumber(String studentNo);
+    List<Skill> findAllByStudent_StudentId(UUID studentId);
 
     Skill findByStudent_StudentNumberAndSkillId(String studentNo, UUID skillId);
+    Skill findByStudent_StudentIdAndSkillId(UUID studentId, UUID skillId);
 }

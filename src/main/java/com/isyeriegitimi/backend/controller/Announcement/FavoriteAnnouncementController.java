@@ -23,9 +23,9 @@ public class FavoriteAnnouncementController {
         this.favoriteAnnouncementService = favoriteAnnouncementService;
     }
 
-    @GetMapping("/{studentNo}")
-    public ResponseEntity<ApiResponse<List<FavoriteAnnouncement>>> getFavoriteAnnouncements(@PathVariable String studentNo) {
-        List<FavoriteAnnouncement> favorites = favoriteAnnouncementService.getFavoriteAnnouncements(studentNo);
+    @GetMapping("/{studentId}")
+    public ResponseEntity<ApiResponse<List<FavoriteAnnouncement>>> getFavoriteAnnouncements(@PathVariable UUID studentId) {
+        List<FavoriteAnnouncement> favorites = favoriteAnnouncementService.getFavoriteAnnouncements(studentId);
         return ResponseEntity.ok(ApiResponse.success(favorites, "Favorites retrieved successfully"));
     }
 
@@ -40,10 +40,10 @@ public class FavoriteAnnouncementController {
         }
     }
 
-    @DeleteMapping("/{studentNo}/{announcementId}")
-    public ResponseEntity<ApiResponse<String>> deleteFavorite(@PathVariable String studentNo, @PathVariable UUID announcementId) {
+    @DeleteMapping("/{studentId}/{announcementId}")
+    public ResponseEntity<ApiResponse<String>> deleteFavorite(@PathVariable UUID studentId, @PathVariable UUID announcementId) {
         try {
-            favoriteAnnouncementService.deleteFavoriteAnnouncement(studentNo, announcementId);
+            favoriteAnnouncementService.deleteFavoriteAnnouncement(studentId, announcementId);
             return ResponseEntity.ok(ApiResponse.success(null, "Favorite removed successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

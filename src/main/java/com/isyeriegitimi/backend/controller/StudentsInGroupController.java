@@ -30,9 +30,9 @@ public class StudentsInGroupController {
     public ResponseEntity<ApiResponse<List<StudentInGroup>>>  getAllStudents(){
         return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.findAll(),"Students fetched successfully"));
     }
-    @PostMapping("/addStudent/{studentNo}/{groupId}")
-    public ResponseEntity<ApiResponse<?>> addStudentToGroup(@PathVariable UUID groupId, @PathVariable String studentNo){
-        return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.addStudentToGroup(groupId,studentNo),"Student added successfully"));
+    @PostMapping("/addStudent/{studentId}/{groupId}")
+    public ResponseEntity<ApiResponse<?>> addStudentToGroup(@PathVariable UUID groupId, @PathVariable UUID studentId){
+        return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.addStudentToGroup(groupId,studentId),"Student added successfully"));
 
     }
     @DeleteMapping("/deleteStudent/{studentNo}")

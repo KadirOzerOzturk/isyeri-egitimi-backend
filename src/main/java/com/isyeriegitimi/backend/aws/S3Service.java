@@ -103,8 +103,8 @@ public class S3Service {
     }
 
 
+    public void deleteFile(String s) {
+        s3client.deleteObject(bucketName, s);
 
-
-
-
+    }
 }

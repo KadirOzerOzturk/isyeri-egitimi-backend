@@ -46,24 +46,22 @@ public class SkillService {
         }
     }
 
-    public List<Skill> getSkills(String studentNo) {
+    public List<Skill> getSkills(UUID studentId) {
         try {
 
-            List<Skill> skillList = skillRepository.findAllByStudent_StudentNumber(studentNo);
-            if (skillList.isEmpty()) {
-                throw new ResourceNotFoundException("Skill", "studentNo", studentNo);
-            }
+            List<Skill> skillList = skillRepository.findAllByStudent_StudentId(studentId);
+
             return skillList;
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the skills: " + e.getMessage());
         }
     }
 
-    public void deleteSkill(String studentNo, UUID skillId) {
+    public void deleteSkill(UUID studentId, UUID skillId) {
         try {
-            Skill skill=skillRepository.findByStudent_StudentNumberAndSkillId(studentNo,skillId);
+            Skill skill=skillRepository.findByStudent_StudentIdAndSkillId(studentId,skillId);
             if(skill==null){
-                throw new ResourceNotFoundException("Skill","studentNo",studentNo);
+                throw new ResourceNotFoundException("Skill","studentNo",studentId.toString());
             }
             skillRepository.delete(skill);
 

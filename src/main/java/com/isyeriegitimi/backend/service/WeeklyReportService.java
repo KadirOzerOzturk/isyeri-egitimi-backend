@@ -35,7 +35,7 @@ public class WeeklyReportService {
                     .builder()
                     .student(student)
                     .report(weeklyReportDto.getReport())
-                    .reportDate(weeklyReportDto.getReportDate())
+                    .reportDate(new Date())
                     .build();
             weeklyReportRepository.save(weeklyReport);
             System.out.println("weekly report id : "+weeklyReport.getReportId());
@@ -47,12 +47,10 @@ public class WeeklyReportService {
     }
 
 
-    public List<WeeklyReport> getAllReportsByStudentNo(String studentNo){
+    public List<WeeklyReport> getAllReportsByStudentId(UUID studentId){
         try {
-            List<WeeklyReport>  weeklyReports=weeklyReportRepository.findByStudent_StudentNumber(studentNo);
-            if (weeklyReports.isEmpty()){
-                throw new ResourceNotFoundException("Weekly Report","studentNo",studentNo);
-            }
+            List<WeeklyReport>  weeklyReports=weeklyReportRepository.findByStudent_StudentId(studentId);
+
             Collections.sort(weeklyReports, new Comparator<WeeklyReport>() {
                 @Override
                 public int compare(WeeklyReport w1, WeeklyReport w2) {
@@ -83,10 +81,10 @@ public class WeeklyReportService {
     }
 }
 
-    public void deleteWeeklyReport(String studentNo, UUID reportId) {
+    public void deleteWeeklyReport(UUID studentId, UUID reportId) {
         try {
-           WeeklyReport weeklyReport = weeklyReportRepository.findByStudent_StudentNumberAndReportId(studentNo, reportId)
-                .orElseThrow(() -> new ResourceNotFoundException("Weekly Report", "studentNo", studentNo));
+           WeeklyReport weeklyReport = weeklyReportRepository.findByStudent_StudentIdAndReportId(studentId, reportId)
+                .orElseThrow(() -> new ResourceNotFoundException("Weekly Report", "studentId", studentId.toString()));
            weeklyReportRepository.delete(weeklyReport);
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while deleting the report: "+e.getMessage());

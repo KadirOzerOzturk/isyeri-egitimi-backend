@@ -40,9 +40,7 @@ public class StudentsInGroupService {
     public List<StudentInGroup> getStudentsByGroupId(UUID groupId) {
         try {
             List<StudentInGroup> studentsInGroup = studentsInGroupRepository.findAllByStudentGroupGroupId(groupId);
-            if (studentsInGroup.isEmpty()) {
-                throw new ResourceNotFoundException("Students", "groupId", groupId.toString());
-            }
+
             return studentsInGroup;
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
@@ -52,24 +50,22 @@ public class StudentsInGroupService {
     public List<StudentInGroup> findAll() {
         try {
             List<StudentInGroup> studentsInGroup = studentsInGroupRepository.findAll();
-            if (studentsInGroup.isEmpty()) {
-                throw new ResourceNotFoundException("Students", "students", "No students found");
-            }
+
             return studentsInGroup;
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
     }
 
-    public String addStudentToGroup(UUID groupId, String studentNo) {
+    public String addStudentToGroup(UUID groupId, UUID studentId) {
         try {
             Optional<StudentGroup>  studentGroup=studentGroupRepository.findById(groupId);
             if (studentGroup.isEmpty()) {
                 throw new ResourceNotFoundException("StudentGroup", "groupId", groupId.toString());
             }
-            Optional<Student>  student=studentRepository.findByStudentNumber(studentNo);
+            Optional<Student>  student=studentRepository.findById(studentId);
             if (student.isEmpty()) {
-                throw new ResourceNotFoundException("Student", "studentNo", studentNo);
+                throw new ResourceNotFoundException("Student", "student id", studentId.toString());
             }
             StudentInGroup studentInGroup = new StudentInGroup();
             studentInGroup.setStudent(student.get());

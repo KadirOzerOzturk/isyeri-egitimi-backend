@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/commission")
+@RequestMapping("/commissions")
 public class CommissionController {
 
     private final CommissionService commissionService;
@@ -34,5 +34,10 @@ public class CommissionController {
         commissionService.update(commissionId,commissionDto);
         return ResponseEntity.ok(ApiResponse.success(null,"Commission updated successfully"));
 
+    }
+    @PostMapping("/save")
+    public ResponseEntity<ApiResponse<?>> saveCommission(@RequestBody CommissionDto commissionDto){
+        ;
+        return ResponseEntity.ok(ApiResponse.success(commissionService.save(commissionDto),"Commission saved successfully"));
     }
 }

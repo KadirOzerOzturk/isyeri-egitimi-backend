@@ -25,10 +25,10 @@ public class FavoriteAnnouncementService {
 
 
 
-    public List<FavoriteAnnouncement> getFavoriteAnnouncements(String studentNo){
-        List<FavoriteAnnouncement> favorites = favoriteAnnouncementRepository.findAll();
+    public List<FavoriteAnnouncement> getFavoriteAnnouncements(UUID studentId){
+        List<FavoriteAnnouncement> favorites = favoriteAnnouncementRepository.findByStudent_StudentId(studentId);
         if (favorites.isEmpty()) {
-            throw new ResourceNotFoundException("FavoriteAnnouncement", "studentNo", studentNo);
+            throw new ResourceNotFoundException("FavoriteAnnouncement", "studentId", studentId.toString());
         }
         Collections.sort(favorites, new Comparator<FavoriteAnnouncement>() {
             @Override
@@ -59,10 +59,10 @@ public class FavoriteAnnouncementService {
         }
     }
 
-    public void deleteFavoriteAnnouncement(String studentNo, UUID announcementId) {
+    public void deleteFavoriteAnnouncement(UUID studentId, UUID announcementId) {
         try {
 
-            FavoriteAnnouncement favoriteAnnouncement = favoriteAnnouncementRepository.findByStudent_StudentNumberAndAnnouncement_AnnouncementId(studentNo, announcementId)
+            FavoriteAnnouncement favoriteAnnouncement = favoriteAnnouncementRepository.findByStudent_StudentIdAndAnnouncement_AnnouncementId(studentId, announcementId)
                     .orElseThrow(() -> new RuntimeException("Favorite announcement not found"));
             favoriteAnnouncementRepository.delete(favoriteAnnouncement);
         } catch (Exception e) {

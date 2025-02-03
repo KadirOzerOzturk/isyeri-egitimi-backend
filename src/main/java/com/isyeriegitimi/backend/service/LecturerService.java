@@ -8,6 +8,9 @@ import com.isyeriegitimi.backend.model.StudentGroup;
 import com.isyeriegitimi.backend.repository.LecturerRepository;
 import com.isyeriegitimi.backend.repository.StudentGroupRepository;
 import com.isyeriegitimi.backend.repository.StudentsInGroupRepository;
+import com.isyeriegitimi.backend.security.dto.UserRequest;
+import com.isyeriegitimi.backend.security.enums.Role;
+import com.isyeriegitimi.backend.security.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,13 @@ public class LecturerService {
 
     private final LecturerRepository lecturerRepository;
     private final StudentsInGroupRepository studentsInGroupRepository;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public LecturerService(LecturerRepository lecturerRepository, StudentsInGroupRepository studentsInGroupRepository) {
+    public LecturerService(LecturerRepository lecturerRepository, StudentsInGroupRepository studentsInGroupRepository, AuthenticationService authenticationService) {
         this.lecturerRepository = lecturerRepository;
         this.studentsInGroupRepository = studentsInGroupRepository;
+        this.authenticationService = authenticationService;
     }
 
     public Optional<Lecturer> getLecturerByLecturerNumber(String lecturerNumber) {
@@ -72,13 +77,21 @@ public class LecturerService {
             throw new InternalServerErrorException("An error occurred while fetching the lecturer: " + e.getMessage());
         }
     }
+    public Optional<Lecturer> getLecturerOfStudentByStudentId(UUID studentId) {
+        try {
+            StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
+                    .orElseThrow(() -> new RuntimeException("Student group not found"))
+                    .getStudentGroup();
 
+            return Optional.ofNullable(studentGroup.getLecturer());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the lecturer: " + e.getMessage());
+        }
+    }
     public List<LecturerDto> getAllLecturers() {
         try {
             List<Lecturer> lecturers = lecturerRepository.findAll();
-            if (lecturers.isEmpty()) {
-                throw new ResourceNotFoundException("Lecturers");
-            }
+
             return lecturers.stream().map(this::mapToDto).collect(Collectors.toList());
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the lecturers: " + e.getMessage());
@@ -86,12 +99,14 @@ public class LecturerService {
     }
     public Lecturer mapToLecturerEntity(LecturerDto lecturerDto) {
         return Lecturer.builder()
+                .lecturerId(lecturerDto.getLecturerId())
                 .firstName(lecturerDto.getFirstName())
                 .lastName(lecturerDto.getLastName())
                 .email(lecturerDto.getEmail())
                 .faculty(lecturerDto.getFaculty())
                 .about(lecturerDto.getAbout())
                 .lecturerNumber(lecturerDto.getLecturerNumber())
+                .password(lecturerDto.getPassword())
                 .build();
     }
 
@@ -106,4 +121,17 @@ public class LecturerService {
                 .lecturerNumber(lecturer.getLecturerNumber())
                 .build();
     }
+
+    public UUID save(LecturerDto lecturerDto) {
+        try {
+            Lecturer lecturer = mapToLecturerEntity(lecturerDto);
+            lecturerRepository.save(lecturer);
+            authenticationService.save(new UserRequest( lecturerDto.getEmail(), lecturerDto.getPassword(),Role.LECTURER.toString()));
+            return lecturer.getLecturerId();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while saving the lecturer: " + e.getMessage());
+        }
+    }
+
+
 }

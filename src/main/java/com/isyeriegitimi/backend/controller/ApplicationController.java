@@ -25,17 +25,17 @@ public class ApplicationController {
 
         return ResponseEntity.ok(ApiResponse.success(applicationService.getApplicationsByAnnouncementId(announcementId), "Applications fetched successfully."));
     }
-    @GetMapping("/student/{studentNo}")
-    public ResponseEntity<ApiResponse<?>>  getApplicationsByStudentNo(@PathVariable String studentNo){
-        return ResponseEntity.ok(ApiResponse.success(applicationService.getApplicationsByStudentNo(studentNo), "Applications fetched successfully."));
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<ApiResponse<?>>  getApplicationsByStudentId(@PathVariable UUID studentId){
+        return ResponseEntity.ok(ApiResponse.success(applicationService.getApplicationsByStudentId(studentId), "Applications fetched successfully."));
     }
-    @GetMapping("/student/{studentNo}/{companyId}")
-    public ResponseEntity<ApiResponse<?>>  getApplicationsByStudentNoAndCompanyId(@PathVariable String studentNo,@PathVariable UUID companyId){
-        return ResponseEntity.ok(ApiResponse.success(applicationService.getApplicationsByStudentNoAndCompanyId(studentNo,companyId), "Applications fetched successfully."));
+    @GetMapping("/student/{studentId}/{companyId}")
+    public ResponseEntity<ApiResponse<?>>  getApplicationsByStudentNoAndCompanyId(@PathVariable UUID studentId,@PathVariable UUID companyId){
+        return ResponseEntity.ok(ApiResponse.success(applicationService.getApplicationsByStudentIdAndCompanyId(studentId,companyId), "Applications fetched successfully."));
     }
-    @PostMapping("/apply/{studentNo}/{announcementId}")
-    public ResponseEntity<ApiResponse<Void>> applyToCompany(@PathVariable String studentNo,@PathVariable UUID announcementId){
-        applicationService.saveApplication(studentNo, announcementId);
+    @PostMapping("/apply/{studentId}/{announcementId}")
+    public ResponseEntity<ApiResponse<Void>> applyToCompany(@PathVariable UUID studentId,@PathVariable UUID announcementId){
+        applicationService.saveApplication(studentId, announcementId);
         return ResponseEntity.ok(ApiResponse.success(null, "Application saved successfully."));
     }
     @PutMapping("/update/{applicationId}/{applicationStatus}")

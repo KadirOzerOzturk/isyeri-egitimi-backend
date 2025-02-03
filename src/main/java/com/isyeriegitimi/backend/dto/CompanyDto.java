@@ -14,10 +14,10 @@ import java.util.UUID;
 public class CompanyDto {
     private UUID companyId;
     private String companyNumber;
+    private String password;
     private String name;
     private String email;
     private String address;
     private String sector;
     private String about;
-    private String logo;
 }

@@ -31,9 +31,7 @@ public class ApplicationService {
     public List<Application> getApplicationsByAnnouncementId(UUID id){
         try {
             List<Application> applications = applicationRepository.findAllByAnnouncement_AnnouncementId(id);
-            if (applications.isEmpty()) {
-                throw new ResourceNotFoundException("Applications", "announcementId", id.toString());
-            }
+
             return applications;
         }
         catch (Exception e) {
@@ -42,21 +40,19 @@ public class ApplicationService {
     }
 
 
-    public List<Application> getApplicationsByStudentNo(String studentNo) {
+    public List<Application> getApplicationsByStudentId(UUID studentId) {
         try {
-            List<Application> applications = applicationRepository.findAllByStudent_StudentNumber(studentNo);
-            if (applications.isEmpty()) {
-                throw new ResourceNotFoundException("Applications", "studentNo", studentNo);
-            }
+            List<Application> applications = applicationRepository.findAllByStudent_StudentId(studentId);
+
             return applications;
         }catch (Exception e){
-            throw new InternalServerErrorException("Applications could not be fetched.");
+            throw new InternalServerErrorException("Applications could not be fetched : " + e.getMessage());
         }
     }
 
-   public void saveApplication(String studentNo, UUID announcementId) {
+   public void saveApplication(UUID studentId, UUID announcementId) {
     try {
-        Optional<Student> student = studentRepository.findByStudentNumber(studentNo);
+        Optional<Student> student = studentRepository.findById(studentId);
         Optional<Announcement> announcement = announcementRepository.findById(announcementId);
         if (student.isEmpty() && announcement.isEmpty()) {
         }
@@ -82,12 +78,10 @@ public class ApplicationService {
     }
 
     @Transactional
-    public List<Application> getApplicationsByStudentNoAndCompanyId(String studentNo, UUID companyId) {
+    public List<Application> getApplicationsByStudentIdAndCompanyId(UUID studentId, UUID companyId) {
         try {
-            List<Application> applications = applicationRepository.findAllByStudent_StudentNumberAndCompanyCompanyId(studentNo, companyId);
-            if (applications.isEmpty()) {
-                throw new ResourceNotFoundException("Applications", "studentNo and companyId", studentNo + " and " + companyId);
-            }
+            List<Application> applications = applicationRepository.findAllByStudent_StudentIdAndCompanyCompanyId(studentId, companyId);
+
             return applications;
         }
         catch (Exception e){

@@ -5,12 +5,14 @@ import com.isyeriegitimi.backend.repository.CommissionRepository;
 import com.isyeriegitimi.backend.repository.CompanyRepository;
 import com.isyeriegitimi.backend.repository.LecturerRepository;
 import com.isyeriegitimi.backend.repository.StudentRepository;
+import com.isyeriegitimi.backend.security.dto.PasswordChangeRequest;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.dto.UserResponse;
 import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.security.model.User;
 import com.isyeriegitimi.backend.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,9 +39,9 @@ public class AuthenticationService {
 
 
    public ApiResponse save(UserRequest userRequest) {
-       Optional<User> existingUser = userRepository.findByUsernameAndTitle(userRequest.getUsername(), userRequest.getTitle());
+       Optional<User> existingUser = userRepository.findByUsername(userRequest.getUsername());
        if (existingUser.isPresent()) {
-           return ApiResponse.error("Kullanıcı zaten kayıtlı", 400);
+           return ApiResponse.error("Kullanıcı adı kayıtlı. Lütfen başka bir kullanıcı adı deneyiniz. ", 400);
        }
        User user = User.builder()
                .username(userRequest.getUsername())
@@ -54,42 +56,57 @@ public class AuthenticationService {
    }
 
     public ApiResponse auth(UserRequest userRequest) {
-        // Kullanıcıyı title ve username ile doğrula
-        User user = userRepository.findByUsernameAndTitle(userRequest.getUsername(), userRequest.getTitle())
+        User existingUser = userRepository.findByUsernameAndTitle(userRequest.getUsername(), userRequest.getTitle())
                 .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı"));
 
-        // Şifre doğrulama işlemini gerçekleştir
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword())
         );
 
-        // JWT token oluştur
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(existingUser);
+        System.out.println(token    );
+        Object user = null;
+        if (existingUser.getTitle().equals(String.valueOf(Role.LECTURER))) {
+            Optional<Lecturer> lecturer = lecturerRepository.findByEmail(existingUser.getUsername());
+            user = lecturer.orElseThrow(() -> new RuntimeException("Lecturer not found"));
+        } else if (existingUser.getTitle().equals(String.valueOf(Role.COMPANY))) {
+            Optional<Company> company = companyRepository.findByEmail(existingUser.getUsername());
+            user = company.orElseThrow(() -> new RuntimeException("Company not found"));
+        } else if (existingUser.getTitle().equals(String.valueOf(Role.COMMISSION))) {
 
-        // UserDto oluştur
-        Object userDto = null;
-        if (user.getTitle().equals(String.valueOf(Role.LECTURER))) {
-            Optional<Lecturer> lecturer = lecturerRepository.findByLecturerId(UUID.fromString(user.getUsername()));
-            userDto = lecturer.orElseThrow(() -> new RuntimeException("Lecturer bulunamadı"));
-        } else if (user.getTitle().equals(String.valueOf(Role.COMPANY))) {
-            Optional<Company> company = companyRepository.findByCompanyId(UUID.fromString(user.getUsername()));
-            userDto = company.orElseThrow(() -> new RuntimeException("Company bulunamadı"));
-        } else if (user.getTitle().equals(String.valueOf(Role.COMMISSION))) {
-
-            Optional<Commission> commission = commissionRepository.findById(UUID.fromString(user.getUsername()));
-            userDto = commission.orElseThrow(() -> new RuntimeException("Commission bulunamadı"));
-        } else if (user.getTitle().equals(String.valueOf(Role.STUDENT))) {
-            Optional<Student> student = studentRepository.findByStudentNumber(String.valueOf(user.getUsername()));
+            Optional<Commission> commission = commissionRepository.findByEmail(existingUser.getUsername());
+            user = commission.orElseThrow(() -> new RuntimeException("Commission not found"));
+        } else if (existingUser.getTitle().equals(String.valueOf(Role.STUDENT))) {
+            Optional<Student> student = studentRepository.findByEmail(existingUser.getUsername());
             if (student.isEmpty()) {
-                return ApiResponse.error("Öğrenci bulunamadı", 404);
+                return ApiResponse.error("Student not found", 404);
             }
-            userDto = student.orElseThrow(() -> new RuntimeException("Student bulunamadı"));
+            user = student.orElseThrow(() -> new RuntimeException("Student not found"));
         }
 
-        // Response döndür
-UserResponse userResponse = UserResponse.builder().userDto(userDto).token(token).build();
-return ApiResponse.success(userResponse, "Giriş başarılı");
+        UserResponse userResponse = UserResponse.builder().user(user).token(token).build();
+        return ApiResponse.success(userResponse, "Successfully logged in");
+    }
+
+
+  public ApiResponse<T> changePassword(PasswordChangeRequest request) {
+    try {
+        User user = userRepository.findByUsernameAndTitle(request.getUsername(), request.getTitle())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            return ApiResponse.error("Old password incorrect", 400);
+        }
+        if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+            return ApiResponse.error("New password cannot be the same as the old password", 400);
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return ApiResponse.success(null, "Password changed successfully");
+    } catch (UsernameNotFoundException e) {
+        return ApiResponse.error("User not found", 404);
+    } catch (Exception e) {
+        return ApiResponse.error("An error occurred while changing the password", 500);
+    }
 }
-
-
 }

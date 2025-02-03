@@ -42,7 +42,6 @@ public class CompanyController {
             company.setAddress(companyDto.getAddress());
             company.setEmail(companyDto.getEmail());
             company.setCompanyId(companyDto.getCompanyId());
-            company.setLogo(companyDto.getLogo());
             company.setAbout(companyDto.getAbout());
             company.setSector(companyDto.getSector());
             company.setCompanyNumber(companyDto.getCompanyNumber());

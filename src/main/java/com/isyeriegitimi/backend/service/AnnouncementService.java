@@ -101,6 +101,8 @@ public class AnnouncementService {
             announcement.setTitle(announcementDto.getTitle());
             announcement.setDescription(announcementDto.getDescription());
             announcement.setPostTitle(announcementDto.getPostTitle());
+            announcement.setStartDate(announcementDto.getStartDate());
+            announcement.setEndDate(announcementDto.getEndDate());
             announcementRepository.save(announcement);
         } catch (Exception e) {
             throw new InternalServerErrorException("Announcement could not be updated.");
