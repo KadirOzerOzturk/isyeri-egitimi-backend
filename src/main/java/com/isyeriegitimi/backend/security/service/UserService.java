@@ -1,0 +1,62 @@
+package com.isyeriegitimi.backend.security.service;
+
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
+import com.isyeriegitimi.backend.security.dto.UserDto;
+import com.isyeriegitimi.backend.security.model.User;
+import com.isyeriegitimi.backend.security.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public Optional<User> getUserByUsernameAndTitle(String username, String title) {
+        return userRepository.findByUsernameAndTitle(username, title);
+    }
+
+    @Transactional
+    public String update(UserDto userDto) {
+        try {
+            Optional<User> existingUser = userRepository.findByUsernameAndTitle(userDto.getUsername(), userDto.getTitle());
+            if (existingUser.isPresent()) {
+                User user = existingUser.get();
+                user.setUsername(userDto.getUsername());
+                user.setPassword(existingUser.get().getPassword());
+                user.setRole(userDto.getRole());
+                userRepository.save(user);
+            } else {
+                throw new ResourceNotFoundException("User", "username", userDto.getUsername());
+            }
+            return "User updated successfully";
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while updating the user: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void updateUsernameByEmail(String oldEmail, String newEmail) {
+        try {
+            Optional<User> userOpt = userRepository.findByUsername(oldEmail);
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+                user.setUsername(newEmail); // Update username
+                userRepository.save(user);
+            } else {
+                throw new ResourceNotFoundException("User", "email", oldEmail);
+            }
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while updating the user's username: " + e.getMessage());
+        }
+    }
+}

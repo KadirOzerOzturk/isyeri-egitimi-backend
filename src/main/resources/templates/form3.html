@@ -1,0 +1,279 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="tr" lang="tr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>form3</title>
+    <meta name="author" content="Kadir Ozer Ozturk" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+        body {
+            width: 210mm;
+            height: 297mm;
+            margin: auto;
+            font-family: 'Roboto', sans-serif;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        .s1 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        .s2 {
+            color: #808080;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+
+        p {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+            margin: 0pt;
+        }
+
+        h2 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 9pt;
+        }
+
+        .s3 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 9pt;
+        }
+
+        .s4 {
+            color: #F00;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        .s5 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+
+        table,
+        tbody {
+            vertical-align: top;
+            overflow: visible;
+        }
+        .header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .header img {
+            position: absolute;
+            align-items: start;
+            left: 0;
+            width: 83px;
+            height: 82px;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<p style="text-indent: 0pt;text-align: left;"><br /></p>
+<p style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><span>
+
+                <div class="header">
+        <img src="data:image/jpg;base64,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" alt="Logo">
+        <div class="header-text">
+            <h1>T.C.</h1>
+            <h1>GAZİ ÜNİVERSİTESİ TEKNOLOJİ FAKÜLTESİ</h1>
+            <h1>İŞYERİ EĞİTİMİ İZLEME FORMU</h1>
+        </div>
+    </div>
+
+        </span></p>
+<p style="padding-top: 2pt;text-indent: 0pt;text-align: left;"><br /></p>
+
+
+<p style="text-indent: 0pt;text-align: left;"><br /></p>
+<table style="border-collapse:collapse;margin-left:5.80998pt" cellspacing="0">
+    <h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left; padding-bottom: 10pt;">ÖĞRENCİ BİLGİLERİ</h1>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Adı Soyadı</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Numarası</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Bölümü</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İşyeri Eğitimi Yaptığı
+                İşletme</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İşyerinde Çalıştığı Bölümler
+            </p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İşyeri Eğitimine Başlama
+                Tarihi</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+    <tr style="height:17pt">
+        <td
+                style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Öğrencinin İmzası</p>
+        </td>
+        <td
+                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+            <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        </td>
+    </tr>
+</table>
+<p style="padding-top: 9pt;text-indent: 0pt;text-align: left;"><br /></p>
+<h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İŞYERİ YETKİLİSİ/GÖREVLİSİNİN ÖĞRENCİ HAKKINDAKİ
+    İZLENİMLERİ</h1>
+<p style="text-indent: 0pt;text-align: left;"><br /></p>
+<div class="textbox" style="border:0.5pt solid #000000;display:block;min-height:114.8pt;width:495.7pt;">
+    <p class="s2" style="padding-top: 11pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+</div>
+<p style="padding-left: 5pt;text-indent: 0pt;text-align: left;" />
+<p style="padding-top: 9pt;padding-left: 253pt;text-indent: 0pt;line-height: 156%;text-align: left;">Adı Soyadı :
+    ……………….……………………… </p>
+<div style="display: flex; justify-content: space-between">
+    <p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Tarih </p>
+    <p style="text-indent: 0pt;line-height: 13pt;text-align: right;">: …./…./202.. </p>
+</div>
+
+<p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;">İmza/Kaşe : ……………………………..…………
+</p>
+<p style="padding-top: 4pt;text-indent: 0pt;text-align: left;"><br /></p>
+<h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İZLEYİCİ ÖĞRETİM ÜYESİNİN ÖĞRENCİ HAKKINDAKİ
+    İZLENİMLERİ</h1>
+<p style="text-indent: 0pt;text-align: left;"><br /></p>
+<div class="textbox" style="border:0.5pt solid #000000;display:block;min-height:114.8pt;width:495.7pt;">
+    <p class="s2" style="padding-top: 11pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+    <p class="s2" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">
+        ……………………………………………………………………………………………………………………</p>
+</div>
+<p style="padding-left: 5pt;text-indent: 0pt;text-align: left;" />
+<p style="padding-top: 9pt;padding-left: 5pt;text-indent: 0pt;line-height: 107%;text-align: left;">Yukarıda
+    bilgileri verilen öğrencinin İşyeri Eğitimi için ……….…..……………………………………..……... adresindeki işyerine …./…./202..
+    tarihinde izleme ziyaretinde bulundum.</p>
+<p style="padding-top: 8pt;padding-left: 253pt;text-indent: 0pt;line-height: 171%;text-align: left;">İzleyici
+    Öğretim Üyesi : ………………..…………… Tarih/İmza : …./…./202.. ……………</p>
+<h2 style="padding-left: 5pt;text-indent: 0pt;line-height: 109%;text-align: left;">Not: <span class="s3">Bu form
+            Bölüm Başkanlığına her izleme ayının son haftası içinde İzleyici Öğretim Üyesi tarafından teslim
+            edilmelidir. Dönem sonunda Bölüm Başkanlığı tarafından İşyeri Eğitimi Komisyonu Başkanlığına teslim
+            edilir.</span></h2>
+<p class="s4" style="padding-top: 7pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">FORM: İE.3/İzleme Formu
+</p>
+<p style="padding-top: 2pt;text-indent: 0pt;text-align: left;"><br /></p>
+<p class="s5" style="padding-left: 433pt;text-indent: -29pt;text-align: right;">Bilgi için: Mehmet Ali ÜNEY Tel: 0
+    (312) 2023431</p>
+</body>
+
+</html>
