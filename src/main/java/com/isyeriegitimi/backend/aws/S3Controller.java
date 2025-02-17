@@ -48,8 +48,8 @@ public class S3Controller {
             @RequestParam("form1") MultipartFile form1,
             @RequestParam("form8") MultipartFile form8,
             @RequestParam("form2") MultipartFile form2,
-            @RequestParam("idCopy") MultipartFile idCopy,
-            @RequestParam("eligibility") MultipartFile eligibility,
+            @RequestParam("kimlik_fotokopisi") MultipartFile idCopy,
+            @RequestParam("mustehaklik_belgesi") MultipartFile eligibility,
             @RequestParam("reportForm") MultipartFile reportForm,
             @PathVariable UUID userId,
             @PathVariable String studentName) throws IOException {
@@ -58,8 +58,8 @@ public class S3Controller {
             s3Service.uploadFile(userId + "/form1-" + studentName, form1);
             s3Service.uploadFile(userId + "/form8-" + studentName, form8);
             s3Service.uploadFile(userId + "/form2-" + studentName, form2);
-            s3Service.uploadFile(userId + "/idCopy-" + studentName, idCopy);
-            s3Service.uploadFile(userId + "/eligibility-" + studentName, eligibility);
+            s3Service.uploadFile(userId + "/kimlik_fotokopisi-" + studentName, idCopy);
+            s3Service.uploadFile(userId + "/mustehaklik_belgesi-" + studentName, eligibility);
             s3Service.uploadFile(userId + "/reportForm-" + studentName, reportForm);
 
             return ResponseEntity.ok("Files uploaded successfully");

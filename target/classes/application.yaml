@@ -47,6 +47,8 @@ logging:
         type:
           descriptor:
             sql: TRACE
+    org.springframework.orm.jpa: DEBUG
+
 aws:
   access:
     key: AKIA4MTWNKJ62UQYNG62
@@ -56,4 +58,5 @@ aws:
     bucket: isyeri-egitimi
 springdoc:
   packages-to-scan: com.isyeriegitimi.backend.controller
+
 

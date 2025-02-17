@@ -21,10 +21,15 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{studentNo}")
+    @GetMapping("/getByStudentNo/{studentNo}")
     public ResponseEntity<ApiResponse<Optional<Student>>> getStudentByStudentNo(@PathVariable String studentNo){
 
         return ResponseEntity.ok(ApiResponse.success(studentService.getStudentByStudentNo(studentNo),"Student fetched successfully"));
+    }
+    @GetMapping("/{studentId}")
+    public ResponseEntity<ApiResponse<Optional<Student>>> getStudentByStudentNo(@PathVariable UUID studentId){
+
+        return ResponseEntity.ok(ApiResponse.success(studentService.getStudentByStudentId(studentId),"Student fetched successfully"));
     }
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse<List<StudentDto>>> getAllStudents(){

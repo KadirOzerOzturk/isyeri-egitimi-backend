@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/form/questions")
+@RequestMapping("/forms/questions")
 public class FormQuestionController {
 
     @Autowired
@@ -27,8 +27,8 @@ public class FormQuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<FormQuestion>> getQuestionById(@PathVariable UUID id) {
-        return ResponseEntity.ok(ApiResponse.success(formQuestionService.getQuestionById(id), "Question fetched successfully."));
+    public ResponseEntity<ApiResponse<List<FormQuestion>>> getQuestionsByFormId(@PathVariable UUID id) {
+        return ResponseEntity.ok(ApiResponse.success(formQuestionService.getQuestionsByFormId(id), "Questions fetched successfully."));
     }
 
     @PostMapping

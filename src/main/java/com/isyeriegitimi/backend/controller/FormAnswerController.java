@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/form/answers")
+@RequestMapping("/forms/answers")
 public class FormAnswerController {
 
     @Autowired
@@ -23,8 +23,8 @@ public class FormAnswerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<FormAnswer>> getAnswerById(@PathVariable UUID id) {
-        return ResponseEntity.ok(ApiResponse.success(formAnswerService.getAnswerById(id), "Answer fetched successfully."));
+    public ResponseEntity<ApiResponse<List<FormAnswer>>> getAnswerById(@PathVariable UUID id) {
+        return ResponseEntity.ok(ApiResponse.success(formAnswerService.getAnswerByFormId(id), "Answer fetched successfully."));
     }
 
     @PostMapping
@@ -41,5 +41,10 @@ public class FormAnswerController {
     public ResponseEntity<ApiResponse<Void>> deleteAnswer(@PathVariable UUID id) {
         formAnswerService.deleteAnswer(id);
         return ResponseEntity.ok(ApiResponse.success(null, "Answer deleted successfully."));
+    }
+    @PostMapping("/submit")
+    public ResponseEntity<ApiResponse<?>> submitAnswers(@RequestBody List<FormAnswer> answers) {
+        formAnswerService.saveAnswers(answers);
+        return ResponseEntity.ok(ApiResponse.success(null,"Form cevapları başarıyla kaydedildi."));
     }
 }

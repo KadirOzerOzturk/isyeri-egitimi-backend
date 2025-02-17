@@ -28,7 +28,7 @@ public class FormQuestion implements Serializable {
 
     private int questionNumber;
     private String questionText;
-
+    private String questionType;
     @Column(name = "options", columnDefinition = "jsonb")
     @Convert(converter = JsonNodeConverter.class)
     private JsonNode options;

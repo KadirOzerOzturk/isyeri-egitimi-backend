@@ -2,6 +2,8 @@ package com.isyeriegitimi.backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.FormQuestion;
 import com.isyeriegitimi.backend.repository.FormQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,40 +19,67 @@ public class FormQuestionService {
     @Autowired
     private FormQuestionRepository formQuestionRepository;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public List<FormQuestion> getAllQuestions() {
-        return formQuestionRepository.findAll();
+        try {
+            return formQuestionRepository.findAll();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while retrieving questions: " + e.getMessage());
+        }
     }
 
+    public List<FormQuestion> getQuestionsByFormId(UUID id) {
+        try {
+            List<FormQuestion> questions = formQuestionRepository.findByForm_Id(id);
+            return questions;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the questions: " + e.getMessage());
+        }
+
+    }
     public FormQuestion getQuestionById(UUID id) {
-        Optional<FormQuestion> question=  formQuestionRepository.findById(id);
-        return question.orElse(null);
+        return formQuestionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("FormQuestion", "form id", id.toString()));
+    }
+    public UUID createQuestion(FormQuestion question) {
+        try {
+            UUID questionId = UUID.randomUUID();
+            formQuestionRepository.insertQuestion(
+                    question.getForm().getId(),
+                    objectMapper.writeValueAsString(question.getOptions()),
+                    question.getQuestionNumber(),
+                    question.getQuestionText(),
+                    questionId
+            );
+            return questionId;
+        } catch (JsonProcessingException e) {
+            throw new InternalServerErrorException("Error processing JSON: " + e.getMessage());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while creating the question: " + e.getMessage());
+        }
     }
 
-
-    public UUID  createQuestion(FormQuestion question) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        formQuestionRepository.insertQuestion(
-                question.getForm().getId(),
-                objectMapper.writeValueAsString(question.getOptions()), // JSON string olarak kaydet
-                question.getQuestionNumber(),
-                question.getQuestionText(),
-                UUID.randomUUID()
-        );
-        return question.getQuestionId();
-    }
-//public UUID  createQuestion(FormQuestion question) {
-//    return formQuestionRepository.save(question).getQuestionId();
-//}
     public FormQuestion updateQuestion(UUID id, FormQuestion updatedQuestion) {
-        FormQuestion question = getQuestionById(id);
-        question.setQuestionNumber(updatedQuestion.getQuestionNumber());
-        question.setQuestionText(updatedQuestion.getQuestionText());
-        question.setOptions(updatedQuestion.getOptions());
-        return formQuestionRepository.save(question);
+        try {
+            FormQuestion existingQuestion = getQuestionById(id);
+            existingQuestion.setQuestionNumber(updatedQuestion.getQuestionNumber());
+            existingQuestion.setQuestionText(updatedQuestion.getQuestionText());
+            existingQuestion.setOptions(updatedQuestion.getOptions());
+            return formQuestionRepository.save(existingQuestion);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while updating the question: " + e.getMessage());
+        }
     }
 
     public void deleteQuestion(UUID id) {
-        formQuestionRepository.deleteById(id);
+        try {
+            if (!formQuestionRepository.existsById(id)) {
+                throw new ResourceNotFoundException("FormQuestion", "id", id.toString());
+            }
+            formQuestionRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while deleting the question: " + e.getMessage());
+        }
     }
 }

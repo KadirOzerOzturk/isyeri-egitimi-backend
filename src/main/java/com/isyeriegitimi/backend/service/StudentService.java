@@ -44,7 +44,27 @@ public class StudentService {
     }
 
     public Optional<Student> getStudentByStudentNo(String studentNo){
-        return studentRepository.findByStudentNumber(studentNo);
+        try {
+            Optional<Student> student = studentRepository.findByStudentNumber(studentNo);
+            if (student.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "Student Number", studentNo);
+            }
+            return student;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the student: " + e.getMessage());
+
+        }
+    }
+    public Optional<Student> getStudentByStudentId(UUID studentId) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            if (student.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "Student ID", studentId.toString());
+            }
+            return student;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the student: " + e.getMessage());
+        }
     }
     @Transactional
     public String update(StudentDto studentDto, UUID studentId) {
@@ -176,6 +196,7 @@ public class StudentService {
 
         return studentDto;
     }
+
 
 
 }

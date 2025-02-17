@@ -35,14 +35,16 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateForm1ByStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form1.pdf");
+        headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
     @GetMapping("/download/form2/{studentId}")
     public ResponseEntity<byte[]> downloadForm2(@PathVariable UUID studentId) throws IOException {
-        byte[] pdfContents = pdfReportService.generateForm1ByStudentId(studentId).toByteArray();
+        byte[] pdfContents = pdfReportService.generateForm2ByStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=taahutname.pdf");
+        headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
@@ -51,6 +53,7 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateForm3ByStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form3.pdf");
+        headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
@@ -59,6 +62,7 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateForm4ByStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form4.pdf");
+        headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
@@ -67,6 +71,7 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateForm4_1yStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form4.1.pdf");
+        headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }

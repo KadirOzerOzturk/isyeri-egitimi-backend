@@ -1,14 +1,8 @@
 package com.isyeriegitimi.backend.pdfReport;
 
 import aj.org.objectweb.asm.ClassWriter;
-import com.isyeriegitimi.backend.model.Lecturer;
-import com.isyeriegitimi.backend.model.Student;
-import com.isyeriegitimi.backend.model.StudentGroup;
-import com.isyeriegitimi.backend.model.WeeklyReport;
-import com.isyeriegitimi.backend.repository.LecturerRepository;
-import com.isyeriegitimi.backend.repository.StudentsInGroupRepository;
-import com.isyeriegitimi.backend.repository.WeeklyReportRepository;
-import com.isyeriegitimi.backend.repository.StudentRepository;
+import com.isyeriegitimi.backend.model.*;
+import com.isyeriegitimi.backend.repository.*;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
@@ -39,6 +33,8 @@ public class PdfReportService {
     private StudentsInGroupRepository studentsInGroupRepository;
     @Autowired
     private StudentRepository studentRepository ;
+    @Autowired
+    private FormAnswerRepository formAnswerRepository;
     @Autowired
     private SpringTemplateEngine templateEngine;
 
@@ -76,7 +72,7 @@ public class PdfReportService {
         context.setVariable("lecturer", studentGroup.getLecturer());
 
 
-        String htmlContent = templateEngine.process("form1", context);
+        String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
@@ -107,10 +103,12 @@ public class PdfReportService {
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
+        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, "student");
         Context context = new Context();
 
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
+        context.setVariable("answers", formAnswers);
 
 
         String htmlContent = templateEngine.process("form3", context);
@@ -144,6 +142,7 @@ public class PdfReportService {
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
+
         Context context = new Context();
 
         context.setVariable("student", student.get());
