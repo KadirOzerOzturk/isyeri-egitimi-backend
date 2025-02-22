@@ -31,7 +31,7 @@ public class PdfReportController {
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
     @GetMapping("/download/form1/{studentId}")
-    public ResponseEntity<byte[]> downloadForm1(@PathVariable UUID studentId) throws IOException {
+    public ResponseEntity<byte[]> downloadForm1(@PathVariable UUID studentId) throws Exception {
         byte[] pdfContents = pdfReportService.generateForm1ByStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form1.pdf");
@@ -71,6 +71,15 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateForm4_1yStudentId(studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form4.1.pdf");
+        headers.add("Content-Type", "application/pdf");
+
+        return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
+    }
+    @GetMapping("/download/survey/{surveyId}/student/{studentId}")
+    public ResponseEntity<byte[]> downloadStudentSurvey(@PathVariable UUID studentId,@PathVariable UUID surveyId) throws Exception {
+        byte[] pdfContents = pdfReportService.generateSurveyByStudentId(studentId,surveyId).toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=degerlendirmeAnketi.pdf");
         headers.add("Content-Type", "application/pdf");
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);

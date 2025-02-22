@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -49,7 +50,24 @@ public class SurveyAnswerService {
         }
 
     }
-
+    public void updateAnswers(List<SurveyAnswerDto> answerDtoList) {
+        try {
+            boolean isExist= surveyRepository.existsById(answerDtoList.get(0).getSurvey().getId());
+            if(isExist){
+                for (SurveyAnswerDto surveyAnswerDto: answerDtoList) {
+                    Optional<SurveyAnswer> surveyAnswer = surveyAnswerRepository.findBySurveyQuestion_QuestionId(surveyAnswerDto.getSurveyQuestion().getQuestionId());
+                    if(surveyAnswer.isPresent()){
+                        surveyAnswer.get().setAnswer(surveyAnswerDto.getAnswer());
+                        surveyAnswerRepository.save(surveyAnswer.get());
+                    }
+                }
+            }else {
+                throw new ResourceNotFoundException("Survey","Survey Id",answerDtoList.get(0).getSurvey().getId().toString());
+            }
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while updating the answers: " + e.getMessage());
+        }
+    }
     private SurveyAnswer mapToEntity(SurveyAnswerDto surveyAnswerDto){
         SurveyAnswer surveyAnswer = new SurveyAnswer();
         surveyAnswer.setAnswer(surveyAnswerDto.getAnswer());
@@ -68,6 +86,7 @@ public class SurveyAnswerService {
         surveyAnswerDto.setUserId(surveyAnswer.getUserId());
         return surveyAnswerDto;
     }
+
 
 
 }

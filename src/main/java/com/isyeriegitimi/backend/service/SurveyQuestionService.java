@@ -113,4 +113,32 @@ public class SurveyQuestionService {
         }
 
     }
+
+    public UUID updateQuestions(UUID surveyId, List<SurveyQuestion> questions) {
+        try {
+            Optional<Survey> survey = surveyRepository.findById(surveyId);
+            if (survey.isEmpty()) {
+                throw new ResourceNotFoundException("Survey", "id", surveyId.toString());
+            }
+            for (SurveyQuestion question : questions) {
+                SurveyQuestion existingQuestion = surveyQuestionRepository.findById(question.getQuestionId())
+                        .orElseThrow(() -> new ResourceNotFoundException("SurveyQuestion", "id", question.getQuestionId().toString()));
+
+
+                surveyQuestionRepository.updateQuestion(
+                        objectMapper.writeValueAsString(question.getOptions()),
+                        question.getQuestionNumber(),
+                        question.getQuestionText(),
+                        question.getQuestionType(),
+                        existingQuestion.getQuestionId()
+                );
+                return existingQuestion.getQuestionId();
+            }
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Failed to update questions: " + e.getMessage());
+        }
+        return null;
+    }
+
+
 }

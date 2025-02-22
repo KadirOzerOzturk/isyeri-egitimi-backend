@@ -3,26 +3,24 @@ package com.isyeriegitimi.backend.pdfReport;
 import aj.org.objectweb.asm.ClassWriter;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
-import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
-import com.itextpdf.io.font.FontProgram;
-import com.itextpdf.io.font.FontProgramFactory;
-import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.font.FontProvider;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import com.itextpdf.html2pdf.HtmlConverter;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PdfReportService {
@@ -36,41 +34,66 @@ public class PdfReportService {
     @Autowired
     private FormAnswerRepository formAnswerRepository;
     @Autowired
+    private SurveyQuestionRepository surveyQuestionRepository;
+    @Autowired
+    private SurveyAnswerRepository surveyAnswerRepository;
+    @Autowired
     private SpringTemplateEngine templateEngine;
 
+    // make return object with barcode image and unique barcode number
+
+
+    private static BufferedImage generateEAN13BarcodeImage() throws Exception {
+        String uniqueBarcodeNumber = generateUnique12DigitNumber();
+        Barcode barcode = BarcodeFactory.createEAN13(uniqueBarcodeNumber);
+        barcode.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        return BarcodeImageHandler.getImage(barcode);
+    }
+    private static String generateUnique12DigitNumber() {
+        UUID uuid = UUID.randomUUID();
+        BigInteger bigInt = new BigInteger(uuid.toString().replaceAll("-", ""), 16);
+        BigInteger mod = new BigInteger("1000000000000");
+        BigInteger uniqueNumber = bigInt.mod(mod);
+        return String.format("%012d", uniqueNumber);
+    }
+    public String convertBufferedImageToBase64(BufferedImage image) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", baos);
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.getEncoder().encodeToString(imageBytes);
+    }
     public ByteArrayOutputStream generateWeeklyReportPdf(UUID studentId) throws IOException {
 
-        // Öğrenciye ait tüm haftalık raporları al
         List<WeeklyReport> reports = weeklyReportRepository.findByStudent_StudentId(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        // Thymeleaf template context oluştur
+
         Context context = new Context();
         context.setVariable("reports", reports); // Haftalık raporlar listesini ekliyoruz
         context.setVariable("lecturer", studentGroup.getLecturer()); // Haftalık raporlar listesini ekliyoruz
         context.setVariable("student", reports.get(0).getStudent()); // Öğrenci bilgisi
 
-        // HTML içeriğini Thymeleaf şablonundan oluştur
         String htmlContent = templateEngine.process("weeklyReport", context); // weeklyReport.html şablonunu render eder
 
-        // HTML'yi PDF'ye dönüştür
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateForm1ByStudentId(UUID studentId) {
+    public ByteArrayOutputStream generateForm1ByStudentId(UUID studentId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        Context context = new Context();
 
+        BufferedImage barcodeImage = generateEAN13BarcodeImage();
+        String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
+        Context context = new Context();
+        context.setVariable("barcode", "data:image/png;base64," + barcodeBase64);
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
-
 
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
@@ -153,6 +176,27 @@ public class PdfReportService {
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
+
+        return pdfOutputStream;
+    }
+
+    public ByteArrayOutputStream generateSurveyByStudentId(UUID studentId,UUID surveyId) throws Exception {
+        Optional<Student> student = studentRepository.findById(studentId);
+        List<SurveyAnswer> surveyAnswers = surveyAnswerRepository.findBySurveyIdAndUserId(surveyId, studentId);
+        System.out.println("Survey Answers: " + surveyAnswers);
+        List<SurveyQuestion> surveyQuestions = surveyQuestionRepository.findBySurvey_Id(surveyAnswers.get(0).getSurvey().getId()); ;
+        BufferedImage barcodeImage = generateEAN13BarcodeImage();
+        String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
+        Context context = new Context();
+        context.setVariable("barcode", "data:image/png;base64," + barcodeBase64);
+        context.setVariable("student", student.get());
+        context.setVariable("answers", surveyAnswers);
+        context.setVariable("questions", surveyQuestions);
+
+        String htmlContent = templateEngine.process("anket", context);
+        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+        HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
+        System.out.println("HTML Content: " + htmlContent);
 
         return pdfOutputStream;
     }

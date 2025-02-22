@@ -23,6 +23,16 @@ public interface SurveyQuestionRepository extends JpaRepository<SurveyQuestion, 
                         @Param("questionText") String questionText,
                         @Param("questionType") String questionType,
                         @Param("questionId") UUID questionId);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE survey_question SET options = CAST(:options AS jsonb), question_number = :questionNumber, question_text = :questionText, question_type = :questionType WHERE question_id = :questionId",
+            nativeQuery = true)
+    void updateQuestion(@Param("options") String options,
+                        @Param("questionNumber") int questionNumber,
+                        @Param("questionText") String questionText,
+                        @Param("questionType") String questionType,
+                        @Param("questionId") UUID questionId);
+
 
     List<SurveyQuestion> findBySurvey_Id(UUID surveyId);
     void deleteAllBySurveyId(UUID surveyId);

@@ -23,6 +23,11 @@ public class SurveyAnswerController {
         surveyAnswerService.saveAnswers(answerDtoList);
         return ResponseEntity.ok(ApiResponse.success(null, "Answers saved successfully"));
     }
+    @PutMapping("/update")
+    public ResponseEntity<ApiResponse<?>> updateAnswers(@RequestBody List<SurveyAnswerDto> answerDtoList) {
+        surveyAnswerService.updateAnswers(answerDtoList);
+        return ResponseEntity.ok(ApiResponse.success(null, "Answers updated successfully"));
+    }
     @GetMapping("/{surveyId}/{userId}")
     public ResponseEntity<ApiResponse<?>> getAnswersBySurveyAndUser(@PathVariable UUID surveyId, @PathVariable UUID userId) {
         return ResponseEntity.ok(ApiResponse.success(surveyAnswerService.getAnswersBySurveyAndUser(surveyId, userId), "Answers fetched successfully"));

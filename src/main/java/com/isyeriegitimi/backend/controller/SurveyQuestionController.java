@@ -28,11 +28,17 @@ public class SurveyQuestionController {
 
         return ResponseEntity.ok(ApiResponse.success(surveyQuestionService.createQuestion(question), "Question created successfully."));
     }
-    @PostMapping("/bulk/{announcementId}")
-    public ResponseEntity<ApiResponse<?>> createQuestions(@RequestBody List<SurveyQuestion> questions, @PathVariable UUID announcementId) throws JsonProcessingException {
+    @PostMapping("/bulk")
+    public ResponseEntity<ApiResponse<?>> createQuestions(@RequestBody List<SurveyQuestion> questions) throws JsonProcessingException {
         logger.info("Recieved request to create questions {}", questions);
         surveyQuestionService.createQuestions(questions);
         return ResponseEntity.ok(ApiResponse.success(null, "Question created successfully."));
+    }
+    @PutMapping("/bulk/{surveyId}")
+    public ResponseEntity<ApiResponse<?>> updateQuestions(@PathVariable UUID surveyId, @RequestBody List<SurveyQuestion> questions) throws JsonProcessingException {
+        logger.info("Recieved request to update questions {}", questions);
+
+        return ResponseEntity.ok(ApiResponse.success(surveyQuestionService.updateQuestions(surveyId, questions), "Questions updated successfully."));
     }
     @GetMapping
     public ResponseEntity<ApiResponse<List<SurveyQuestion>>> getAllQuestions() {
