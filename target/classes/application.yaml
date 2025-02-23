@@ -4,9 +4,6 @@ spring:
   web:
     resources:
       add-mappings: true
-
-
-
   servlet:
     multipart:
       enabled: true
@@ -26,6 +23,9 @@ spring:
       hibernate:
         format_sql: true
         show-sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
@@ -35,6 +35,7 @@ spring:
     user:
       name: user
       password: 123
+
 security:
   jwt:
     secret: "rnhx6OPzdG/WGj7uWgKbOwcqZHf3KpsW9HPTHXkbguXKXD2Vb9N03nu/ZxmWud6Z"

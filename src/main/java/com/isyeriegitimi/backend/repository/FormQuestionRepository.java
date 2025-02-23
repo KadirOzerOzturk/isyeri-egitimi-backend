@@ -21,8 +21,8 @@ public interface FormQuestionRepository extends JpaRepository<FormQuestion, UUID
                         @Param("options") String options, // options doğrudan JSON string olmalı
                         @Param("questionNumber") int questionNumber,
                         @Param("questionText") String questionText,
-                        @Param("questionId") UUID questionId);
-
+                        @Param("questionId") UUID questionId)
+;
     @Query(value = "SELECT * FROM form_question WHERE question_id = :questionId", nativeQuery = true)
     FormQuestion getQuestionByQuestionId(@Param("questionId") UUID questionId);
 

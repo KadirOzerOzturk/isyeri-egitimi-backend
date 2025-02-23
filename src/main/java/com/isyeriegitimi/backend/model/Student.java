@@ -55,6 +55,8 @@ public class Student {
     @Column(name = "about")
     private String about;
 
+
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = true)
     private Company company;

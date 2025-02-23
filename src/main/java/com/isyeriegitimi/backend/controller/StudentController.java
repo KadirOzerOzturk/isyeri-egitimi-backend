@@ -4,8 +4,10 @@ import com.isyeriegitimi.backend.dto.StudentDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.service.StudentService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +29,7 @@ public class StudentController {
         return ResponseEntity.ok(ApiResponse.success(studentService.getStudentByStudentNo(studentNo),"Student fetched successfully"));
     }
     @GetMapping("/{studentId}")
-    public ResponseEntity<ApiResponse<Optional<Student>>> getStudentByStudentNo(@PathVariable UUID studentId){
+    public ResponseEntity<ApiResponse<Optional<Student>>> getStudentByStudentId(@PathVariable UUID studentId){
 
         return ResponseEntity.ok(ApiResponse.success(studentService.getStudentByStudentId(studentId),"Student fetched successfully"));
     }
@@ -53,7 +55,7 @@ public class StudentController {
      @PostMapping("/saveStudent")
      public ResponseEntity<ApiResponse<?>> saveStudent(@RequestBody StudentDto studentDto) {
                 return ResponseEntity.ok(ApiResponse.success( studentService.save(studentDto), "Student created successfully"));
-        }
+     }
 
 
 }
