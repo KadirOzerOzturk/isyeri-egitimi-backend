@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isyeriegitimi.backend.dto.FileInfoDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
@@ -26,6 +27,7 @@ public class FileService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public UUID uploadFile(FileInfo fileInfo, MultipartFile file) {
         try {
@@ -48,11 +50,32 @@ public class FileService {
         }
 
     }
-    public List<FileInfo> getFiles(){
+    public List<FileInfo> getFiles() {
         try {
-            return fileInfoRepository.findAll();
-        }catch (Exception e){
+            List<FileInfo> files = fileInfoRepository.findAllFiles();
+            for (FileInfo file : files) {
+                System.out.println("File ID: " + file.getId());
+                System.out.println("File Data: " + file.getData()); // Log the Base64 data
+            }
+            return files;
+        } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
+        }
+    }
+    public FileInfoDto getFileById(UUID id){
+        try {
+            FileInfo fileInfo = fileInfoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
+            return FileInfoDto.builder()
+                    .id(fileInfo.getId())
+                    .fileName(fileInfo.getFileName())
+                    .fileType(fileInfo.getFileType())
+                    .owners(objectMapper.writeValueAsString(fileInfo.getOwners()))
+                    .signedBy(objectMapper.writeValueAsString(fileInfo.getSignedBy()))
+                    .data(fileInfo.getData())
+                    .barcodeNumber(fileInfo.getBarcodeNumber())
+                    .build();
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the file: " + e.getMessage());
         }
     }
 

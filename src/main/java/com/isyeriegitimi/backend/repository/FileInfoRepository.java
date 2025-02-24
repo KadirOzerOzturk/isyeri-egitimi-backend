@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
@@ -22,5 +23,6 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
                     @Param("signedBy") String signedBy,
                     @Param("data") String data,
                     @Param("barcodeNumber") String barcodeNumber);
-
+    @Query(value = "SELECT id, file_name, file_type, owners, signed_by, data, barcode_number FROM file_info", nativeQuery = true)
+    List<FileInfo> findAllFiles();
 }

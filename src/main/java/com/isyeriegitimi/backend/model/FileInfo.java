@@ -23,7 +23,6 @@ public class FileInfo {
     @Column(name = "signed_by", columnDefinition = "jsonb")
     @Convert(converter = JsonNodeConverter.class)
     private JsonNode signedBy;
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String data;
     private String barcodeNumber;

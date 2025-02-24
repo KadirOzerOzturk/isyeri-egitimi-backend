@@ -21,12 +21,8 @@ import java.util.UUID;
 public class FormQuestionDto {
 
     private UUID questionId;
-
-
     private Form form;
-
     private int questionNumber;
     private String questionText;
-
     private JsonNode options;
 }

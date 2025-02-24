@@ -1,5 +1,19 @@
 package com.isyeriegitimi.backend.dto;
 
+import lombok.*;
+
 import java.util.UUID;
 
-public record FileInfoDto(UUID id, String fileName, String fileType, String base64Data) {}
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class FileInfoDto {
+    private UUID id;
+    private String fileName;
+    private String fileType;
+    private String owners;
+    private String signedBy;
+    private String data;
+    private String barcodeNumber;
+}

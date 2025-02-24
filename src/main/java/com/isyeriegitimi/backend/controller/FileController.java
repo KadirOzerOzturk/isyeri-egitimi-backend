@@ -33,6 +33,10 @@ public class FileController {
     public ResponseEntity<ApiResponse<?>> getFiles(){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFiles(), "Files fetched successfully"));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> getFile(@PathVariable UUID id){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getFileById(id), "File fetched successfully"));
+    }
 
 
 

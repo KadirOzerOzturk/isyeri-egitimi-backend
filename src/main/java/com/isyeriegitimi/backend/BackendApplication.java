@@ -17,18 +17,18 @@ public class BackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
 	}
-	@Bean
-	public ApplicationRunner applicationRunner(S3Service s3Service) {
-		return args -> {
-			log.info("Spring Boot AWS S3 integration...");
-
-			try {
-				var s3Object = s3Service.getFile("jvm.png");
-				log.info(s3Object.getKey());
-			} catch (AmazonS3Exception e) {
-				log.error(e.getMessage());
-			}
-		};
-	}
+//	@Bean
+//	public ApplicationRunner applicationRunner(S3Service s3Service) {
+//		return args -> {
+//			log.info("Spring Boot AWS S3 integration...");
+//
+//			try {
+//				var s3Object = s3Service.getFile("jvm.png");
+//				log.info(s3Object.getKey());
+//			} catch (AmazonS3Exception e) {
+//				log.error(e.getMessage());
+//			}
+//		};
+//	}
 
 }
