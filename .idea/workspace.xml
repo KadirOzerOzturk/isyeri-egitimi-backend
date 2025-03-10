@@ -4,16 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Add survey answer and question management with update functionality and PDF generation">
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Refactor file upload functionality to handle owners validation and remove file parameter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormQuestionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormQuestionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormQuestionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Form.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormQuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormQuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/dto/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/dto/UserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CommissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CommissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormQuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/LecturerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/LecturerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/WeeklyReport.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/WeeklyReport.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/anket.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/anket.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form3.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Form$FormBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Form$FormBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Form.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Form.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/CommissionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/CommissionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/CompanyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/CompanyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/LecturerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/LecturerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,9 +50,10 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Interface" />
+        <option value="Dockerfile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -79,6 +105,7 @@
     &quot;JUnit.AnnouncementServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.form3.html.executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -88,7 +115,7 @@
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/backend/src/main/java/com/isyeriegitimi/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/backend&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -98,7 +125,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -173,6 +200,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="form3.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/backend/src/main/resources/templates/form3.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="backend" />
@@ -183,6 +213,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.form3.html" />
         <item itemvalue="JUnit.LoginTest" />
         <item itemvalue="JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria" />
         <item itemvalue="JUnit.AnnouncementServiceTest" />
@@ -341,6 +372,20 @@
       <workItem from="1740130936575" duration="13608000" />
       <workItem from="1740230957457" duration="5518000" />
       <workItem from="1740337346237" duration="4838000" />
+      <workItem from="1740415642890" duration="1146000" />
+      <workItem from="1740465666538" duration="654000" />
+      <workItem from="1740506118037" duration="2227000" />
+      <workItem from="1740509311707" duration="2011000" />
+      <workItem from="1740845117420" duration="2846000" />
+      <workItem from="1740919573808" duration="6208000" />
+      <workItem from="1740980126820" duration="361000" />
+      <workItem from="1740994213094" duration="4957000" />
+      <workItem from="1741005330758" duration="10383000" />
+      <workItem from="1741195000002" duration="6816000" />
+      <workItem from="1741271082034" duration="2675000" />
+      <workItem from="1741549269250" duration="1088000" />
+      <workItem from="1741550375970" duration="4950000" />
+      <workItem from="1741592145588" duration="9101000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -582,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740231190524</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="feat: Implement file management with upload, retrieval, and DTO enhancements">
+      <option name="closed" value="true" />
+      <created>1740412117410</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1740412117410</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,6 +672,33 @@
     <MESSAGE value="feat: Implement form management with CRUD operations and JSON handling" />
     <MESSAGE value="feat: Add survey and survey question management with CRUD operations" />
     <MESSAGE value="feat: Add survey answer and question management with update functionality and PDF generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add survey answer and question management with update functionality and PDF generation" />
+    <MESSAGE value="feat: Implement file management with upload, retrieval, and DTO enhancements" />
+    <MESSAGE value="feat: Refactor file upload functionality to handle owners validation and remove file parameter" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Refactor file upload functionality to handle owners validation and remove file parameter" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
+          <line>50</line>
+          <properties class="com.isyeriegitimi.backend.pdfReport.PdfReportController" method="downloadForm3">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -19,16 +19,16 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID studentId;
 
-    @Column(name = "student_number", nullable = false, unique = true)
+    @Column(name = "student_number",  unique = true)
     private String studentNumber;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name" )
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name" )
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "phone_number")
@@ -43,7 +43,7 @@ public class Student {
     @Column(name = "gpa")
     private String gpa;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password" )
     private String password;
 
     @Column(name = "grade")

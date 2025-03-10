@@ -2,14 +2,16 @@ package com.isyeriegitimi.backend.controller;
 
 
 import com.isyeriegitimi.backend.dto.FormDto;
-import com.isyeriegitimi.backend.model.ApiResponse;
-import com.isyeriegitimi.backend.model.Form;
+import com.isyeriegitimi.backend.model.*;
+import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.service.FormService;
+import com.isyeriegitimi.backend.service.FormSignatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -17,10 +19,30 @@ import java.util.UUID;
 public class FormController {
     @Autowired
     private FormService formService;
+    @Autowired
+    private  FormSignatureService formSignatureService;
+
+
+    @PostMapping("/sign")
+    public ResponseEntity<ApiResponse<String>> signForm(@RequestBody SignFormRequest request) {
+        String message = formSignatureService.signForm(request.getFormId(), request.getUserId(), String.valueOf(request.getUserRole()));
+        return ResponseEntity.ok(ApiResponse.success(message, "Form signed successfully."));
+    }
+
+    @GetMapping("/signed")
+    public ResponseEntity<ApiResponse<List<FormSignature>>> getSignedForms() {
+        return ResponseEntity.ok(ApiResponse.success(formService.getSignedForms(), "Signed forms fetched successfully."));
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Form>>> getAllForms() {
         return ResponseEntity.ok(ApiResponse.success(formService.getAllForms(), "Forms fetched successfully."));
+    }
+
+    @GetMapping("/signed/{userId}/{userRole}")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getSignedFormsById(@PathVariable UUID userId, @PathVariable String userRole) {
+        Map<String, Object> response = formService.getSignedAndUnsignedForms(userId, userRole);
+        return ResponseEntity.ok(ApiResponse.success(response, "Signed and unsigned forms fetched successfully."));
     }
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Form>> getFormById( @PathVariable UUID id) {
@@ -28,9 +50,12 @@ public class FormController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Form>> createForm(@RequestBody Form form) {
-        return ResponseEntity.ok(ApiResponse.success(formService.createForm(form), "Form created successfully."));
+    public ResponseEntity<ApiResponse<Form>> createForm(@RequestBody CreateFormRequest request) {
+        Form createdForm = formService.createForm(request.getForm(), request.getSignatureRoles());
+
+        return ResponseEntity.ok(ApiResponse.success(createdForm, "Form created successfully."));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Form>> updateForm(@PathVariable UUID id, @RequestBody FormDto formDto) {
 

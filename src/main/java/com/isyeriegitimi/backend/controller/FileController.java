@@ -2,9 +2,11 @@ package com.isyeriegitimi.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.Converter;
+import com.isyeriegitimi.backend.dto.FileInfoDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.FileInfo;
 import com.isyeriegitimi.backend.service.FileService;
+import jdk.jfr.StackTrace;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,13 +24,17 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ApiResponse<?>> uploadFile(
-            @RequestPart("fileInfo") FileInfo fileInfo,
-            @RequestPart("file") MultipartFile file) {
+    @PostMapping("/upload")
+    public ResponseEntity<ApiResponse<?>> uploadFile(@RequestBody FileInfo fileInfo){
 
-        return ResponseEntity.ok(ApiResponse.success(fileService.uploadFile(fileInfo, file), "File uploaded successfully"));
+        return ResponseEntity.ok(ApiResponse.success(fileService.uploadFile(fileInfo), "File uploaded successfully"));
     }
+    @GetMapping("/{userId}/{userRole}/{fileName}")
+    public ResponseEntity<ApiResponse<FileInfoDto>> getFile(@PathVariable UUID userId, @PathVariable String userRole, @PathVariable String fileName){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getFile(userId,userRole,fileName), "File fetched successfully"));
+    }
+
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<?>> getFiles(){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFiles(), "Files fetched successfully"));

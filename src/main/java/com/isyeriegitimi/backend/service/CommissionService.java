@@ -77,7 +77,7 @@ public class CommissionService {
         try {
             Commission commission = mapToEntity(commissionDto);
             commissionRepository.save(commission);
-            authenticationService.save(new UserRequest(commission.getEmail(), commission.getPassword(), Role.COMMISSION.toString()));
+            authenticationService.save(new UserRequest(commission.getEmail(), commission.getPassword(),commissionDto.getFirstName(),commissionDto.getLastName(), Role.COMMISSION.toString()));
             return commission.getCommissionId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the commission: " + e.getMessage());

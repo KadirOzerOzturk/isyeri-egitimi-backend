@@ -41,7 +41,7 @@ public class AuthenticationService {
    public ApiResponse save(UserRequest userRequest) {
        Optional<User> existingUser = userRepository.findByUsername(userRequest.getUsername());
        if (existingUser.isPresent()) {
-           return ApiResponse.error("Kullanıcı adı kayıtlı. Lütfen başka bir kullanıcı adı deneyiniz. ", 400);
+           return ApiResponse.error("Username already taken. Please try another. ", 400);
        }
        User user = User.builder()
                .username(userRequest.getUsername())
@@ -51,13 +51,23 @@ public class AuthenticationService {
                .build();
 
        userRepository.save(user);
+       switch (userRequest.getTitle()){
+           case "STUDENT":
+                Student student = Student.builder()
+                          .email(userRequest.getUsername())
+                          .firstName(userRequest.getFirstName())
+                          .lastName(userRequest.getLastName())
+                          .build();
+                studentRepository.save(student);
+                break;
+       }
 
-       return ApiResponse.success(user, "Kayit başarılı");
+       return ApiResponse.success(user, "Successfully saved");
    }
 
     public ApiResponse auth(UserRequest userRequest) {
         User existingUser = userRepository.findByUsernameAndTitle(userRequest.getUsername(), userRequest.getTitle())
-                .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword())

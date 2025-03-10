@@ -3,6 +3,9 @@ package com.isyeriegitimi.backend.pdfReport;
 import aj.org.objectweb.asm.ClassWriter;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
+import com.isyeriegitimi.backend.security.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
@@ -22,26 +25,34 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+
 @Service
 public class PdfReportService {
 
-    @Autowired
+    
     private WeeklyReportRepository weeklyReportRepository;
-    @Autowired
     private StudentsInGroupRepository studentsInGroupRepository;
-    @Autowired
     private StudentRepository studentRepository ;
-    @Autowired
     private FormAnswerRepository formAnswerRepository;
-    @Autowired
     private SurveyQuestionRepository surveyQuestionRepository;
-    @Autowired
     private SurveyAnswerRepository surveyAnswerRepository;
-    @Autowired
     private SpringTemplateEngine templateEngine;
+    private FileInfoRepository fileInfoRepository;
+    private FormSignatureRepository formSignatureRepository;
+    private FormRepository formRepository;
 
-    // make return object with barcode image and unique barcode number
-
+    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileInfoRepository fileInfoRepository, FormSignatureRepository formSignatureRepository, FormRepository formRepository) {
+        this.weeklyReportRepository = weeklyReportRepository;
+        this.studentsInGroupRepository = studentsInGroupRepository;
+        this.studentRepository = studentRepository;
+        this.formAnswerRepository = formAnswerRepository;
+        this.surveyQuestionRepository = surveyQuestionRepository;
+        this.surveyAnswerRepository = surveyAnswerRepository;
+        this.templateEngine = templateEngine;
+        this.fileInfoRepository = fileInfoRepository;
+        this.formSignatureRepository = formSignatureRepository;
+        this.formRepository = formRepository;
+    }
 
     private static BufferedImage generateEAN13BarcodeImage() throws Exception {
         String uniqueBarcodeNumber = generateUnique12DigitNumber();
@@ -70,9 +81,13 @@ public class PdfReportService {
                 .getStudentGroup();
 
         Context context = new Context();
-        context.setVariable("reports", reports); // Haftalık raporlar listesini ekliyoruz
-        context.setVariable("lecturer", studentGroup.getLecturer()); // Haftalık raporlar listesini ekliyoruz
-        context.setVariable("student", reports.get(0).getStudent()); // Öğrenci bilgisi
+        context.setVariable("reports", reports);
+        if( studentGroup.getLecturer() == null) {
+            context.setVariable("lecturer",null);
+        }else {
+            context.setVariable("lecturer", studentGroup.getLecturer());
+        }
+        context.setVariable("student", reports.get(0).getStudent());
 
         String htmlContent = templateEngine.process("weeklyReport", context); // weeklyReport.html şablonunu render eder
 
@@ -82,26 +97,33 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateForm1ByStudentId(UUID studentId) throws Exception {
-        Optional<Student> student = studentRepository.findById(studentId);
-        StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
+    public ByteArrayOutputStream generateForm1ByStudentId(DownloadFormRequest downloadFormRequest) throws Exception {
+        Optional<Student> student = studentRepository.findById(downloadFormRequest.getFormId());
+        StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(downloadFormRequest.getFormId())
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
+        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(downloadFormRequest.getUserId(), downloadFormRequest.getUserRole());
+
+        // Corrected the method call
+        List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(downloadFormRequest.getFormId() , downloadFormRequest.getUserId(),Role.valueOf(downloadFormRequest.getUserRole()));
 
         BufferedImage barcodeImage = generateEAN13BarcodeImage();
         String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
+
         Context context = new Context();
         context.setVariable("barcode", "data:image/png;base64," + barcodeBase64);
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
+        context.setVariable("answers", formAnswers);
+        context.setVariable("signatures", formSignatures);
 
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
-
         return pdfOutputStream;
     }
+
     public  ByteArrayOutputStream generateForm2ByStudentId(UUID studentId) {
 
         Optional<Student> studentOptional = studentRepository.findById(studentId);
@@ -126,9 +148,11 @@ public class PdfReportService {
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, "student");
+        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, "STUDENT");
+        List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(UUID.fromString("0f7ba07d-1d21-40c3-9b3e-dc7f823d22e9"),student.get().getCompany().getCompanyId(), Role.valueOf("COMPANY"));
+        System.out.println("Form Signatures: " + formSignatures);
         Context context = new Context();
-
+        context.setVariable("signatures", formSignatures);
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
         context.setVariable("answers", formAnswers);

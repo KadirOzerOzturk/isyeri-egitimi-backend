@@ -37,6 +37,13 @@ public class FormQuestionController {
 
         return ResponseEntity.ok(ApiResponse.success(formQuestionService.createQuestion(question), "Question created successfully."));
     }
+    @PostMapping("/bulk/{formId}")
+    public ResponseEntity<ApiResponse<?>> bulkCreate(@RequestBody List<FormQuestion> questions,@PathVariable UUID formId){
+        formQuestionService.bulkSave(questions,formId);
+        return ResponseEntity.ok(ApiResponse.success(null,"Questions created successfully"));
+
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<FormQuestion>> updateQuestion(@PathVariable UUID id, @RequestBody FormQuestion updatedQuestion) {

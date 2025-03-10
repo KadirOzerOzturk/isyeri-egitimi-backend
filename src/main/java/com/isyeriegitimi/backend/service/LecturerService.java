@@ -126,7 +126,7 @@ public class LecturerService {
         try {
             Lecturer lecturer = mapToLecturerEntity(lecturerDto);
             lecturerRepository.save(lecturer);
-            authenticationService.save(new UserRequest( lecturerDto.getEmail(), lecturerDto.getPassword(),Role.LECTURER.toString()));
+            authenticationService.save(new UserRequest( lecturerDto.getEmail(), lecturerDto.getPassword(),lecturerDto.getFirstName(),lecturerDto.getLastName(),Role.LECTURER.toString()));
             return lecturer.getLecturerId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the lecturer: " + e.getMessage());

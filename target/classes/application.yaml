@@ -10,11 +10,16 @@ spring:
       max-request-size: 10MB
       max-file-size: 10MB
   # Database
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://isyeri-egitimi-db.c9c00uwao83r.eu-north-1.rds.amazonaws.com/isyeri_egitimi_db
+#    username: postgres
+#    password: 8FOJ833oCZxfNHsWaf35
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://isyeri-egitimi-db.c9c00uwao83r.eu-north-1.rds.amazonaws.com/isyeri_egitimi_db
-    username: postgres
-    password: 8FOJ833oCZxfNHsWaf35
+    url: jdbc:postgresql://13.48.43.117/isyeri_egitimi
+    username: isyeri
+    password: admin
   # JPA properties
   jpa:
     hibernate:

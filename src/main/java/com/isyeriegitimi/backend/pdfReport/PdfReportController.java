@@ -1,17 +1,16 @@
 package com.isyeriegitimi.backend.pdfReport;
 
+import com.isyeriegitimi.backend.model.DownloadFormRequest;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/pdf")
@@ -30,9 +29,9 @@ public class PdfReportController {
         headers.add("Content-Type", "application/pdf");
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
-    @GetMapping("/download/form1/{studentId}")
-    public ResponseEntity<byte[]> downloadForm1(@PathVariable UUID studentId) throws Exception {
-        byte[] pdfContents = pdfReportService.generateForm1ByStudentId(studentId).toByteArray();
+    @GetMapping("/download/form1")
+    public ResponseEntity<byte[]> downloadForm1(@RequestBody DownloadFormRequest downloadFormRequest) throws Exception {
+        byte[] pdfContents = pdfReportService.generateForm1ByStudentId(downloadFormRequest).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form1.pdf");
         headers.add("Content-Type", "application/pdf");

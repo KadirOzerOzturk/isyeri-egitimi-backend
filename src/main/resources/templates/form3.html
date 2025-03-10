@@ -241,8 +241,16 @@
     <p style="text-indent: 0pt;line-height: 13pt;text-align: right;">: …./…./202.. </p>
 </div>
 
-<p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;">İmza/Kaşe : ……………………………..…………
+<p style="padding-left: 253pt; text-indent: 0pt; line-height: 13pt; text-align: left;">
+    İmza/Kaşe:
+    <span th:each="signature : ${signatures}">
+        <span th:if="${signature.signed and signature.userRole.toString() == 'COMPANY'}" >
+            E-Onaylı
+        </span>
+    </span>
 </p>
+
+
 <p style="padding-top: 4pt;text-indent: 0pt;text-align: left;"><br /></p>
 <h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İZLEYİCİ ÖĞRETİM ÜYESİNİN ÖĞRENCİ HAKKINDAKİ
     İZLENİMLERİ</h1>

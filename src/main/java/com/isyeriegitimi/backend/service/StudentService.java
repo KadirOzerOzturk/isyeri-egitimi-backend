@@ -147,7 +147,7 @@ public class StudentService {
         try {
             Student student = mapDtoToEntity(studentDto);
             studentRepository.save(student);
-            authenticationService.save(new UserRequest(studentDto.getEmail(), studentDto.getPassword(), Role.STUDENT.toString()));
+            authenticationService.save(new UserRequest(studentDto.getEmail(),studentDto.getPassword(),studentDto.getFirstName(),studentDto.getLastName(),  Role.STUDENT.toString()));
             return student.getStudentId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the student: " + e.getMessage());

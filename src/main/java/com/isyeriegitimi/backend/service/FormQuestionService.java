@@ -82,4 +82,21 @@ public class FormQuestionService {
             throw new InternalServerErrorException("An error occurred while deleting the question: " + e.getMessage());
         }
     }
+
+    public void bulkSave(List<FormQuestion> questions, UUID formId) {
+        try {
+            for (FormQuestion question : questions){
+                UUID questionId = UUID.randomUUID();
+                formQuestionRepository.insertQuestion(
+                        question.getForm().getId(),
+                        objectMapper.writeValueAsString(question.getOptions()),
+                        question.getQuestionNumber(),
+                        question.getQuestionText(),
+                        questionId
+                );
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

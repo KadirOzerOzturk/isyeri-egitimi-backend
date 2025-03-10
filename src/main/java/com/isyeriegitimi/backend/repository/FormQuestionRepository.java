@@ -28,4 +28,6 @@ public interface FormQuestionRepository extends JpaRepository<FormQuestion, UUID
 
 
     List<FormQuestion> findByForm_Id(UUID formId);
+
+    void deleteAllByFormId(UUID id);
 }

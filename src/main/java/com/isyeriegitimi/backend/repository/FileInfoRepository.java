@@ -7,22 +7,39 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO file_info (id,file_name, file_type, owners, signed_by, data, barcode_number) " +
-            "VALUES (:id,:fileName, :fileType, CAST(:owners AS jsonb), CAST(:signedBy AS jsonb), :data, :barcodeNumber)",
+    @Query(value = "INSERT INTO file_info (id,file_name, file_type, owners, data, barcode_number) " +
+            "VALUES (:id,:fileName, :fileType, CAST(:owners AS jsonb), :data, :barcodeNumber)",
             nativeQuery = true)
     void insertFile(@Param("id") UUID id,
-            @Param("fileName") String fileName,
+                    @Param("fileName") String fileName,
                     @Param("fileType") String fileType,
                     @Param("owners") String owners,
-                    @Param("signedBy") String signedBy,
                     @Param("data") String data,
                     @Param("barcodeNumber") String barcodeNumber);
-    @Query(value = "SELECT id, file_name, file_type, owners, signed_by, data, barcode_number FROM file_info", nativeQuery = true)
-    List<FileInfo> findAllFiles();
+
+@Query(value = """
+        SELECT
+                                     *\s
+                                 FROM
+                                     file_info\s
+                                 WHERE
+                                     EXISTS (
+                                         SELECT
+                                             1    \s
+                                         FROM
+                                             jsonb_array_elements(owners) AS owner    \s
+                                         WHERE
+                                             owner @> CAST(? AS jsonb)
+                                     )
+                                     AND file_name = ?
+        """, nativeQuery = true)
+    Optional<FileInfo> findByOwnersContainingAndFileName(@Param("owner") String owner, @Param("fileName") String fileName);
 }

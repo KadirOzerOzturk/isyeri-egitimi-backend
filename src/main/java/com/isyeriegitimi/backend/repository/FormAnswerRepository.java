@@ -11,4 +11,5 @@ public interface FormAnswerRepository extends JpaRepository<FormAnswer, UUID> {
     List<FormAnswer> findByForm_Id(UUID id);
     List<FormAnswer> findByUserIdAndUserRole(UUID userId, String userRole);
 
+    void deleteAllByFormId(UUID id);
 }

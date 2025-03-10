@@ -63,7 +63,7 @@
         <p><strong>Öğrenci Numarası:</strong> [[${student.studentNumber}]]</p>
         <p><strong>Faküte:</strong> [[${student.faculty}]]</p>
         <p><strong>Bölüm:</strong> [[${student.faculty}]]</p>
-        <p><strong>İzleyici Akademisyen:</strong> [[${lecturer.firstName}]] [[${lecturer.lastName}]]</p>
+         <p><strong>İzleyici Akademisyen:</strong> [[${lecturer != null ? lecturer.firstName : ''}]] [[${lecturer != null ? lecturer.lastName : ''}]]</p>
     </div>
 
     <!-- Haftalık Raporlar -->

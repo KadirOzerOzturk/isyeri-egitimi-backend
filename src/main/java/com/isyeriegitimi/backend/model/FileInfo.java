@@ -3,14 +3,15 @@ package com.isyeriegitimi.backend.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.isyeriegitimi.backend.converter.JsonNodeConverter;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
+@Builder
 @Data
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,12 +21,7 @@ public class FileInfo {
     @Column(name = "owners", columnDefinition = "jsonb")
     @Convert(converter = JsonNodeConverter.class)
     private JsonNode owners;
-    @Column(name = "signed_by", columnDefinition = "jsonb")
-    @Convert(converter = JsonNodeConverter.class)
-    private JsonNode signedBy;
     @Column(columnDefinition = "TEXT")
     private String data;
     private String barcodeNumber;
-
-
 }

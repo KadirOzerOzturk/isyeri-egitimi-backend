@@ -69,7 +69,7 @@ public class CompanyService {
   public void save(CompanyDto companyDto) {
     try {
         companyRepository.save(mapToEntity(companyDto));
-        authenticationService.save(new UserRequest(companyDto.getEmail(), companyDto.getPassword(), Role.COMPANY.toString()));
+        authenticationService.save(new UserRequest(companyDto.getEmail(), companyDto.getPassword(),companyDto.getName(),"", Role.COMPANY.toString()));
     } catch (Exception e) {
         throw new InternalServerErrorException("An error occurred while saving the company: " + e.getMessage());
     }
