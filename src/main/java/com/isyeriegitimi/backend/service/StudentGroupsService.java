@@ -152,6 +152,24 @@ public class StudentGroupsService {
         }
     }
 
+    public void assignLecturer(UUID groupId, UUID lecturerId) {
+        try {
+            Optional<StudentGroup> studentGroup = studentGroupRepository.findById(groupId);
+            Optional<Lecturer> lecturer =lecturerRepository.findById(lecturerId);
+            if (studentGroup.get().getLecturer() != null) {
+                throw new InternalServerErrorException("A lecturer is already assigned to the group");
+            }else if (studentGroup.isEmpty()){
+                throw new ResourceNotFoundException("StudentGroup", "groupId", groupId.toString());
+            }else if (lecturer.isEmpty()){
+                throw new ResourceNotFoundException("Lecturer", "lecturerId", lecturerId.toString());
+            }
+            studentGroup.get().setLecturer(lecturer.get());
+            studentGroupRepository.save(studentGroup.get());
+
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while assigning the lecturer: " + e.getMessage());
+        }
+    }
 }
 
 

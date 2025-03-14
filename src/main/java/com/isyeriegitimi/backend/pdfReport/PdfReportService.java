@@ -1,6 +1,10 @@
 package com.isyeriegitimi.backend.pdfReport;
 
 import aj.org.objectweb.asm.ClassWriter;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.enums.Role;
@@ -53,7 +57,20 @@ public class PdfReportService {
         this.formSignatureRepository = formSignatureRepository;
         this.formRepository = formRepository;
     }
+    private static QrInfo generateQR(String code) throws Exception {
 
+        int imageSize = 200;
+        BitMatrix matrix = new MultiFormatWriter().encode(code, BarcodeFormat.QR_CODE,
+                imageSize, imageSize);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(matrix, "png", bos);
+        String image = Base64.getEncoder().encodeToString(bos.toByteArray());
+
+        QrInfo qrInfo = new QrInfo();
+        qrInfo.setCode(code);
+        qrInfo.setImage(image);
+        return qrInfo;
+    }
     private static BufferedImage generateEAN13BarcodeImage() throws Exception {
         String uniqueBarcodeNumber = generateUnique12DigitNumber();
         Barcode barcode = BarcodeFactory.createEAN13(uniqueBarcodeNumber);
@@ -97,25 +114,21 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateForm1ByStudentId(UUID studentId) throws Exception {
+    public ByteArrayOutputStream generateForm1ByStudentId(UUID formId,UUID studentId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
         List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, String.valueOf(Role.STUDENT));
-
-        // Corrected the method call
-       // List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(downloadFormRequest.getFormId() , downloadFormRequest.getUserId(),Role.valueOf(downloadFormRequest.getUserRole()));
-
-        BufferedImage barcodeImage = generateEAN13BarcodeImage();
-        String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
+        List<FormSignature> signatures = formSignatureRepository.findAllByFormId(formId);
+        QrInfo qr= generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
-        context.setVariable("barcode", "data:image/png;base64," + barcodeBase64);
+        context.setVariable("qr", "data:image/png;base64," + qr.getImage());
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
         context.setVariable("answers", formAnswers);
-     //   context.setVariable("signatures", formSignatures);
+        context.setVariable("signatures", signatures);
 
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();

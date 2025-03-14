@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/lecturer")
+@RequestMapping("/lecturers")
 public class LecturerController {
 
     private final LecturerService lecturerService;
@@ -22,7 +22,7 @@ public class LecturerController {
         this.lecturerService = lecturerService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<ApiResponse<?>> getAllLecturer(){
         return ResponseEntity.ok(ApiResponse.success(lecturerService.getAllLecturers(),"Lecturers fetched successfully"));
     }

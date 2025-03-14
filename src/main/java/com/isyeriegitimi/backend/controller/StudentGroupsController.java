@@ -6,6 +6,7 @@ import com.isyeriegitimi.backend.model.StudentGroup;
 import com.isyeriegitimi.backend.service.StudentGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
@@ -40,6 +41,11 @@ public class StudentGroupsController {
     @GetMapping("/autoCreate")
     public ResponseEntity<ApiResponse<?>> autoCreateGroups(){
         return ResponseEntity.ok(ApiResponse.success(studentGroupsService.autoCreate(),"Groups created successfully"));
+    }
+    @PostMapping("/assignLecturer/{groupId}/{lecturerId}")
+    public ResponseEntity<ApiResponse<?>> assignLecturer(@PathVariable UUID groupId, @PathVariable UUID lecturerId){
+        studentGroupsService.assignLecturer(groupId,lecturerId);
+        return ResponseEntity.ok(ApiResponse.success(null,"Lecturer assigned successfully"));
     }
 
 }

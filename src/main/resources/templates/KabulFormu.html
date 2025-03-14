@@ -139,13 +139,17 @@
             text-align: center;
         }
     </style>
-    <img th:src="${barcode}" alt="Barkod"
-         style="position: fixed; top: 0; right: 0; width: 100px; height: auto; z-index: 9999; background: white; ">
 
 </head>
 
 
 <body>
+<div >
+
+    <img th:src="${qr}" alt="qr"
+         style="  width: 50px; height: auto;background: white; ">
+
+</div>
 <div style="text-align: center;">
     <h1 style="margin: 0; padding-top: 4pt; padding-bottom: 4pt;">
         GAZİ ÜNİVERSİTESİ TEKNOLOJİ FAKÜLTESİ
@@ -498,6 +502,7 @@
         1 hafta önce <span class="p">1 nüshasının Fakültemiz İşyeri Eğitimi Birimine, 1 nüshasının bölüm başkanlığına ve
             1 nüshasının işyeri eğitimi yapılacak işletmeye teslim edilmesi zorunludur.</span></h2>
     </div>
+
 </body>
 
 </html>
