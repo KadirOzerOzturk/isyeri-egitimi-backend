@@ -28,20 +28,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-
+    @Autowired
     private StudentRepository studentRepository;
+    @Autowired
     private StudentsInGroupRepository studentsInGroupRepository;
-    private AuthenticationService authenticationService;
+    @Autowired
     private UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
-    @Autowired
-    public StudentService(StudentRepository studentRepository, StudentsInGroupRepository studentsInGroupRepository, AuthenticationService authenticationService, UserService userService) {
-        this.studentRepository = studentRepository;
-        this.authenticationService = authenticationService;
-        this.studentsInGroupRepository = studentsInGroupRepository;
-        this.userService = userService;
-    }
+
 
     public Optional<Student> getStudentByStudentNo(String studentNo){
         try {
@@ -147,7 +142,7 @@ public class StudentService {
         try {
             Student student = mapDtoToEntity(studentDto);
             studentRepository.save(student);
-            authenticationService.save(new UserRequest(studentDto.getEmail(),studentDto.getPassword(),studentDto.getFirstName(),studentDto.getLastName(),  Role.STUDENT.toString()));
+
             return student.getStudentId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the student: " + e.getMessage());
@@ -157,7 +152,6 @@ public class StudentService {
         if (studentDto == null) {
             return null;
         }
-
         Student student = new Student();
         student.setStudentNumber(studentDto.getStudentNumber());
         student.setFirstName(studentDto.getFirstName());
@@ -178,9 +172,8 @@ public class StudentService {
         if (student == null) {
             return null;
         }
-
         StudentDto studentDto = new StudentDto();
-        studentDto.setStudentId(student.getStudentId().toString());
+        studentDto.setStudentId(student.getStudentId());
         studentDto.setStudentNumber(student.getStudentNumber());
         studentDto.setFirstName(student.getFirstName());
         studentDto.setLastName(student.getLastName());

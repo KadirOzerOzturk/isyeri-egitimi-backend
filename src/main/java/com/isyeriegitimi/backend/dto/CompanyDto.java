@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CompanyDto {
     private UUID companyId;
-    private String companyNumber;
     private String password;
     private String name;
     private String email;

@@ -19,14 +19,10 @@ import java.util.UUID;
 @Service
 public class CommissionService {
 
-    private final CommissionRepository commissionRepository;
-    private final AuthenticationService authenticationService;
-
     @Autowired
-    public CommissionService(CommissionRepository commissionRepository, AuthenticationService authenticationService) {
-        this.commissionRepository = commissionRepository;
-        this.authenticationService = authenticationService;
-    }
+    private  CommissionRepository commissionRepository;
+
+
 
     public Commission getCommissionByCommissionNo(String commissionNo) {
         try {
@@ -77,7 +73,6 @@ public class CommissionService {
         try {
             Commission commission = mapToEntity(commissionDto);
             commissionRepository.save(commission);
-            authenticationService.save(new UserRequest(commission.getEmail(), commission.getPassword(),commissionDto.getFirstName(),commissionDto.getLastName(), Role.COMMISSION.toString()));
             return commission.getCommissionId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the commission: " + e.getMessage());
@@ -101,7 +96,7 @@ public class CommissionService {
         commission.setCommissionNumber(commissionDto.getCommissionNumber());
         commission.setEmail(commissionDto.getEmail());
         commission.setAbout(commissionDto.getAbout());
-        commission.setPassword(commissionDto.getPassword());
+
 
         return  commission;
     }

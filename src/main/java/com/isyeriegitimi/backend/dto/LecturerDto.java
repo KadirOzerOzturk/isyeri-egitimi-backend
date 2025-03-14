@@ -19,5 +19,4 @@ public class LecturerDto {
     private String faculty;
     private String about;
     private String lecturerNumber;
-    private String password;
 }

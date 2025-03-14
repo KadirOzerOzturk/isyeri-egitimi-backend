@@ -4,6 +4,7 @@ import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.security.dto.PasswordChangeRequest;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> save(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<ApiResponse> save(@Valid @RequestBody UserRequest userRequest) {
         ApiResponse response =authenticationService.save(userRequest);
         if (!response.isSuccess()) {
             return ResponseEntity

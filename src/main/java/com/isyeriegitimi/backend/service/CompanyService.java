@@ -15,11 +15,11 @@ import java.util.UUID;
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
-    private final AuthenticationService authenticationService;
 
-    public CompanyService(CompanyRepository companyRepository, AuthenticationService authenticationService) {
+
+    public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
-        this.authenticationService = authenticationService;
+
     }
 
     public List<Company> getAllCompanies() {
@@ -39,10 +39,7 @@ public class CompanyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Company", "Company ID", companyId.toString()));
     }
 
-    public Company getCompanyByCompanyNo(String companyNo) {
-        return companyRepository.findByCompanyNumber(companyNo)
-                .orElseThrow(() -> new ResourceNotFoundException("Company", "Company Number", companyNo));
-    }
+
 
     public void update(Company company) {
         if (!companyRepository.existsById(company.getCompanyId())) {
@@ -69,7 +66,6 @@ public class CompanyService {
   public void save(CompanyDto companyDto) {
     try {
         companyRepository.save(mapToEntity(companyDto));
-        authenticationService.save(new UserRequest(companyDto.getEmail(), companyDto.getPassword(),companyDto.getName(),"", Role.COMPANY.toString()));
     } catch (Exception e) {
         throw new InternalServerErrorException("An error occurred while saving the company: " + e.getMessage());
     }
@@ -83,7 +79,6 @@ public class CompanyService {
 
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyId(company.getCompanyId());
-        companyDto.setCompanyNumber(company.getCompanyNumber());
         companyDto.setName(company.getName());
         companyDto.setEmail(company.getEmail());
         companyDto.setAddress(company.getAddress());
@@ -96,8 +91,6 @@ public class CompanyService {
     public Company mapToEntity(CompanyDto companyDto){
         Company company =new Company();
         company.setCompanyId(companyDto.getCompanyId());
-        company.setCompanyNumber(companyDto.getCompanyNumber());
-        company.setPassword(companyDto.getPassword());
         company.setName(companyDto.getName());
         company.setEmail(companyDto.getEmail());
         company.setAddress(companyDto.getAddress());

@@ -28,9 +28,6 @@ public class Lecturer {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
     @Column(name = "faculty")
     private String faculty;
 

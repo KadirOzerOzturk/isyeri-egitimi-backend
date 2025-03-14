@@ -21,17 +21,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class LecturerService {
-
-    private final LecturerRepository lecturerRepository;
-    private final StudentsInGroupRepository studentsInGroupRepository;
-    private final AuthenticationService authenticationService;
-
     @Autowired
-    public LecturerService(LecturerRepository lecturerRepository, StudentsInGroupRepository studentsInGroupRepository, AuthenticationService authenticationService) {
-        this.lecturerRepository = lecturerRepository;
-        this.studentsInGroupRepository = studentsInGroupRepository;
-        this.authenticationService = authenticationService;
-    }
+    private  LecturerRepository lecturerRepository;
+    @Autowired
+    private  StudentsInGroupRepository studentsInGroupRepository;
+
+
 
     public Optional<Lecturer> getLecturerByLecturerNumber(String lecturerNumber) {
         try {
@@ -106,7 +101,6 @@ public class LecturerService {
                 .faculty(lecturerDto.getFaculty())
                 .about(lecturerDto.getAbout())
                 .lecturerNumber(lecturerDto.getLecturerNumber())
-                .password(lecturerDto.getPassword())
                 .build();
     }
 
@@ -126,7 +120,6 @@ public class LecturerService {
         try {
             Lecturer lecturer = mapToLecturerEntity(lecturerDto);
             lecturerRepository.save(lecturer);
-            authenticationService.save(new UserRequest( lecturerDto.getEmail(), lecturerDto.getPassword(),lecturerDto.getFirstName(),lecturerDto.getLastName(),Role.LECTURER.toString()));
             return lecturer.getLecturerId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the lecturer: " + e.getMessage());

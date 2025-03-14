@@ -20,14 +20,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID companyId;
 
-    @Column(name = "company_number", nullable = false, unique = true)
-    private String companyNumber;
-
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-
-    @Column(name = "password", nullable = false)
-    private String password;
 
     @Column(name = "name", nullable = false)
     private String name;

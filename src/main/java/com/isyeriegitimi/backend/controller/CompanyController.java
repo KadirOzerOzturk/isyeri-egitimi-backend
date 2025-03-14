@@ -44,7 +44,6 @@ public class CompanyController {
             company.setCompanyId(companyDto.getCompanyId());
             company.setAbout(companyDto.getAbout());
             company.setSector(companyDto.getSector());
-            company.setCompanyNumber(companyDto.getCompanyNumber());
             companyService.update(company);
             return ResponseEntity.ok(ApiResponse.success("Company updated successfully", "Update successful"));
         } catch (ResourceNotFoundException ex) {
