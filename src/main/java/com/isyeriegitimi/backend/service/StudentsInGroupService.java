@@ -24,15 +24,12 @@ import java.util.UUID;
 public class StudentsInGroupService {
 
     private final StudentsInGroupRepository studentsInGroupRepository;
-    private final LecturerRepository  lecturerRepository;
     private final StudentRepository studentRepository;
-
     private final StudentGroupRepository studentGroupRepository;
 
     @Autowired
-    public StudentsInGroupService(StudentsInGroupRepository studentsInGroupRepository, LecturerRepository lecturerRepository, StudentRepository studentRepository, StudentGroupRepository studentGroupRepository) {
+    public StudentsInGroupService(StudentsInGroupRepository studentsInGroupRepository,  StudentRepository studentRepository, StudentGroupRepository studentGroupRepository) {
         this.studentsInGroupRepository = studentsInGroupRepository;
-        this.lecturerRepository = lecturerRepository;
         this.studentRepository = studentRepository;
         this.studentGroupRepository = studentGroupRepository;
     }

@@ -20,6 +20,6 @@ public class StudentGroup {
     private UUID groupId;
 
     @ManyToOne
-    @JoinColumn(name = "lecturer_id")
+    @JoinColumn(name = "lecturer_id",nullable = true)
     private Lecturer lecturer;
 }

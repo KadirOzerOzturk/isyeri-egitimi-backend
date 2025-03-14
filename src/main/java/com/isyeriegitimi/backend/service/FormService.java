@@ -83,6 +83,7 @@ public class FormService {
         try {
             formAnswerRepository.deleteAllByFormId(id);
             formQuestionRepository.deleteAllByFormId(id);
+            formSignatureRepository.deleteAllByFormId(id);
             formRepository.deleteById(id);
 
         } catch (Exception e) {

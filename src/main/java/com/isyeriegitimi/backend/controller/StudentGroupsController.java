@@ -37,6 +37,9 @@ public class StudentGroupsController {
     public ResponseEntity<ApiResponse<?>> deleteGroup(@PathVariable UUID groupId){
             return  ResponseEntity.ok(ApiResponse.success(studentGroupsService.deleteGroup(groupId),"Group deleted successfully"));
     }
-
+    @GetMapping("/autoCreate")
+    public ResponseEntity<ApiResponse<?>> autoCreateGroups(){
+        return ResponseEntity.ok(ApiResponse.success(studentGroupsService.autoCreate(),"Groups created successfully"));
+    }
 
 }

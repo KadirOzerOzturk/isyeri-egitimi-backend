@@ -97,15 +97,15 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateForm1ByStudentId(DownloadFormRequest downloadFormRequest) throws Exception {
-        Optional<Student> student = studentRepository.findById(downloadFormRequest.getFormId());
-        StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(downloadFormRequest.getFormId())
+    public ByteArrayOutputStream generateForm1ByStudentId(UUID studentId) throws Exception {
+        Optional<Student> student = studentRepository.findById(studentId);
+        StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(downloadFormRequest.getUserId(), downloadFormRequest.getUserRole());
+        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, String.valueOf(Role.STUDENT));
 
         // Corrected the method call
-        List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(downloadFormRequest.getFormId() , downloadFormRequest.getUserId(),Role.valueOf(downloadFormRequest.getUserRole()));
+       // List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(downloadFormRequest.getFormId() , downloadFormRequest.getUserId(),Role.valueOf(downloadFormRequest.getUserRole()));
 
         BufferedImage barcodeImage = generateEAN13BarcodeImage();
         String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
@@ -115,7 +115,7 @@ public class PdfReportService {
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
         context.setVariable("answers", formAnswers);
-        context.setVariable("signatures", formSignatures);
+     //   context.setVariable("signatures", formSignatures);
 
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();

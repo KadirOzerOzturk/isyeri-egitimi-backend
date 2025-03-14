@@ -42,4 +42,13 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
                                      AND file_name = ?
         """, nativeQuery = true)
     Optional<FileInfo> findByOwnersContainingAndFileName(@Param("owner") String owner, @Param("fileName") String fileName);
+    @Query(value = """
+    SELECT * 
+    FROM file_info 
+    WHERE owners @> CAST(:ownerRoleJson AS jsonb)
+    """, nativeQuery = true)
+    List<FileInfo> findByOwner(@Param("ownerRoleJson") String ownerRoleJson);
+
+
+
 }

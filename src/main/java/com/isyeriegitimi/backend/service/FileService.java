@@ -132,4 +132,17 @@ public class FileService {
             throw new InternalServerErrorException("An error occurred while fetching the file: " + e.getMessage());
         }
     }
+
+    public List<FileInfo> getFilesByUserId(UUID userId, String userRole) {
+        try {
+            String ownerRoleJson = String.format("[{\"id\": \"%s\", \"role\": \"%s\"}]", userId, userRole);
+
+            return fileInfoRepository.findByOwner(ownerRoleJson);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
+        }
+    }
+
+
+
 }

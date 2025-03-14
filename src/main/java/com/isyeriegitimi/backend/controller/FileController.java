@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +35,10 @@ public class FileController {
     public ResponseEntity<ApiResponse<FileInfoDto>> getFile(@PathVariable UUID userId, @PathVariable String userRole, @PathVariable String fileName){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFile(userId,userRole,fileName), "File fetched successfully"));
     }
+    @GetMapping("/{userId}/{userRole}")
+    public ResponseEntity<ApiResponse<List<FileInfo>>> getFilesByUserId(@PathVariable UUID userId, @PathVariable String userRole){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getFilesByUserId(userId,userRole), "File fetched successfully"));
+    }
 
 
     @GetMapping("/all")
@@ -43,7 +49,11 @@ public class FileController {
     public ResponseEntity<ApiResponse<?>> getFile(@PathVariable UUID id){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFileById(id), "File fetched successfully"));
     }
-
+    @PutMapping("/update/{fileId}")
+    public ResponseEntity<ApiResponse<?>> updateFile(@PathVariable UUID id,@RequestBody FileInfo fileInfo){
+        fileService.updateFile(id,fileInfo);
+        return ResponseEntity.ok(ApiResponse.success(null,"File updated successfully"));
+    }
 
 
 }

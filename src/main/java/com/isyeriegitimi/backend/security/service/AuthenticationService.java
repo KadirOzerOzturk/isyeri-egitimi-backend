@@ -47,7 +47,7 @@ public class AuthenticationService {
                .username(userRequest.getUsername())
                .title(userRequest.getTitle())
                .password(passwordEncoder.encode(userRequest.getPassword()))
-               .role(Role.USER)
+               .role(Role.valueOf(userRequest.getTitle()))
                .build();
 
        userRepository.save(user);
@@ -60,6 +60,8 @@ public class AuthenticationService {
                           .build();
                 studentRepository.save(student);
                 break;
+           case "COMPANY":
+
        }
 
        return ApiResponse.success(user, "Successfully saved");
