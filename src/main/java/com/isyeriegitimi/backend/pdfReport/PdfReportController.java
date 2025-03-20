@@ -47,9 +47,9 @@ public class PdfReportController {
 
         return new ResponseEntity<>(pdfContents, headers, HttpStatus.OK);
     }
-    @GetMapping("/download/form3/{studentId}")
-    public ResponseEntity<byte[]> downloadForm3(@PathVariable UUID studentId) throws IOException {
-        byte[] pdfContents = pdfReportService.generateForm3ByStudentId(studentId).toByteArray();
+    @GetMapping("/download/form3/{studentId}/{formId}")
+    public ResponseEntity<byte[]> downloadForm3(@PathVariable UUID studentId,@PathVariable UUID formId) throws IOException {
+        byte[] pdfContents = pdfReportService.generateForm3ByStudentId(formId,studentId).toByteArray();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=form3.pdf");
         headers.add("Content-Type", "application/pdf");

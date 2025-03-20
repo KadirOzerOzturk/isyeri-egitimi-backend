@@ -114,14 +114,14 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateForm1ByStudentId(UUID formId,UUID studentId) throws Exception {
+    public ByteArrayOutputStream generateForm1ByStudentId(UUID formId, UUID studentId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
-                .orElseThrow(() -> new RuntimeException("Student group not found"))
+                .orElseThrow(() -> new RuntimeException("Öğrenci grubu bulunamadı"))
                 .getStudentGroup();
         List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, String.valueOf(Role.STUDENT));
         List<FormSignature> signatures = formSignatureRepository.findAllByFormId(formId);
-        QrInfo qr= generateQR(generateUnique12DigitNumber());
+        QrInfo qr = generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
         context.setVariable("qr", "data:image/png;base64," + qr.getImage());
@@ -129,6 +129,16 @@ public class PdfReportService {
         context.setVariable("lecturer", studentGroup.getLecturer());
         context.setVariable("answers", formAnswers);
         context.setVariable("signatures", signatures);
+
+        // Cevapları dinamik olarak Thymeleaf bağlamına ekleyin
+        for (FormAnswer answer : formAnswers) {
+            String questionText = answer.getFormQuestion().getQuestionText();
+            String answerValue = answer.getAnswer();
+
+            // Soru metnini Thymeleaf değişkeni olarak kullanın (geçersiz karakterleri temizleyin)
+            String variableName = questionText.replaceAll("[^a-zA-Z0-9]", "");
+            context.setVariable(variableName, answerValue);
+        }
 
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
@@ -156,19 +166,27 @@ public class PdfReportService {
 
         return pdfOutputStream;
     }
-    public ByteArrayOutputStream generateForm3ByStudentId(UUID studentId) {
+    public ByteArrayOutputStream generateForm3ByStudentId(UUID formId, UUID studentId) {
         Optional<Student> student = studentRepository.findById(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
         List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, "STUDENT");
-        List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(UUID.fromString("0f7ba07d-1d21-40c3-9b3e-dc7f823d22e9"),student.get().getCompany().getCompanyId(), Role.valueOf("COMPANY"));
-        System.out.println("Form Signatures: " + formSignatures);
+       // List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(UUID.fromString("00d23916-1b83-4ba8-80cd-4995e4f2c24f"),student.get().getCompany().getCompanyId(), Role.valueOf("COMPANY"));
+
         Context context = new Context();
-        context.setVariable("signatures", formSignatures);
+        for (FormAnswer answer : formAnswers) {
+            String questionText = answer.getFormQuestion().getQuestionText();
+            String answerValue = answer.getAnswer();
+            System.out.println("Question Text: " + questionText);
+            System.out.println("Answer Value: " + answerValue);
+
+            String variableName = questionText.replaceAll("[^a-zA-Z0-9]", "");
+            context.setVariable(variableName, answerValue);
+        }
+      //  context.setVariable("signatures", formSignatures);
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
-        context.setVariable("answers", formAnswers);
 
 
         String htmlContent = templateEngine.process("form3", context);
@@ -220,7 +238,6 @@ public class PdfReportService {
     public ByteArrayOutputStream generateSurveyByStudentId(UUID studentId,UUID surveyId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         List<SurveyAnswer> surveyAnswers = surveyAnswerRepository.findBySurveyIdAndUserId(surveyId, studentId);
-        System.out.println("Survey Answers: " + surveyAnswers);
         List<SurveyQuestion> surveyQuestions = surveyQuestionRepository.findBySurvey_Id(surveyAnswers.get(0).getSurvey().getId()); ;
         BufferedImage barcodeImage = generateEAN13BarcodeImage();
         String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);

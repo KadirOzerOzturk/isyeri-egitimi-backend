@@ -8,6 +8,7 @@ import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.repository.AnnouncementRepository;
 import com.isyeriegitimi.backend.repository.ApplicationRepository;
 import com.isyeriegitimi.backend.repository.StudentRepository;
+import com.isyeriegitimi.backend.security.enums.Role;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,7 @@ public class ApplicationService {
                 .announcement(announcement.get())
                 .student(student.get())
                 .applicationDate(new Date())
+                .pendingRole(String.valueOf(Role.COMPANY))
                 .applicationStatus("Firma onayı bekleniyor.")
                 .build();
         applicationRepository.save(application);
@@ -89,14 +91,14 @@ public class ApplicationService {
         }
     }
     @Transactional
-    public void updateApplication(String applicationStatus, UUID applicationId) {
+    public void updateApplication(String pendingRole, UUID applicationId) {
     try {
         Optional<Application> existingApplication = applicationRepository.findByApplicationId(applicationId);
         if (existingApplication.isEmpty()) {
             throw new ResourceNotFoundException("Application", "id", applicationId.toString());
         }
         Application application = existingApplication.get();
-        application.setApplicationStatus(applicationStatus);
+        application.setPendingRole(pendingRole);
 
         applicationRepository.save(application);
 
@@ -104,4 +106,13 @@ public class ApplicationService {
         throw new InternalServerErrorException("Application could not be updated.");
     }
 }
+
+    public List<Application> getPendingApplicationsByRole(String confirmingRole) {
+        try{
+            List<Application> applications = applicationRepository.findByPendingRole(confirmingRole);
+            return applications;
+        }catch (Exception e){
+            throw  new InternalServerErrorException("Applications could not be fetched : " + e.getMessage());
+        }
+    }
 }

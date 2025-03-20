@@ -30,33 +30,12 @@ public class FileService {
     public UUID uploadFile(FileInfo fileInfo) {
         try {
 
-            Set<UUID> uniqueOwnerIds = new HashSet<>();
+            validateOwners(fileInfo.getOwners());
 
-            if (fileInfo.getOwners().isArray()) {
-                for (JsonNode ownerNode : fileInfo.getOwners()) {
-                    if (ownerNode.isObject() && ownerNode.has("id")) {
-                        String idStr = ownerNode.get("id").asText();
-                        UUID owner = UUID.fromString(idStr);
-
-                        if (!uniqueOwnerIds.add(owner)) {
-                            throw new IllegalArgumentException("Founded duplicated id in owners. Duplicated id : " + owner);
-                        }
-
-                        if (studentRepository.findById(owner).isEmpty() &&
-                                lecturerRepository.findById(owner).isEmpty() &&
-                                commissionRepository.findById(owner).isEmpty() &&
-                                companyRepository.findById(owner).isEmpty()) {
-                            throw new ResourceNotFoundException("Owner", "id", owner.toString());
-                        }
-                    } else {
-                        throw new IllegalArgumentException("Owners field should be an array of objects with id field.");
-                    }
-                }
-            } else {
-                throw new IllegalArgumentException("Owners field should be an json array.");
-            }
-
+            // Generate a random UUID for the new file
             UUID id = UUID.randomUUID();
+
+            // Insert the file info into the repository
             fileInfoRepository.insertFile(
                     id,
                     fileInfo.getFileName(),
@@ -65,12 +44,52 @@ public class FileService {
                     fileInfo.getData(),
                     fileInfo.getBarcodeNumber()
             );
+
             return id;
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while uploading the file: " + e.getMessage());
-
         }
     }
+
+    private void validateOwners(JsonNode owners) {
+        if (!owners.isArray()) {
+            throw new IllegalArgumentException("Owners field should be a JSON array.");
+        }
+
+        Set<UUID> uniqueOwnerIds = new HashSet<>();
+
+        for (JsonNode ownerNode : owners) {
+            validateOwner(ownerNode, uniqueOwnerIds);
+        }
+    }
+
+    private void validateOwner(JsonNode ownerNode, Set<UUID> uniqueOwnerIds) {
+        if (!ownerNode.isObject() || !ownerNode.has("id")) {
+            throw new IllegalArgumentException("Each owner should be an object with an 'id' field.");
+        }
+
+        String idStr = ownerNode.get("id").asText();
+        String role= ownerNode.get("role").asText();
+        UUID ownerId = UUID.fromString(idStr);
+
+        // Check for duplicate owner ID
+        if (!uniqueOwnerIds.add(ownerId)) {
+            throw new IllegalArgumentException("Found duplicated id in owners. Duplicated id: " + ownerId);
+        }
+
+        // Validate that the owner exists in one of the repositories
+        if (!role.equalsIgnoreCase("announcement")  &&  isOwnerNotFound(ownerId)) {
+            throw new ResourceNotFoundException("Owner", "id", ownerId.toString());
+        }
+    }
+
+    private boolean isOwnerNotFound(UUID ownerId) {
+        return studentRepository.findById(ownerId).isEmpty() &&
+                lecturerRepository.findById(ownerId).isEmpty() &&
+                commissionRepository.findById(ownerId).isEmpty() &&
+                companyRepository.findById(ownerId).isEmpty();
+    }
+
 
     public List<FileInfo> getFiles() {
         try {
@@ -99,12 +118,15 @@ public class FileService {
     public void updateFile(UUID id, FileInfo fileInfo) {
         try {
             FileInfo file = fileInfoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
-            file.setFileName(fileInfo.getFileName());
-            file.setFileType(fileInfo.getFileType());
-            file.setOwners(fileInfo.getOwners());
-            file.setData(fileInfo.getData());
-            file.setBarcodeNumber(fileInfo.getBarcodeNumber());
-            fileInfoRepository.save(file);
+
+            fileInfoRepository.updateFile(
+                    id,
+                    fileInfo.getFileName(),
+                    fileInfo.getFileType(),
+                    objectMapper.writeValueAsString(fileInfo.getOwners()),
+                    fileInfo.getData(),
+                    fileInfo.getBarcodeNumber()
+            );
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the file: " + e.getMessage());
         }
@@ -144,5 +166,13 @@ public class FileService {
     }
 
 
+    public List<FileInfo> getFilesByName(String fileName) {
+        try {
+            return fileInfoRepository.findAllByFileName(fileName);
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
 
+        }
+
+    }
 }

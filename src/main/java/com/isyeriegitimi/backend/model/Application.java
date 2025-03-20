@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.model;
 
+import com.isyeriegitimi.backend.security.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,8 @@ public class Application {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
+    private String  pendingRole;
 
     private String applicationStatus;
 }

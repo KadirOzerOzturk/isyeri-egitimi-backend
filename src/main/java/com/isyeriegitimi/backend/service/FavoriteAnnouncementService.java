@@ -28,7 +28,7 @@ public class FavoriteAnnouncementService {
     public List<FavoriteAnnouncement> getFavoriteAnnouncements(UUID studentId){
         List<FavoriteAnnouncement> favorites = favoriteAnnouncementRepository.findByStudent_StudentId(studentId);
         if (favorites.isEmpty()) {
-            throw new ResourceNotFoundException("FavoriteAnnouncement", "studentId", studentId.toString());
+            return favorites;
         }
         Collections.sort(favorites, new Comparator<FavoriteAnnouncement>() {
             @Override

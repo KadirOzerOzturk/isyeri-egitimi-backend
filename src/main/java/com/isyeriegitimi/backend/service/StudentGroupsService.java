@@ -98,46 +98,49 @@ public class StudentGroupsService {
         try {
             List<Student> studentList = studentRepository.findAll();
 
-            // Group students by company address
             Map<String, List<Student>> studentsByCompanyAddress = studentList.stream()
                     .filter(student -> student.getCompany() != null && student.getCompany().getAddress() != null)
                     .collect(Collectors.groupingBy(student -> student.getCompany().getAddress()));
 
             List<StudentGroup> studentGroups = new ArrayList<>();
-            List<Student> ungroupedStudents = new ArrayList<>();
+            Set<Student> alreadyGroupedStudents = studentsInGroupRepository.findAll().stream()
+                    .map(StudentInGroup::getStudent)
+                    .collect(Collectors.toSet());
 
-            // Add students with a company address to respective groups
             for (Map.Entry<String, List<Student>> entry : studentsByCompanyAddress.entrySet()) {
-                StudentGroup studentGroup = StudentGroup.builder().build();
-                studentGroup = studentGroupRepository.save(studentGroup);  // Save the group first
-                studentGroups.add(studentGroup);
+                List<Student> studentsToGroup = entry.getValue().stream()
+                        .filter(student -> !alreadyGroupedStudents.contains(student))
+                        .collect(Collectors.toList());
 
-                for (Student student : entry.getValue()) {
-                    StudentInGroup studentInGroup = StudentInGroup.builder()
-                            .studentGroup(studentGroup)
-                            .student(student)
-                            .build();
-                    studentsInGroupRepository.save(studentInGroup);
+                if (!studentsToGroup.isEmpty()) {
+                    StudentGroup studentGroup = StudentGroup.builder().build();
+                    studentGroup = studentGroupRepository.save(studentGroup);
+                    studentGroups.add(studentGroup);
+
+                    for (Student student : studentsToGroup) {
+                        StudentInGroup studentInGroup = StudentInGroup.builder()
+                                .studentGroup(studentGroup)
+                                .student(student)
+                                .build();
+                        studentsInGroupRepository.save(studentInGroup);
+                    }
                 }
             }
 
-            // Collect students who do not have a company address
-            ungroupedStudents = studentList.stream()
-                    .filter(student -> student.getCompany() == null || student.getCompany().getAddress() == null)
+            List<Student> ungroupedStudents = studentList.stream()
+                    .filter(student -> (student.getCompany() == null || student.getCompany().getAddress() == null)
+                            && !alreadyGroupedStudents.contains(student))
                     .collect(Collectors.toList());
 
-            // If there are ungrouped students, assign them to existing groups
             if (!ungroupedStudents.isEmpty()) {
-                for (Student student : ungroupedStudents) {
-                    // If there is no student group, create a new one
-                    if (studentGroups.isEmpty()) {
-                        StudentGroup studentGroup = StudentGroup.builder().build();
-                        studentGroup = studentGroupRepository.save(studentGroup);  // Save the group first
-                        studentGroups.add(studentGroup);
-                    }
+                StudentGroup studentGroup = studentGroups.isEmpty() ? StudentGroup.builder().build() : studentGroups.get(0);
 
-                    // Pick a group for the ungrouped student (you can customize this logic)
-                    StudentGroup studentGroup = studentGroups.get(0); // Assign to the first group (for example)
+                if (studentGroups.isEmpty()) {
+                    studentGroup = studentGroupRepository.save(studentGroup);
+                    studentGroups.add(studentGroup);
+                }
+
+                for (Student student : ungroupedStudents) {
                     StudentInGroup studentInGroup = StudentInGroup.builder()
                             .studentGroup(studentGroup)
                             .student(student)
@@ -148,7 +151,7 @@ public class StudentGroupsService {
 
             return studentGroups;
         } catch (Exception e) {
-            throw new InternalServerErrorException("Otomatik grup oluşturma başarısız oldu");
+            throw new InternalServerErrorException("An error occurred while creating group: " + e.getMessage());
         }
     }
 

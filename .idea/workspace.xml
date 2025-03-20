@@ -4,21 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Refactor company and student services, update DTOs, and remove password fields">
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Add QR code generation and lecturer assignment functionality, update templates and controllers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/LecturerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/LecturerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentGroupsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentGroupsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/ApplicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/ApplicationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentGroupsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentGroupsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form3.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form4.1.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form4.1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form4.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/taahutname.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/taahutname.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/LecturerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/LecturerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentGroupsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentGroupsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/ApplicationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Application$ApplicationBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Application$ApplicationBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/ApplicationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/ApplicationRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentGroupsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentGroupsService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +41,7 @@
         <option value="Interface" />
         <option value="Dockerfile" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -371,7 +378,14 @@
       <workItem from="1741702562024" duration="5817000" />
       <workItem from="1741874434388" duration="6859000" />
       <workItem from="1741952879221" duration="3581000" />
-      <workItem from="1741963095060" duration="4267000" />
+      <workItem from="1741963095060" duration="4525000" />
+      <workItem from="1741983999875" duration="149000" />
+      <workItem from="1742032340985" duration="2730000" />
+      <workItem from="1742046465417" duration="131000" />
+      <workItem from="1742225611413" duration="244000" />
+      <workItem from="1742306547007" duration="5338000" />
+      <workItem from="1742371258291" duration="7830000" />
+      <workItem from="1742398472845" duration="9189000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -645,7 +659,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741956477866</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="feat: Add QR code generation and lecturer assignment functionality, update templates and controllers">
+      <option name="closed" value="true" />
+      <created>1741967997295</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1741967997295</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -687,31 +709,7 @@
     <MESSAGE value="feat: Enhance file management and form handling with new features and validations" />
     <MESSAGE value="feat: auto create student groups" />
     <MESSAGE value="feat: Refactor company and student services, update DTOs, and remove password fields" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Refactor company and student services, update DTOs, and remove password fields" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java</url>
-          <line>50</line>
-          <properties class="com.isyeriegitimi.backend.pdfReport.PdfReportController" method="downloadForm3">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="feat: Add QR code generation and lecturer assignment functionality, update templates and controllers" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add QR code generation and lecturer assignment functionality, update templates and controllers" />
   </component>
 </project>

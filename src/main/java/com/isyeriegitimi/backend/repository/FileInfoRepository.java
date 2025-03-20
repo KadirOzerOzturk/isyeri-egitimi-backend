@@ -24,6 +24,16 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
                     @Param("owners") String owners,
                     @Param("data") String data,
                     @Param("barcodeNumber") String barcodeNumber);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE file_info SET file_name = :fileName, file_type = :fileType, owners = CAST(:owners AS jsonb), data = :data, barcode_number = :barcodeNumber WHERE id = :id",
+            nativeQuery = true)
+    void updateFile(@Param("id") UUID id,
+                    @Param("fileName") String fileName,
+                    @Param("fileType") String fileType,
+                    @Param("owners") String owners,
+                    @Param("data") String data,
+                    @Param("barcodeNumber") String barcodeNumber);
 
 @Query(value = """
         SELECT
@@ -49,6 +59,7 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
     """, nativeQuery = true)
     List<FileInfo> findByOwner(@Param("ownerRoleJson") String ownerRoleJson);
 
+    List<FileInfo> findAllByFileName(String  fileName);
 
 
 }

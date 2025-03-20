@@ -50,10 +50,13 @@ public class FileController {
         return ResponseEntity.ok(ApiResponse.success(fileService.getFileById(id), "File fetched successfully"));
     }
     @PutMapping("/update/{fileId}")
-    public ResponseEntity<ApiResponse<?>> updateFile(@PathVariable UUID id,@RequestBody FileInfo fileInfo){
-        fileService.updateFile(id,fileInfo);
+    public ResponseEntity<ApiResponse<?>> updateFile(@PathVariable UUID fileId,@RequestBody FileInfo fileInfo){
+        fileService.updateFile(fileId,fileInfo);
         return ResponseEntity.ok(ApiResponse.success(null,"File updated successfully"));
     }
-
+    @GetMapping("/fileName/{fileName}")
+    public ResponseEntity<ApiResponse<?>> getFilesByFileName(@PathVariable String fileName){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getFilesByName(fileName),"Files fetched successfully"));
+    }
 
 }

@@ -11,6 +11,7 @@ import java.util.UUID;
 public interface ApplicationRepository extends JpaRepository<Application, UUID> {
 
     List<Application> findAllByAnnouncement_AnnouncementId(UUID id);
+    List<Application> findByPendingRole(String role);
     List<Application> findAllByStudent_StudentNumber(String studentNo);
     List<Application> findAllByStudent_StudentId(UUID studentId);
 
