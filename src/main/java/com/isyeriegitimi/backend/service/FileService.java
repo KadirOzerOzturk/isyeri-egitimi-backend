@@ -8,6 +8,7 @@ import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.FileInfo;
 import com.isyeriegitimi.backend.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -24,7 +25,8 @@ public class FileService {
     private CommissionRepository commissionRepository;
     @Autowired
     private CompanyRepository companyRepository;
-
+    @Autowired
+    private FileLogRepository fileLogRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public UUID uploadFile(FileInfo fileInfo) {
@@ -42,7 +44,11 @@ public class FileService {
                     fileInfo.getFileType(),
                     objectMapper.writeValueAsString(fileInfo.getOwners()),
                     fileInfo.getData(),
-                    fileInfo.getBarcodeNumber()
+                    fileInfo.getBarcodeNumber(),
+                    new Date(),
+                    null
+
+
             );
 
             return id;
@@ -108,6 +114,8 @@ public class FileService {
                     .fileType(fileInfo.getFileType())
                     .owners(objectMapper.writeValueAsString(fileInfo.getOwners()))
                     .data(fileInfo.getData())
+                    .deleteDate(fileInfo.getDeleteDate())
+                    .uploadDate(fileInfo.getUploadDate())
                     .barcodeNumber(fileInfo.getBarcodeNumber())
                     .build();
         }catch (Exception e){
@@ -125,7 +133,9 @@ public class FileService {
                     fileInfo.getFileType(),
                     objectMapper.writeValueAsString(fileInfo.getOwners()),
                     fileInfo.getData(),
-                    fileInfo.getBarcodeNumber()
+                    fileInfo.getBarcodeNumber(),
+                    fileInfo.getUploadDate(),
+                    fileInfo.getDeleteDate()
             );
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the file: " + e.getMessage());
@@ -149,6 +159,8 @@ public class FileService {
                     .owners(String.valueOf(fileInfo.getOwners()))
                     .data(fileInfo.getData())
                     .barcodeNumber(fileInfo.getBarcodeNumber())
+                    .uploadDate(fileInfo.getUploadDate())
+                    .deleteDate(fileInfo.getDeleteDate())
                     .build();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the file: " + e.getMessage());
@@ -174,5 +186,25 @@ public class FileService {
 
         }
 
+    }
+    @Transactional
+    public void deleteFile(UUID id) {
+        try {
+            FileInfoDto fileInfoDto= getFileById(id);
+            fileInfoRepository.deleteById(id);
+
+            fileLogRepository.insertFile(
+                    UUID.randomUUID(),
+                    fileInfoDto.getFileName(),
+                    fileInfoDto.getFileType(),
+                    objectMapper.writeValueAsString(fileInfoDto.getOwners()),
+                    fileInfoDto.getData(),
+                    fileInfoDto.getBarcodeNumber(),
+                    fileInfoDto.getUploadDate(),
+                    new Date()
+            );
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while deleting the file: " + e.getMessage());
+        }
     }
 }

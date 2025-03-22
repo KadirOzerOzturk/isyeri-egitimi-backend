@@ -58,5 +58,10 @@ public class FileController {
     public ResponseEntity<ApiResponse<?>> getFilesByFileName(@PathVariable String fileName){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFilesByName(fileName),"Files fetched successfully"));
     }
+    @DeleteMapping("/delete/{fileId}")
+    public ResponseEntity<ApiResponse<?>> deleteFile(@PathVariable UUID fileId){
+        fileService.deleteFile(fileId);
+        return ResponseEntity.ok(ApiResponse.success(null,"File deleted successfully"));
+    }
 
 }

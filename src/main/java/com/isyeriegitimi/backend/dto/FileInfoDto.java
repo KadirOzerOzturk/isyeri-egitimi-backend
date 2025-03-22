@@ -2,6 +2,7 @@ package com.isyeriegitimi.backend.dto;
 
 import lombok.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -16,4 +17,6 @@ public class FileInfoDto {
     private String signedBy;
     private String data;
     private String barcodeNumber;
+    private Date uploadDate;
+    private Date deleteDate;
 }

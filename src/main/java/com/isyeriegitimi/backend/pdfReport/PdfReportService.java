@@ -90,6 +90,18 @@ public class PdfReportService {
         byte[] imageBytes = baos.toByteArray();
         return Base64.getEncoder().encodeToString(imageBytes);
     }
+
+    private String convertToVariableName(String text) {
+        return text.toLowerCase()
+                .replace("ı", "i").replace("İ", "I")
+                .replace("ğ", "g").replace("Ğ", "G")
+                .replace("ü", "u").replace("Ü", "U")
+                .replace("ş", "s").replace("Ş", "S")
+                .replace("ö", "o").replace("Ö", "O")
+                .replace("ç", "c").replace("Ç", "C")
+                .replaceAll("[^a-zA-Z0-9]", ""); // Sadece harf ve rakamları bırak
+    }
+
     public ByteArrayOutputStream generateWeeklyReportPdf(UUID studentId) throws IOException {
 
         List<WeeklyReport> reports = weeklyReportRepository.findByStudent_StudentId(studentId);
@@ -130,16 +142,12 @@ public class PdfReportService {
         context.setVariable("answers", formAnswers);
         context.setVariable("signatures", signatures);
 
-        // Cevapları dinamik olarak Thymeleaf bağlamına ekleyin
         for (FormAnswer answer : formAnswers) {
             String questionText = answer.getFormQuestion().getQuestionText();
             String answerValue = answer.getAnswer();
-
-            // Soru metnini Thymeleaf değişkeni olarak kullanın (geçersiz karakterleri temizleyin)
             String variableName = questionText.replaceAll("[^a-zA-Z0-9]", "");
             context.setVariable(variableName, answerValue);
         }
-
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
@@ -171,31 +179,31 @@ public class PdfReportService {
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, "STUDENT");
-       // List<FormSignature> formSignatures = formSignatureRepository.findAllByFormIdAndSignedByAndSignedByRole(UUID.fromString("00d23916-1b83-4ba8-80cd-4995e4f2c24f"),student.get().getCompany().getCompanyId(), Role.valueOf("COMPANY"));
+        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(UUID.fromString("92ab7d1e-0710-4a82-9be4-3b429cf33ded"), "LECTURER");
 
         Context context = new Context();
+
         for (FormAnswer answer : formAnswers) {
             String questionText = answer.getFormQuestion().getQuestionText();
             String answerValue = answer.getAnswer();
-            System.out.println("Question Text: " + questionText);
-            System.out.println("Answer Value: " + answerValue);
 
-            String variableName = questionText.replaceAll("[^a-zA-Z0-9]", "");
+            String variableName = convertToVariableName(questionText);
+
+            System.out.println("Variable Name: " + variableName + " = " + answerValue);
+
             context.setVariable(variableName, answerValue);
         }
-      //  context.setVariable("signatures", formSignatures);
+
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
-
 
         String htmlContent = templateEngine.process("form3", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
-
         return pdfOutputStream;
     }
+
 
     public ByteArrayOutputStream generateForm4ByStudentId(UUID studentId) {
         Optional<Student> student = studentRepository.findById(studentId);

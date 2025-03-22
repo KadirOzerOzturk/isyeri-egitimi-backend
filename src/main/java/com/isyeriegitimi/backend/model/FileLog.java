@@ -3,7 +3,10 @@ package com.isyeriegitimi.backend.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.isyeriegitimi.backend.converter.JsonNodeConverter;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,7 +16,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileInfo {
+public class FileLog {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -24,7 +27,9 @@ public class FileInfo {
     private JsonNode owners;
     @Column(columnDefinition = "TEXT")
     private String data;
+    private String barcodeNumber;
     private Date uploadDate;
     private Date deleteDate;
-    private String barcodeNumber;
+
+
 }
