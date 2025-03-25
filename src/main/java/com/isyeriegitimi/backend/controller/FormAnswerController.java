@@ -47,4 +47,8 @@ public class FormAnswerController {
         formAnswerService.saveAnswers(answers);
         return ResponseEntity.ok(ApiResponse.success(null,"Form cevapları başarıyla kaydedildi."));
     }
+    @GetMapping("/{formId}/{studentId}")
+    public ResponseEntity<ApiResponse<List<FormAnswer>>> getAnswersByFormIdAndStudentId(@PathVariable UUID formId, @PathVariable UUID studentId) {
+        return ResponseEntity.ok(ApiResponse.success(formAnswerService.getAnswersByFormIdAndStudentId(formId, studentId), "Answers fetched successfully."));
+    }
 }

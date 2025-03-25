@@ -27,7 +27,7 @@ public class FormSignature {
     private UUID signedBy;
     private String signedByRole;
 
-    private String signature;
+    private UUID studentId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date signedAt;

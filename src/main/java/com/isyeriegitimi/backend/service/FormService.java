@@ -132,4 +132,24 @@ public class FormService {
 
         return arrayNode;
     }
+
+    public Map<String, Object> getSignedFormsByStudentId(UUID userId, String userRole, UUID studentId) {
+        try {
+            List<FormSignature> signedForms = formSignatureRepository.findBySignedByAndSignedByRoleAndStudentId(userId, userRole,studentId);
+            List<Form> allForms = formRepository.findAll();
+
+            List<Form> unsignedForms = allForms.stream()
+                    .filter(form -> form.getRoles().contains(Role.valueOf(userRole)))
+                    .filter(form -> signedForms.stream().noneMatch(sig -> sig.getForm().equals(form)))
+                    .toList();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("signedForms", signedForms);
+            response.put("unsignedForms", unsignedForms);
+            return response;
+
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error: " + e.getMessage());
+        }
+    }
 }

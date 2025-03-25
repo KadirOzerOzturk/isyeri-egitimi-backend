@@ -56,6 +56,10 @@ public class StudentController {
      public ResponseEntity<ApiResponse<?>> saveStudent(@RequestBody StudentDto studentDto) {
                 return ResponseEntity.ok(ApiResponse.success( studentService.save(studentDto), "Student created successfully"));
      }
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<ApiResponse<List<StudentDto>>> getStudentsByCompanyId(@PathVariable UUID companyId){
 
+        return ResponseEntity.ok(ApiResponse.success(studentService.getStudentsByCompanyId(companyId),"Students fetched successfully"));
+    }
 
 }

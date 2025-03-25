@@ -191,5 +191,18 @@ public class StudentService {
     }
 
 
-
+    public List<StudentDto> getStudentsByCompanyId(UUID companyId) {
+        try {
+            List<Student> studentList = studentRepository.findByCompanyCompanyId(companyId);
+            if (studentList.isEmpty()) {
+                throw new ResourceNotFoundException("Student", "Company ID", companyId.toString());
+            }
+            List<StudentDto> studentDtoList = studentList.stream()
+                    .map(student -> mapToDto(student))
+                    .collect(Collectors.toList());
+            return studentDtoList;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
+    }
 }

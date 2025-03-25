@@ -53,20 +53,39 @@ public class FormAnswerService {
     public void saveAnswers(List<FormAnswer> formAnswerRequests) {
         try {
             List<FormAnswer> answers = formAnswerRequests.stream().map(request -> {
-                FormAnswer answer = new FormAnswer();
-                answer.setForm(formRepository.findById(request.getForm().getId()).orElseThrow(() -> new RuntimeException("Form bulunamadı!")));
-                answer.setFormQuestion(formQuestionRepository.findById(request.getFormQuestion().getQuestionId()).orElseThrow(() -> new RuntimeException("Form sorusu bulunamadı!")));
-                answer.setUserId(request.getUserId());
-                answer.setUserRole(request.getUserRole());
-                answer.setAnswer(request.getAnswer());
-                return answer;
+                FormAnswer existingAnswer = formAnswerRepository
+                        .findByForm_IdAndFormQuestionQuestionIdAndUserId(
+                                request.getForm().getId(),
+                                request.getFormQuestion().getQuestionId(),
+                                request.getUserId()
+                        )
+                        .orElse(null);
+
+                if (existingAnswer != null) {
+                    // Eğer cevap zaten varsa, sadece güncelle
+                    existingAnswer.setAnswer(request.getAnswer());
+                    return existingAnswer;
+                } else {
+                    // Yeni cevap ekle
+                    FormAnswer answer = new FormAnswer();
+                    answer.setForm(formRepository.findById(request.getForm().getId())
+                            .orElseThrow(() -> new RuntimeException("Form bulunamadı!")));
+                    answer.setFormQuestion(formQuestionRepository.findById(request.getFormQuestion().getQuestionId())
+                            .orElseThrow(() -> new RuntimeException("Form sorusu bulunamadı!")));
+                    answer.setUserId(request.getUserId());
+                    answer.setUserRole(request.getUserRole());
+                    answer.setAnswer(request.getAnswer());
+                    answer.setStudentId(request.getStudentId());
+                    return answer;
+                }
             }).collect(Collectors.toList());
 
             formAnswerRepository.saveAll(answers);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while saving the answers: " + e.getMessage());
         }
     }
+
     public FormAnswer updateAnswer(UUID id, FormAnswer updatedAnswer) {
         try {
             FormAnswer answer = getAnswerById(id);
@@ -85,6 +104,14 @@ public class FormAnswerService {
             formAnswerRepository.deleteById(id);
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while deleting the answer: " + e.getMessage());
+        }
+    }
+
+    public List<FormAnswer> getAnswersByFormIdAndStudentId(UUID formId, UUID studentId) {
+        try {
+            return formAnswerRepository.findByForm_IdAndStudentId(formId, studentId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the answers: " + e.getMessage());
         }
     }
 }

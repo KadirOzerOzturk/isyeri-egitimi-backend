@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,7 +33,7 @@ public class FormSignatureService {
     }
 
     @Transactional
-    public String signForm(UUID formId, UUID userId, String userRole) {
+    public String signForm(UUID formId, UUID userId, String userRole,UUID studentID) {
         Form form = formRepository.findById(formId)
                 .orElseThrow(() -> new ResourceNotFoundException("Form", "id", formId.toString()));
 
@@ -61,9 +62,19 @@ public class FormSignatureService {
             throw new IllegalArgumentException("This user role is not allowed to sign this form.");
         }
 
-        boolean alreadySigned = formSignatureRepository.existsByFormAndSignedByAndSignedByRole(form, actualUserId, role.toString());
-        if (alreadySigned) {
+        Optional<FormSignature> existingSignature = formSignatureRepository.findByFormAndSignedByAndSignedByRole(form, actualUserId, role.toString());
+        if (existingSignature.isPresent()) {
+            FormSignature signature = FormSignature.builder()
+                    .id(existingSignature.get().getId())
+                    .form(form)
+                    .signedBy(actualUserId)
+                    .signedByRole(role.toString())
+                    .signedAt(new Date())
+                    .studentId(studentID)
+                    .build();
+            formSignatureRepository.save(signature);
             return "Form already signed.";
+
         }
 
         FormSignature signature = FormSignature.builder()
@@ -71,6 +82,7 @@ public class FormSignatureService {
                 .signedBy(actualUserId)
                 .signedByRole(role.toString())
                 .signedAt(new Date())
+                .studentId(studentID)
                 .build();
 
         formSignatureRepository.save(signature);

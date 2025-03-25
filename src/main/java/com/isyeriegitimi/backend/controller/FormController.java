@@ -25,7 +25,7 @@ public class FormController {
 
     @PostMapping("/sign")
     public ResponseEntity<ApiResponse<String>> signForm(@RequestBody SignFormRequest request) {
-        String message = formSignatureService.signForm(request.getFormId(), request.getUserId(), String.valueOf(request.getUserRole()));
+        String message = formSignatureService.signForm(request.getFormId(), request.getUserId(), String.valueOf(request.getUserRole()),request.getStudentId());
         return ResponseEntity.ok(ApiResponse.success(message, "Form signed successfully."));
     }
 
@@ -66,4 +66,10 @@ public class FormController {
         formService.deleteForm(id);
         return ResponseEntity.ok(ApiResponse.success(null, "Form deleted successfully."));
     }
+    @GetMapping("/signed/{userId}/{userRole}/{studentId}")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getSignedFormsByStudentId(@PathVariable UUID userId, @PathVariable String userRole, @PathVariable UUID studentId) {
+        Map<String, Object> response =formService.getSignedFormsByStudentId(userId, userRole, studentId);
+        return ResponseEntity.ok(ApiResponse.success(response, "Signed forms fetched successfully."));
+    }
+
 }

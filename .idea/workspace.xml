@@ -4,17 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Enhance file management by adding upload and delete date fields, implement file logging, and create delete file endpoint">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileLogRepository.java" afterDir="false" />
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form3.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormAnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormAnswerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormAnswer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormSignature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormSignature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/SignFormRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/SignFormRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormSignatureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormSignatureRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormSignatureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormSignatureService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormAnswer$FormAnswerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormAnswer$FormAnswerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormAnswer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormAnswer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +37,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="Record" />
         <option value="Interface" />
         <option value="Dockerfile" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -92,7 +104,7 @@
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/ileri_programlama/microservices&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -375,7 +387,13 @@
       <workItem from="1742306547007" duration="5338000" />
       <workItem from="1742371258291" duration="7830000" />
       <workItem from="1742398472845" duration="10000000" />
-      <workItem from="1742640135300" duration="10547000" />
+      <workItem from="1742640135300" duration="10568000" />
+      <workItem from="1742744067193" duration="87000" />
+      <workItem from="1742796077851" duration="32000" />
+      <workItem from="1742806777885" duration="1534000" />
+      <workItem from="1742887156648" duration="1674000" />
+      <workItem from="1742919505135" duration="7498000" />
+      <workItem from="1742931178533" duration="1194000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -665,7 +683,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742507272990</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="feat: Enhance file management by adding upload and delete date fields, implement file logging, and create delete file endpoint">
+      <option name="closed" value="true" />
+      <created>1742651387552</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1742651387552</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

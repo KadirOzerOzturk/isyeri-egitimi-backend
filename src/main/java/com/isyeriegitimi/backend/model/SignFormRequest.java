@@ -15,5 +15,6 @@ public class SignFormRequest {
     private UUID formId;
     private UUID userId;
     private Role userRole;
+    private UUID studentId;
 }
 

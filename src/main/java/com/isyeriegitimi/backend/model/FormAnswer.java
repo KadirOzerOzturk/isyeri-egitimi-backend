@@ -30,4 +30,5 @@ public class FormAnswer {
     private UUID userId;
     private String userRole;
     private String answer;
+    private UUID studentId;
 }
