@@ -62,7 +62,7 @@ public class FormSignatureService {
             throw new IllegalArgumentException("This user role is not allowed to sign this form.");
         }
 
-        Optional<FormSignature> existingSignature = formSignatureRepository.findByFormAndSignedByAndSignedByRole(form, actualUserId, role.toString());
+        Optional<FormSignature> existingSignature = formSignatureRepository.findByFormAndSignedByAndSignedByRoleAndStudentId(form, actualUserId, role.toString(),studentID);
         if (existingSignature.isPresent()) {
             FormSignature signature = FormSignature.builder()
                     .id(existingSignature.get().getId())
@@ -89,3 +89,4 @@ public class FormSignatureService {
         return "Form signed successfully.";
     }
 }
+

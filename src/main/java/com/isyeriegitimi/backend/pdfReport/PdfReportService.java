@@ -1,6 +1,9 @@
 package com.isyeriegitimi.backend.pdfReport;
 
 import aj.org.objectweb.asm.ClassWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -8,6 +11,8 @@ import com.google.zxing.common.BitMatrix;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.enums.Role;
+import com.isyeriegitimi.backend.service.FileService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.sourceforge.barbecue.Barcode;
@@ -41,11 +46,11 @@ public class PdfReportService {
     private SurveyQuestionRepository surveyQuestionRepository;
     private SurveyAnswerRepository surveyAnswerRepository;
     private SpringTemplateEngine templateEngine;
-    private FileInfoRepository fileInfoRepository;
+    private FileService fileInfoService;
     private FormSignatureRepository formSignatureRepository;
     private FormRepository formRepository;
 
-    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileInfoRepository fileInfoRepository, FormSignatureRepository formSignatureRepository, FormRepository formRepository) {
+    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileService fileInfoService, FormSignatureRepository formSignatureRepository, FormRepository formRepository) {
         this.weeklyReportRepository = weeklyReportRepository;
         this.studentsInGroupRepository = studentsInGroupRepository;
         this.studentRepository = studentRepository;
@@ -53,7 +58,7 @@ public class PdfReportService {
         this.surveyQuestionRepository = surveyQuestionRepository;
         this.surveyAnswerRepository = surveyAnswerRepository;
         this.templateEngine = templateEngine;
-        this.fileInfoRepository = fileInfoRepository;
+        this.fileInfoService = fileInfoService;
         this.formSignatureRepository = formSignatureRepository;
         this.formRepository = formRepository;
     }
@@ -126,32 +131,51 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
+    @Transactional
     public ByteArrayOutputStream generateForm1ByStudentId(UUID formId, UUID studentId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
-        StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
-                .orElseThrow(() -> new RuntimeException("Öğrenci grubu bulunamadı"))
-                .getStudentGroup();
-        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(studentId, String.valueOf(Role.STUDENT));
-        List<FormSignature> signatures = formSignatureRepository.findAllByFormId(formId);
+
+        List<FormAnswer> formAnswers = formAnswerRepository.findByStudentIdAndFormId(studentId, formId);
+        List<FormSignature> signatures = formSignatureRepository.findAllByFormIdAndStudentId(formId, studentId);
         QrInfo qr = generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
         context.setVariable("qr", "data:image/png;base64," + qr.getImage());
-        context.setVariable("student", student.get());
-        context.setVariable("lecturer", studentGroup.getLecturer());
+        context.setVariable("student", student.orElseThrow(() -> new RuntimeException("Öğrenci bulunamadı")));
         context.setVariable("answers", formAnswers);
         context.setVariable("signatures", signatures);
 
         for (FormAnswer answer : formAnswers) {
             String questionText = answer.getFormQuestion().getQuestionText();
             String answerValue = answer.getAnswer();
-            String variableName = questionText.replaceAll("[^a-zA-Z0-9]", "");
+            String variableName = convertToVariableName(questionText);
+
+            System.out.println("Variable Name: " + variableName + " = " + answerValue);
             context.setVariable(variableName, answerValue);
         }
+
         String htmlContent = templateEngine.process("kabulFormu", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
+        String encodedPdfData = Base64.getEncoder().encodeToString(pdfOutputStream.toByteArray());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode ownersArray = objectMapper.createArrayNode();
+        ObjectNode ownerObject = objectMapper.createObjectNode();
+        ownerObject.put("id", studentId.toString());
+        ownerObject.put("role", Role.STUDENT.toString());
+
+        ownersArray.add(ownerObject);
+        FileInfo fileInfo = FileInfo.builder()
+                .fileName("form1-" + studentId)
+                .fileType("application/pdf")
+                .owners(ownersArray)
+                .data(encodedPdfData)
+                .uploadDate(new Date())
+                .barcodeNumber(qr.getCode())
+                .build();
+        fileInfoService.uploadFile(fileInfo);
         return pdfOutputStream;
     }
 
@@ -262,4 +286,15 @@ public class PdfReportService {
 
         return pdfOutputStream;
     }
+//    private List<FormSignature> convertDateToString(List<FormSignature> signatures){
+//        List<FormSignature> signatureDisplays = new ArrayList<>();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // İstenilen tarih formatı
+//
+//        for (FormSignature signature : signatures) {
+//            String signedAtString = (signature.getSignedAt() != null) ? dateFormat.format(signature.getSignedAt()) : "";
+//            FormSignature display = new SignatureDisplay(signature, signedAtString);
+//            signatureDisplays.add(display);
+//        }
+//        return signatureDisplays;
+//    }
 }

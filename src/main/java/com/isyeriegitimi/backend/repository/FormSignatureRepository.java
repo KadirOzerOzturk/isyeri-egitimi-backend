@@ -15,10 +15,10 @@ public interface FormSignatureRepository extends JpaRepository<FormSignature, UU
 
     List<FormSignature> findAllByFormIdAndSignedByAndSignedByRole(UUID formId, UUID signedBy, String signedByRole);
 
-    List<FormSignature> findAllByFormId(UUID formId);
+    List<FormSignature> findAllByFormIdAndStudentId(UUID formId, UUID studentId);
 
     boolean existsByFormAndSignedByAndSignedByRole(Form form, UUID signedBy, String signedByRole);
-    Optional<FormSignature> findByFormAndSignedByAndSignedByRole(Form form, UUID signedBy, String signedByRole);
+    Optional<FormSignature> findByFormAndSignedByAndSignedByRoleAndStudentId(Form form, UUID signedBy, String signedByRole,UUID studentID);
     List<FormSignature> findBySignedByAndSignedByRole(UUID signedBy, String signedByRole);
     List<FormSignature> findBySignedByAndSignedByRoleAndStudentId(UUID signedBy, String signedByRole,UUID studentId);
 

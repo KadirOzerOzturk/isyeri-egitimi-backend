@@ -58,15 +58,16 @@ public class FormAnswerService {
                                 request.getForm().getId(),
                                 request.getFormQuestion().getQuestionId(),
                                 request.getUserId()
+
                         )
                         .orElse(null);
 
                 if (existingAnswer != null) {
-                    // Eğer cevap zaten varsa, sadece güncelle
+
                     existingAnswer.setAnswer(request.getAnswer());
                     return existingAnswer;
                 } else {
-                    // Yeni cevap ekle
+
                     FormAnswer answer = new FormAnswer();
                     answer.setForm(formRepository.findById(request.getForm().getId())
                             .orElseThrow(() -> new RuntimeException("Form bulunamadı!")));
@@ -76,6 +77,8 @@ public class FormAnswerService {
                     answer.setUserRole(request.getUserRole());
                     answer.setAnswer(request.getAnswer());
                     answer.setStudentId(request.getStudentId());
+                    System.out.println(request.getStudentId());
+                    System.out.println(request.getAnswer());
                     return answer;
                 }
             }).collect(Collectors.toList());
