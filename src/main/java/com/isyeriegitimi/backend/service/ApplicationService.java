@@ -99,7 +99,13 @@ public class ApplicationService {
         }
         Application application = existingApplication.get();
         application.setPendingRole(pendingRole);
-
+        if (pendingRole.equals(String.valueOf(Role.COMPANY))) {
+            application.setApplicationStatus("Firma onayı bekleniyor.");
+        } else if (pendingRole.equals(String.valueOf(Role.STUDENT))) {
+            application.setApplicationStatus("Öğrenci onayı bekleniyor.");
+        } else if (pendingRole.equals(String.valueOf(Role.COMMISSION))) {
+            application.setApplicationStatus("Komisyon onayı bekleniyor.");
+        }
         applicationRepository.save(application);
 
     } catch (Exception e) {
