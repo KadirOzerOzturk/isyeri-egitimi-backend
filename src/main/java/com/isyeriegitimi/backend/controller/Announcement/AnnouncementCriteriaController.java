@@ -26,6 +26,11 @@ public class AnnouncementCriteriaController {
         announcementCriteriaService.save(announcementCriteria, announcementId);
         return ResponseEntity.ok(ApiResponse.success(null, "Criteria saved successfully."));
     }
+    @PostMapping("/bulkSave/{announcementId}")
+    public ResponseEntity<ApiResponse<String>> bulkSaveCriteria(@RequestBody List<AnnouncementCriteria> announcementCriteria, @PathVariable UUID announcementId) {
+        announcementCriteriaService.bulkSave(announcementCriteria, announcementId);
+        return ResponseEntity.ok(ApiResponse.success(null, "Criteria saved successfully."));
+    }
 
     @GetMapping("/{announcementId}")
     public ResponseEntity<ApiResponse<List<AnnouncementCriteria>>> getCriteriaByAnnouncementId(@PathVariable UUID announcementId) {

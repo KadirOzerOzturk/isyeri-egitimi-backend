@@ -35,9 +35,9 @@ public class StudentsInGroupController {
         return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.addStudentToGroup(groupId,studentId),"Student added successfully"));
 
     }
-    @DeleteMapping("/deleteStudent/{studentNo}")
-    public ResponseEntity<?> deleteStudentFromGroup(@PathVariable String studentNo){
-            return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.deleteStudentFromGroup(studentNo),"Student deleted successfully"));
+    @DeleteMapping("/deleteStudent/{studentId}")
+    public ResponseEntity<?> deleteStudentFromGroup(@PathVariable UUID studentId){
+            return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.deleteStudentFromGroup(studentId),"Student deleted successfully"));
     }
 
 }

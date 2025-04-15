@@ -66,5 +66,13 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
 
     List<FileInfo> findAllByFileName(String  fileName);
 
+    @Modifying
+    @Transactional
+    @Query(value = """
+    DELETE FROM file_info
+    WHERE owners @> CAST(CONCAT('[{\"id\": \"', :ownerId, '\"}]') AS jsonb)
+    """, nativeQuery = true)
+    void deleteByOwnerId(@Param("ownerId") String ownerId);
+
 
 }

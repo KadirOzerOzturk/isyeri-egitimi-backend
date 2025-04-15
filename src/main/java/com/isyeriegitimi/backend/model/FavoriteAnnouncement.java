@@ -17,7 +17,7 @@ import java.util.UUID;
 public class FavoriteAnnouncement {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID favoriteID;
+    private UUID favoriteId;
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;

@@ -74,13 +74,13 @@ public class StudentsInGroupService {
         }
     }
     @Transactional
-    public String deleteStudentFromGroup( String studentNo) {
+    public String deleteStudentFromGroup( UUID studentId) {
         try {
-            Optional<Student>  student=studentRepository.findByStudentNumber(studentNo);
+            Optional<Student>  student=studentRepository.findById(studentId);
             if (student.isEmpty()) {
-                throw new ResourceNotFoundException("Student", "studentNo", studentNo);
+                throw new ResourceNotFoundException("Student", "studentNo", studentId.toString());
             }
-            studentsInGroupRepository.deleteByStudentStudentNumber(studentNo);
+            studentsInGroupRepository.deleteByStudentStudentId(studentId);
             return "Student successfully deleted from group ";
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while deleting the student: " + e.getMessage());

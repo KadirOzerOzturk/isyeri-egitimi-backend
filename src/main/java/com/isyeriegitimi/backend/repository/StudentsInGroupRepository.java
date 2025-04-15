@@ -17,5 +17,6 @@ public interface StudentsInGroupRepository extends JpaRepository<StudentInGroup,
     List<StudentInGroup>  findAllByStudentGroupGroupId(UUID groupId);
     Optional<StudentInGroup> findByStudent_StudentNumber(String studentNo);
     void deleteByStudentStudentNumber(String studentNo);
+    void deleteByStudentStudentId(UUID studentId);
     Optional<StudentInGroup> findByStudent_StudentId(UUID uuid);
 }

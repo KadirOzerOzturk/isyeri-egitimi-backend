@@ -5,9 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Update PDF report generation and templates to include student signatures and enhance form handling">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/public.abK9xQ.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Service.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentsInGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentsInGroupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FavoriteAnnouncement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FavoriteAnnouncement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FavoriteAnnouncementRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FavoriteAnnouncementRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentsInGroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentsInGroupService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Service.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentsInGroupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentsInGroupController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentsInGroupService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentsInGroupService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +112,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -193,7 +224,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.9-jbr-17.0.9-f644763e9732-e10f1064" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -382,6 +414,13 @@
       <workItem from="1743176462420" duration="599000" />
       <workItem from="1743254197025" duration="5684000" />
       <workItem from="1743354850615" duration="1232000" />
+      <workItem from="1743608545323" duration="846000" />
+      <workItem from="1744380135523" duration="600000" />
+      <workItem from="1744573728614" duration="4070000" />
+      <workItem from="1744650142599" duration="7240000" />
+      <workItem from="1744704551791" duration="1213000" />
+      <workItem from="1744708926850" duration="80000" />
+      <workItem from="1744712060364" duration="10148000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />

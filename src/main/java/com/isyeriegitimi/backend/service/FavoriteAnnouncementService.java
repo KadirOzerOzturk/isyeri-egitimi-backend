@@ -41,21 +41,21 @@ public class FavoriteAnnouncementService {
 
     public UUID save(FavoriteAnnouncementDto favoriteAnnouncementDto){
         try{
-            Student student=studentRepository.findByStudentNumber(favoriteAnnouncementDto.getStudent().getStudentNumber()).
-                    orElseThrow(()-> new ResourceNotFoundException("Student","studentNo",favoriteAnnouncementDto.getStudent().getStudentNumber()));
+            Student student=studentRepository.findById(favoriteAnnouncementDto.getStudent().getStudentId()).
+                    orElseThrow(()-> new ResourceNotFoundException("Student","student id",favoriteAnnouncementDto.getStudent().getStudentId().toString()));
 
             FavoriteAnnouncement favoriteAnnouncement=FavoriteAnnouncement
                     .builder()
                     .student(student)
-                    .favoriteID(favoriteAnnouncementDto.getFavoriteId())
+                    .favoriteId(favoriteAnnouncementDto.getFavoriteId())
                     .announcement(favoriteAnnouncementDto.getAnnouncement())
                     .build();
             favoriteAnnouncementRepository.save(favoriteAnnouncement);
-            return favoriteAnnouncement.getFavoriteID();
+            return favoriteAnnouncement.getFavoriteId();
         }
         catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Error saving favorite", e);
+            throw new RuntimeException("Error saving favorite" + e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class FavoriteAnnouncementService {
                     .orElseThrow(() -> new RuntimeException("Favorite announcement not found"));
             favoriteAnnouncementRepository.delete(favoriteAnnouncement);
         } catch (Exception e) {
-            throw new RuntimeException("Error removing favorite", e);
+            throw new RuntimeException("Error removing favorite" + e.getMessage());
         }
     }
 

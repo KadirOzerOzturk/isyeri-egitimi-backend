@@ -69,5 +69,22 @@ public class AnnouncementCriteriaService {
             throw new InternalServerErrorException("Failed to delete all criteria: " + e.getMessage());
         }
     }
+
+    public void bulkSave(List<AnnouncementCriteria> announcementCriteria, UUID announcementId) {
+        try {
+            Optional<Announcement> announcement = announcementRepository.findById(announcementId);
+            if (announcement.isEmpty()) {
+                throw new ResourceNotFoundException("Announcement", "id", announcementId.toString());
+            }
+            for (AnnouncementCriteria criteria : announcementCriteria) {
+                AnnouncementCriteria newCriteria = new AnnouncementCriteria();
+                newCriteria.setAnnouncement(announcement.get());
+                newCriteria.setCriteriaDescription(criteria.getCriteriaDescription());
+                announcementCriteriaRepository.save(newCriteria);
+            }
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Failed to save criteria: " + e.getMessage());
+        }
+    }
 }
 
