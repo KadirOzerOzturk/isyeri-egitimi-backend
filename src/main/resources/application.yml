@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://13.48.43.117:5432/isyeri_egitimi
+    username: isyeri
+    password: isyeri
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+security:
+  jwt:
+    secret: "qgjk1Jd9zQPnJ1YrXX5Eb4y2EhsCc7QD/2+fza2dHowaUsc+SbAgBCwzRs3dP7zEwHamBUP5qocWwDyZzOwhjpikAFwpdMU2LuOl4Ij1/Tc46twk4IVEOYnmvdF9VuoVNNR1UCRizFkt56aN8l8uz0juo2pwtfy0lRD5uRnIitW25Z5W5O35TJb7ESkUL9KI"
+    expiration: 86400000
+    issuer: "isyeri-proje"
+
+
+logging:
+  level:
+    org:
+      springframework: INFO
