@@ -90,12 +90,12 @@ public class SurveyQuestionService {
         }
     }
 
-    public void createQuestions(List<SurveyQuestion> questions) {
+    public void createQuestions(List<SurveyQuestion> questions,UUID surveyId) {
 
         try {
-            Optional<Survey> survey = surveyRepository.findById(questions.get(0).getSurvey().getId());
+            Optional<Survey> survey = surveyRepository.findById(surveyId);
             if (survey.isEmpty()) {
-                throw new ResourceNotFoundException("Survey", "id", questions.get(0).getSurvey().getId().toString());
+                throw new ResourceNotFoundException("Survey", "id", surveyId.toString());
             }
             for (SurveyQuestion question : questions) {
                 UUID questionId = UUID.randomUUID();

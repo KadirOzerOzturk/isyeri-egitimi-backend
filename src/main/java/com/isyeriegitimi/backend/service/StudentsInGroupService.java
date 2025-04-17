@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentsInGroupService {
@@ -93,7 +95,7 @@ public class StudentsInGroupService {
         studentInGroupDto.setStudent(studentInGroup.getStudent());
         return  studentInGroupDto;
     }
-    private StudentInGroup mapToDto(StudentInGroupDto studentInGroupDto){
+    private StudentInGroup mapToEntity(StudentInGroupDto studentInGroupDto){
         StudentInGroup  studentInGroup=new StudentInGroup();
         studentInGroup.setStudentGroup(studentInGroupDto.getStudentGroup());
         studentInGroup.setId(studentInGroupDto.getId());
@@ -102,4 +104,14 @@ public class StudentsInGroupService {
     }
 
 
+    public List<Student> getStudentsOfLecturer(UUID lecturerId) {
+        try {
+            Optional<StudentGroup> studentsGroup = studentGroupRepository.findByLecturerLecturerId(lecturerId);
+            List<StudentInGroup> studentInGroupList = studentsInGroupRepository.findAllByStudentGroup_GroupId(studentsGroup.get().getGroupId());
+            List<Student> studentList = studentInGroupList.stream().map(studentInGroup -> (studentInGroup.getStudent())).collect(Collectors.toList());
+            return studentList;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
+    }
 }

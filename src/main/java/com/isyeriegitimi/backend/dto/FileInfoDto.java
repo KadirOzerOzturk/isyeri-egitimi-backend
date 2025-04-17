@@ -13,8 +13,8 @@ public class FileInfoDto {
     private UUID id;
     private String fileName;
     private String fileType;
-    private String owners;
-    private String signedBy;
+    private UUID ownerId;
+    private String ownerRole;
     private String data;
     private String barcodeNumber;
     private Date uploadDate;

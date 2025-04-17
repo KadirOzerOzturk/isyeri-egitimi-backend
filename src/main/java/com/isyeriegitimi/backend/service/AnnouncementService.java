@@ -98,7 +98,7 @@ public class AnnouncementService {
             if (favoriteAnnouncement.isPresent()) {
                 favoriteAnnouncementRepository.deleteAllByAnnouncement_AnnouncementId(favoriteAnnouncement.get().getAnnouncement().getAnnouncementId());
             }
-            fileInfoRepository.deleteByOwnerId(String.valueOf(announcementId));
+            fileInfoRepository.deleteByOwnerId(announcementId);
             announcementRepository.deleteById(announcementId);
         } catch (Exception e) {
             throw new InternalServerErrorException("Announcement could not be deleted." +e.getMessage());

@@ -2,6 +2,7 @@ package com.isyeriegitimi.backend.controller;
 
 import com.isyeriegitimi.backend.dto.StudentInGroupDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
+import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentInGroup;
 import com.isyeriegitimi.backend.service.StudentsInGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class StudentsInGroupController {
     @DeleteMapping("/deleteStudent/{studentId}")
     public ResponseEntity<?> deleteStudentFromGroup(@PathVariable UUID studentId){
             return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.deleteStudentFromGroup(studentId),"Student deleted successfully"));
+    }
+    @GetMapping("/getStudentsByOfLecturer/{lecturerId}")
+    public ResponseEntity<ApiResponse<List<Student>>>  getStudentsByOfLecturer(@PathVariable UUID lecturerId){
+        return ResponseEntity.ok(ApiResponse.success(studentsInGroupService.getStudentsOfLecturer(lecturerId),"Students fetched successfully"));
     }
 
 }

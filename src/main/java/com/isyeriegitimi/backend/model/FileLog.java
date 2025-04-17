@@ -22,9 +22,9 @@ public class FileLog {
     private UUID id;
     private String fileName;
     private String fileType;
-    @Column(name = "owners", columnDefinition = "jsonb")
-    @Convert(converter = JsonNodeConverter.class)
-    private JsonNode owners;
+
+    private UUID ownerId;
+    private String ownerRole;
     @Column(columnDefinition = "TEXT")
     private String data;
     private String barcodeNumber;

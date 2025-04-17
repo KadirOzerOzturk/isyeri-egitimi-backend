@@ -17,5 +17,5 @@ public interface FormAnswerRepository extends JpaRepository<FormAnswer, UUID> {
 
     List<FormAnswer> findByForm_IdAndStudentId(UUID formId, UUID studentId);
 
-    Optional<FormAnswer> findByForm_IdAndFormQuestionQuestionIdAndUserId(UUID formId, UUID questionId, UUID userId);
+    Optional<FormAnswer> findByForm_IdAndFormQuestionQuestionIdAndUserIdAndStudentId(UUID formId, UUID questionId, UUID userId,UUID studentId);
 }

@@ -54,10 +54,11 @@ public class FormAnswerService {
         try {
             List<FormAnswer> answers = formAnswerRequests.stream().map(request -> {
                 FormAnswer existingAnswer = formAnswerRepository
-                        .findByForm_IdAndFormQuestionQuestionIdAndUserId(
+                        .findByForm_IdAndFormQuestionQuestionIdAndUserIdAndStudentId(
                                 request.getForm().getId(),
                                 request.getFormQuestion().getQuestionId(),
-                                request.getUserId()
+                                request.getUserId(),
+                                request.getStudentId()
 
                         )
                         .orElse(null);

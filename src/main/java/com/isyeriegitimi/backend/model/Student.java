@@ -52,7 +52,7 @@ public class Student {
     @Column(name = "faculty")
     private String faculty;
 
-    @Column(name = "about")
+    @Column(name = "about", length = 1000)
     private String about;
 
 

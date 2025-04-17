@@ -7,6 +7,7 @@ import com.isyeriegitimi.backend.dto.FileInfoDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.FileInfo;
+import com.isyeriegitimi.backend.model.FileLog;
 import com.isyeriegitimi.backend.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,31 +28,11 @@ public class FileService {
     private CompanyRepository companyRepository;
     @Autowired
     private FileLogRepository fileLogRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public UUID uploadFile(FileInfo fileInfo) {
         try {
-
-            validateOwners(fileInfo.getOwners());
-
-            // Generate a random UUID for the new file
-            UUID id = UUID.randomUUID();
-
-            // Insert the file info into the repository
-            fileInfoRepository.insertFile(
-                    id,
-                    fileInfo.getFileName(),
-                    fileInfo.getFileType(),
-                    objectMapper.writeValueAsString(fileInfo.getOwners()),
-                    fileInfo.getData(),
-                    fileInfo.getBarcodeNumber(),
-                    new Date(),
-                    null
-
-
-            );
-
-            return id;
+            fileInfoRepository.save(fileInfo);
+            return  fileInfoRepository.save(fileInfo).getId();
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while uploading the file: " + e.getMessage());
         }
@@ -112,7 +93,8 @@ public class FileService {
                     .id(fileInfo.getId())
                     .fileName(fileInfo.getFileName())
                     .fileType(fileInfo.getFileType())
-                    .owners(objectMapper.writeValueAsString(fileInfo.getOwners()))
+                    .ownerId(fileInfo.getOwnerId())
+                    .ownerRole(fileInfo.getOwnerRole())
                     .data(fileInfo.getData())
                     .deleteDate(fileInfo.getDeleteDate())
                     .uploadDate(fileInfo.getUploadDate())
@@ -126,17 +108,8 @@ public class FileService {
     public void updateFile(UUID id, FileInfo fileInfo) {
         try {
             FileInfo file = fileInfoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
-
-            fileInfoRepository.updateFile(
-                    id,
-                    fileInfo.getFileName(),
-                    fileInfo.getFileType(),
-                    objectMapper.writeValueAsString(fileInfo.getOwners()),
-                    fileInfo.getData(),
-                    fileInfo.getBarcodeNumber(),
-                    fileInfo.getUploadDate(),
-                    fileInfo.getDeleteDate()
-            );
+            fileInfo.setId(file.getId());
+            fileInfoRepository.save(fileInfo);
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the file: " + e.getMessage());
         }
@@ -144,11 +117,9 @@ public class FileService {
 
     public FileInfoDto getFile(UUID userId, String userRole, String fileName) {
         try {
-            // JSON formatında owner bilgisini oluştur
-            String ownerJson = String.format("{\"id\": \"%s\"}", userId);
 
-            // Fetch FileInfo from DB
-            FileInfo fileInfo = fileInfoRepository.findByOwnersContainingAndFileName(ownerJson, fileName)
+
+            FileInfo fileInfo = fileInfoRepository.findByFileNameAndOwnerIdAndOwnerRole(fileName, userId, userRole)
                     .orElseThrow(() -> new ResourceNotFoundException("File not found by given id: " + userId));
 
             // Convert to DTO
@@ -156,7 +127,8 @@ public class FileService {
                     .id(fileInfo.getId())
                     .fileName(fileInfo.getFileName())
                     .fileType(fileInfo.getFileType())
-                    .owners(String.valueOf(fileInfo.getOwners()))
+                    .ownerId(fileInfo.getOwnerId())
+                    .ownerRole(fileInfo.getOwnerRole())
                     .data(fileInfo.getData())
                     .barcodeNumber(fileInfo.getBarcodeNumber())
                     .uploadDate(fileInfo.getUploadDate())
@@ -169,9 +141,9 @@ public class FileService {
 
     public List<FileInfo> getFilesByUserId(UUID userId, String userRole) {
         try {
-            String ownerRoleJson = String.format("[{\"id\": \"%s\", \"role\": \"%s\"}]", userId, userRole);
 
-            return fileInfoRepository.findByOwner(ownerRoleJson);
+
+            return fileInfoRepository.findAllByOwnerIdAndOwnerRole(userId, userRole);
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
         }
@@ -190,19 +162,22 @@ public class FileService {
     @Transactional
     public void deleteFile(UUID id) {
         try {
-            FileInfoDto fileInfoDto= getFileById(id);
+            FileInfo fileInfo = fileInfoRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
+            FileLog fileLog = FileLog.builder()
+                    .fileName(fileInfo.getFileName())
+                    .fileType(fileInfo.getFileType())
+                    .ownerId(fileInfo.getOwnerId())
+                    .ownerRole(fileInfo.getOwnerRole())
+                    .data(fileInfo.getData())
+                    .barcodeNumber(fileInfo.getBarcodeNumber())
+                    .uploadDate(fileInfo.getUploadDate())
+                    .deleteDate(new Date())
+                    .build();
+            fileLogRepository.save(fileLog);
             fileInfoRepository.deleteById(id);
 
-            fileLogRepository.insertFile(
-                    UUID.randomUUID(),
-                    fileInfoDto.getFileName(),
-                    fileInfoDto.getFileType(),
-                    objectMapper.writeValueAsString(fileInfoDto.getOwners()),
-                    fileInfoDto.getData(),
-                    fileInfoDto.getBarcodeNumber(),
-                    fileInfoDto.getUploadDate(),
-                    new Date()
-            );
+
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while deleting the file: " + e.getMessage());
         }

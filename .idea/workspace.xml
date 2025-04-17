@@ -4,40 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Update PDF report generation and templates to include student signatures and enhance form handling">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3d13ccd2-5f84-4820-a916-6182636444f9/storage_v2/_src_/database/isyeri_egitimi_db.1x8L9A/schema/public.abK9xQ.meta" beforeDir="false" />
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Implement email sending functionality with enhanced template and error handling">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/GaziLogo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/BackendApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Config.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Controller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/aws/S3Service.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/EmailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentsInGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/StudentsInGroupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FavoriteAnnouncement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FavoriteAnnouncement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FavoriteAnnouncementRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FavoriteAnnouncementRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/SurveyQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/SurveyQuestionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FileInfoDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Announcement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Announcement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FileLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormAnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentGroupRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/AnnouncementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FavoriteAnnouncementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentsInGroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentsInGroupService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/BackendApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/aws/S3Service.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/Announcement/AnnouncementCriteriaController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentsInGroupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/StudentsInGroupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentsInGroupRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementCriteriaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/SurveyQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/SurveyQuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/gazi_university_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/EmailTemplate.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/EmailTemplate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Announcement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Announcement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/Student.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/AnnouncementService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentsInGroupService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/StudentsInGroupService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,14 +62,12 @@
     &quot;assignee&quot;: &quot;KadirOzerOzturk&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="c4c4b847-7ebe-442f-a59c-4a6945abe28d" />
-        <option name="url" value="https://github.com/KadirOzerOzturk/isyeri-egitimi-backend.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KadirOzerOzturk/isyeri-egitimi-backend.git&quot;,
+    &quot;accountId&quot;: &quot;951e75e4-7321-4641-abd9-5866160b56af&quot;
+  }
+}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
@@ -116,7 +110,7 @@
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/ileri_programlama/microservices&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/isyeri-egitimi-backend/src/main/resources/static&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -140,6 +134,7 @@
       <recent name="com.isyeriegitimi.backend.dto" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\isyeri-egitimi-backend\src\main\resources\static" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend\security" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend\controller" />
@@ -420,7 +415,11 @@
       <workItem from="1744650142599" duration="7240000" />
       <workItem from="1744704551791" duration="1213000" />
       <workItem from="1744708926850" duration="80000" />
-      <workItem from="1744712060364" duration="10148000" />
+      <workItem from="1744712060364" duration="13936000" />
+      <workItem from="1744886672979" duration="125000" />
+      <workItem from="1744887181157" duration="7056000" />
+      <workItem from="1744895003564" duration="10315000" />
+      <workItem from="1744920028038" duration="4660000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -734,7 +733,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743172001830</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="feat: Add bulk save functionality for announcement criteria and enhance error handling">
+      <option name="closed" value="true" />
+      <created>1744726733352</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1744726733352</updated>
+    </task>
+    <task id="LOCAL-00041" summary="fix: minor changes">
+      <option name="closed" value="true" />
+      <created>1744726795446</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1744726795446</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -752,9 +767,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="bazi duzeltmeler yapildi" />
-    <MESSAGE value="on basvuru islemleri tamamlandi" />
-    <MESSAGE value="student forms added" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="s3 bucket integrated" />
     <MESSAGE value="gitignore modified" />
@@ -777,6 +789,9 @@
     <MESSAGE value="feat: Enhance file management by adding upload and delete date fields, implement file logging, and create delete file endpoint" />
     <MESSAGE value="feat: Add student ID handling in form answers and signatures, implement email service and template, and enhance student retrieval by company ID" />
     <MESSAGE value="feat: Update PDF report generation and templates to include student signatures and enhance form handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Update PDF report generation and templates to include student signatures and enhance form handling" />
+    <MESSAGE value="feat: Add bulk save functionality for announcement criteria and enhance error handling" />
+    <MESSAGE value="fix: minor changes" />
+    <MESSAGE value="feat: Implement email sending functionality with enhanced template and error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Implement email sending functionality with enhanced template and error handling" />
   </component>
 </project>

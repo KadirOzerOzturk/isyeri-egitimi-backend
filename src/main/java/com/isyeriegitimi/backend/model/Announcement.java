@@ -27,6 +27,7 @@ public class Announcement {
     private Date startDate;
     private Date endDate;
     private String title;
+    @Column(length = 3000)
     private String description;
     private String postTitle;
 }

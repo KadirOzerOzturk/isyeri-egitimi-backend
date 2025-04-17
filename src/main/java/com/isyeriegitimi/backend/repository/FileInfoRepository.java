@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
-    @Modifying
+  /*  @Modifying
     @Transactional
     @Query(value = "INSERT INTO file_info (id,file_name, file_type, owners, data, barcode_number,upload_date,delete_date) " +
             "VALUES (:id,:fileName, :fileType, CAST(:owners AS jsonb), :data, :barcodeNumber,:uploadDate,:deleteDate)",
@@ -73,6 +73,12 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
     WHERE owners @> CAST(CONCAT('[{\"id\": \"', :ownerId, '\"}]') AS jsonb)
     """, nativeQuery = true)
     void deleteByOwnerId(@Param("ownerId") String ownerId);
-
+*/
+    Optional<FileInfo> findByFileNameAndOwnerIdAndOwnerRole(String fileName, UUID ownerId, String ownerRole);
+    Optional<FileInfo> findByOwnerIdAndOwnerRole(UUID ownerId, String ownerRole);
+    List<FileInfo> findAllByOwnerIdAndOwnerRole(UUID userId, String userRole);
+    List<FileInfo> findAllByFileName(String fileName);
+    void deleteByOwnerIdAndOwnerRole(UUID ownerId, String ownerRole);
+    void deleteByOwnerId(UUID ownerId);
 
 }
