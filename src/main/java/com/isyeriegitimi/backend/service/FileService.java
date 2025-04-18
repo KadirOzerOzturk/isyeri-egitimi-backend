@@ -12,6 +12,15 @@ import com.isyeriegitimi.backend.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.*;
 
 @Service
@@ -31,52 +40,44 @@ public class FileService {
 
     public UUID uploadFile(FileInfo fileInfo) {
         try {
-            fileInfoRepository.save(fileInfo);
-            return  fileInfoRepository.save(fileInfo).getId();
+            // Base64'ten BufferedImage'a çevir
+            byte[] imageBytes = Base64.getDecoder().decode(fileInfo.getData());
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+            BufferedImage originalImage = ImageIO.read(inputStream);
+
+            // Yeni sıkıştırılmış output için ByteArrayOutputStream
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // ImageWriter ayarları
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            if (!writers.hasNext()) throw new IllegalStateException("No writer found for jpg");
+
+            ImageWriter writer = writers.next();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(outputStream);
+            writer.setOutput(ios);
+
+            // Kalite ayarlarını yap (0.5 = %50 kalite)
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            if (param.canWriteCompressed()) {
+                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                param.setCompressionQuality(0.5f);
+            }
+
+            writer.write(null, new IIOImage(originalImage, null, null), param);
+            ios.close();
+            writer.dispose();
+
+            // Yeni Base64'e dönüştür
+            String compressedBase64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+            fileInfo.setData(compressedBase64);
+
+            // Kaydet ve ID döndür
+            return fileInfoRepository.save(fileInfo).getId();
+
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while uploading the file: " + e.getMessage());
         }
     }
-
-    private void validateOwners(JsonNode owners) {
-        if (!owners.isArray()) {
-            throw new IllegalArgumentException("Owners field should be a JSON array.");
-        }
-
-        Set<UUID> uniqueOwnerIds = new HashSet<>();
-
-        for (JsonNode ownerNode : owners) {
-            validateOwner(ownerNode, uniqueOwnerIds);
-        }
-    }
-
-    private void validateOwner(JsonNode ownerNode, Set<UUID> uniqueOwnerIds) {
-        if (!ownerNode.isObject() || !ownerNode.has("id")) {
-            throw new IllegalArgumentException("Each owner should be an object with an 'id' field.");
-        }
-
-        String idStr = ownerNode.get("id").asText();
-        String role= ownerNode.get("role").asText();
-        UUID ownerId = UUID.fromString(idStr);
-
-        // Check for duplicate owner ID
-        if (!uniqueOwnerIds.add(ownerId)) {
-            throw new IllegalArgumentException("Found duplicated id in owners. Duplicated id: " + ownerId);
-        }
-
-        // Validate that the owner exists in one of the repositories
-        if (!role.equalsIgnoreCase("announcement")  &&  isOwnerNotFound(ownerId)) {
-            throw new ResourceNotFoundException("Owner", "id", ownerId.toString());
-        }
-    }
-
-    private boolean isOwnerNotFound(UUID ownerId) {
-        return studentRepository.findById(ownerId).isEmpty() &&
-                lecturerRepository.findById(ownerId).isEmpty() &&
-                commissionRepository.findById(ownerId).isEmpty() &&
-                companyRepository.findById(ownerId).isEmpty();
-    }
-
 
     public List<FileInfo> getFiles() {
         try {
@@ -106,13 +107,21 @@ public class FileService {
     }
 
     public void updateFile(UUID id, FileInfo fileInfo) {
-        try {
-            FileInfo file = fileInfoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
-            fileInfo.setId(file.getId());
-            fileInfoRepository.save(fileInfo);
-        } catch (Exception e) {
-            throw new InternalServerErrorException("An error occurred while updating the file: " + e.getMessage());
-        }
+       try  {
+            FileInfo existingFileInfo = fileInfoRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("File", "id", id.toString()));
+            existingFileInfo.setFileName(fileInfo.getFileName());
+            existingFileInfo.setFileType(fileInfo.getFileType());
+            existingFileInfo.setOwnerId(fileInfo.getOwnerId());
+            existingFileInfo.setOwnerRole(fileInfo.getOwnerRole());
+            existingFileInfo.setData(fileInfo.getData());
+            existingFileInfo.setBarcodeNumber(fileInfo.getBarcodeNumber());
+            existingFileInfo.setUploadDate(fileInfo.getUploadDate());
+
+            fileInfoRepository.save(existingFileInfo);
+        }catch (Exception e){
+           throw new InternalServerErrorException("An error occurred while updating the file: " + e.getMessage());
+       }
     }
 
     public FileInfoDto getFile(UUID userId, String userRole, String fileName) {

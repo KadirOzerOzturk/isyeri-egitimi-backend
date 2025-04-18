@@ -74,9 +74,11 @@ public class LecturerService {
     }
     public Optional<Lecturer> getLecturerOfStudentByStudentId(UUID studentId) {
         try {
-            StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
-                    .orElseThrow(() -> new RuntimeException("Student group not found"))
-                    .getStudentGroup();
+
+            if (studentsInGroupRepository.findByStudent_StudentId(studentId).isEmpty()) {
+                return  Optional.empty();
+            }
+            StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId).get().getStudentGroup();
 
             return Optional.ofNullable(studentGroup.getLecturer());
         } catch (Exception e) {
