@@ -21,6 +21,7 @@ import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.*;
 
 @Service
@@ -194,6 +195,15 @@ public class FileService {
 
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while deleting the file: " + e.getMessage());
+        }
+    }
+
+    public List<FileInfo> getCompanyPhotos() {
+        try {
+            List<FileInfo> companyPhotos = fileInfoRepository.findAllByFileNameAndOwnerRole("profilePhoto","COMPANY");
+            return companyPhotos;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
         }
     }
 }

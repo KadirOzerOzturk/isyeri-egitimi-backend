@@ -39,8 +39,10 @@ public class FileController {
     public ResponseEntity<ApiResponse<List<FileInfo>>> getFilesByUserId(@PathVariable UUID userId, @PathVariable String userRole){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFilesByUserId(userId,userRole), "File fetched successfully"));
     }
-
-
+    @GetMapping("/companyPhotos")
+    public ResponseEntity<ApiResponse<List<FileInfo>>> getCompanyPhotos(){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getCompanyPhotos(), "File fetched successfully"));
+    }
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<?>> getFiles(){
         return ResponseEntity.ok(ApiResponse.success(fileService.getFiles(), "Files fetched successfully"));
