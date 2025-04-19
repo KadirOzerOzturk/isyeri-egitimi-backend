@@ -105,6 +105,8 @@ public class ApplicationService {
             application.setApplicationStatus("Öğrenci onayı bekleniyor.");
         } else if (pendingRole.equals(String.valueOf(Role.COMMISSION))) {
             application.setApplicationStatus("Komisyon onayı bekleniyor.");
+        }else if (pendingRole.equals("DONE")) {
+            application.setApplicationStatus("Onaylandı.");
         }
         applicationRepository.save(application);
 
@@ -119,6 +121,17 @@ public class ApplicationService {
             return applications;
         }catch (Exception e){
             throw  new InternalServerErrorException("Applications could not be fetched : " + e.getMessage());
+        }
+    }
+
+    public List<Application> getAllApplications() {
+        try {
+            List<Application> applications = applicationRepository.findAll();
+            return applications;
+
+        }
+        catch (Exception e){
+            throw new InternalServerErrorException("Applications could not be fetched : " + e.getMessage());
         }
     }
 }

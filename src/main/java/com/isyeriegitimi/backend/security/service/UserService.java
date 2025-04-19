@@ -8,18 +8,61 @@ import com.isyeriegitimi.backend.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.CharacterData;
+
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+
+import static org.springframework.beans.MethodInvocationException.ERROR_CODE;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+
     }
+    private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyz";
+    private static final String NUMBERS = "0123456789";
+    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+
+    private static final String ALL_CHARACTERS = UPPER_CASE + LOWER_CASE + NUMBERS + SPECIAL_CHARACTERS;
+
+    public static String generatePassword(int length) {
+        StringBuilder passwordBuilder = new StringBuilder();
+        Random random = new SecureRandom();
+        passwordBuilder.append(getRandomCharacter(UPPER_CASE, random));
+        passwordBuilder.append(getRandomCharacter(LOWER_CASE, random));
+        passwordBuilder.append(getRandomCharacter(NUMBERS, random));
+        passwordBuilder.append(getRandomCharacter(SPECIAL_CHARACTERS, random));
+        for (int i = 4; i < length; i++) {
+            char randomChar = getRandomCharacter(ALL_CHARACTERS, random);
+            passwordBuilder.append(randomChar);
+        }
+
+        // Shuffle the password to randomize the order of characters.
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(length);
+            char temp = passwordBuilder.charAt(i);
+            passwordBuilder.setCharAt(i, passwordBuilder.charAt(randomIndex));
+            passwordBuilder.setCharAt(randomIndex, temp);
+        }
+
+        return passwordBuilder.toString();
+    }
+
+    private static char getRandomCharacter(String characterSet, Random random) {
+        int index = random.nextInt(characterSet.length());
+        return characterSet.charAt(index);
+    }
+
 
     public Optional<User> getUserByUsernameAndTitle(String username, String title) {
         return userRepository.findByUsernameAndTitle(username, title);

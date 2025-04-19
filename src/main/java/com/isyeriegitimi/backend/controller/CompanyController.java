@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller;
 
 import com.isyeriegitimi.backend.dto.CompanyDto;
+import com.isyeriegitimi.backend.dto.MentorDto;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.Company;
@@ -70,4 +71,5 @@ public class CompanyController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
+
 }

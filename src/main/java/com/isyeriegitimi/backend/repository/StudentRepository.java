@@ -14,4 +14,8 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
     Optional<Student> findByEmail(String email);
 
         List<Student> findByCompanyCompanyId(UUID companyId);
+
+    List<Student> searchByFirstNameOrLastName(String firstName, String lastName);
+
+    List<Student> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String searchText, String searchText1);
 }

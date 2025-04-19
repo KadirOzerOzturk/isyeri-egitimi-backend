@@ -3,9 +3,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://13.48.43.117:5432/isyeri_egitimi
-    username: isyeri
-    password: isyeri
+#    url: jdbc:postgresql://13.48.43.117:5432/isyeri_egitimi
+#    username: isyeri
+#    password: isyeri
+#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/isyeri_egitimi
+    username: postgres
+    password: 1
     driver-class-name: org.postgresql.Driver
   mail:
     host: smtp.gmail.com

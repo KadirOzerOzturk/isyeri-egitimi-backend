@@ -40,38 +40,43 @@ public class FileService {
 
     public UUID uploadFile(FileInfo fileInfo) {
         try {
-            // Base64'ten BufferedImage'a çevir
-            byte[] imageBytes = Base64.getDecoder().decode(fileInfo.getData());
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-            BufferedImage originalImage = ImageIO.read(inputStream);
+            // Check if the file is an image
+            if (fileInfo.getFileType().startsWith("image")) {
+                byte[] imageBytes = Base64.getDecoder().decode(fileInfo.getData());
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+                BufferedImage originalImage = ImageIO.read(inputStream);
 
-            // Yeni sıkıştırılmış output için ByteArrayOutputStream
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                // Proceed only if the image was successfully read
+                if (originalImage == null) {
+                    throw new IllegalStateException("Invalid image data");
+                }
 
-            // ImageWriter ayarları
-            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
-            if (!writers.hasNext()) throw new IllegalStateException("No writer found for jpg");
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            ImageWriter writer = writers.next();
-            ImageOutputStream ios = ImageIO.createImageOutputStream(outputStream);
-            writer.setOutput(ios);
+                // Find an image writer for JPG format
+                Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+                if (!writers.hasNext()) throw new IllegalStateException("No writer found for jpg");
 
-            // Kalite ayarlarını yap (0.5 = %50 kalite)
-            ImageWriteParam param = writer.getDefaultWriteParam();
-            if (param.canWriteCompressed()) {
-                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionQuality(0.5f);
+                ImageWriter writer = writers.next();
+                ImageOutputStream ios = ImageIO.createImageOutputStream(outputStream);
+                writer.setOutput(ios);
+
+                ImageWriteParam param = writer.getDefaultWriteParam();
+                if (param.canWriteCompressed()) {
+                    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    param.setCompressionQuality(0.5f); // Compression quality
+                }
+
+                writer.write(null, new IIOImage(originalImage, null, null), param);
+                ios.close();
+                writer.dispose();
+
+                // Convert the compressed image to Base64
+                String compressedBase64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+                fileInfo.setData(compressedBase64);
             }
 
-            writer.write(null, new IIOImage(originalImage, null, null), param);
-            ios.close();
-            writer.dispose();
-
-            // Yeni Base64'e dönüştür
-            String compressedBase64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
-            fileInfo.setData(compressedBase64);
-
-            // Kaydet ve ID döndür
+            // Save the file and return its ID (without modification if it's not an image)
             return fileInfoRepository.save(fileInfo).getId();
 
         } catch (Exception e) {

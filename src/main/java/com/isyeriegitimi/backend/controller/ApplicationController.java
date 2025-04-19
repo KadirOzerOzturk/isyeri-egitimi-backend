@@ -21,7 +21,10 @@ public class ApplicationController {
     public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
-
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Application>>> getAllApplications() {
+        return ResponseEntity.ok(ApiResponse.success(applicationService.getAllApplications(),"Applications fetched successfully"));
+    }
     @GetMapping("/{announcementId}")
     public ResponseEntity<ApiResponse<?>>  getApplicationsByAnnouncementId(@PathVariable UUID announcementId){
 
@@ -55,5 +58,6 @@ public class ApplicationController {
     public ResponseEntity<ApiResponse<List<Application>>> getPendingApplications(@PathVariable String confirmingRole){
         return ResponseEntity.ok(ApiResponse.success(applicationService.getPendingApplicationsByRole(confirmingRole),"Applications fetched successfully."));
     }
+
 
 }

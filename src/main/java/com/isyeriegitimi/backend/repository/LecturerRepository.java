@@ -18,4 +18,5 @@ public interface LecturerRepository extends JpaRepository<Lecturer,UUID> {
 
     Optional<Lecturer> findByEmail(String email);
 
+    List<Lecturer> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String searchText, String searchText1);
 }

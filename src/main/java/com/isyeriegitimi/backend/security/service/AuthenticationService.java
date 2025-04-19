@@ -15,6 +15,7 @@ import com.isyeriegitimi.backend.service.CommissionService;
 import com.isyeriegitimi.backend.service.CompanyService;
 import com.isyeriegitimi.backend.service.LecturerService;
 import com.isyeriegitimi.backend.service.StudentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,57 +46,65 @@ public class AuthenticationService {
 
 
 
-   public ApiResponse save(UserRequest userRequest) {
-       Optional<User> existingUser = userRepository.findByUsername(userRequest.getUsername());
-       if (existingUser.isPresent()) {
-           return ApiResponse.error("Username already taken. Please try another. ", 400);
-       }
-       switch (userRequest.getTitle()){
-           case "STUDENT":
-               Student student = Student.builder()
-                       .email(userRequest.getUsername())
-                       .firstName(userRequest.getFirstName())
-                       .lastName(userRequest.getLastName())
-                       .build();
-               studentService.save(studentService.mapToDto(student));
-               break;
-           case "COMPANY":
+    public ApiResponse save(UserRequest userRequest) {
+        Optional<User> existingUser = userRepository.findByUsername(userRequest.getUsername());
+        if (existingUser.isPresent()) {
+            return ApiResponse.error("Username already taken. Please try another. ", 400);
+        }
+
+
+        // Handle different user roles
+        switch (userRequest.getTitle()){
+            case "STUDENT":
+                Student student = Student.builder()
+                        .email(userRequest.getUsername())
+                        .firstName(userRequest.getFirstName())
+                        .lastName(userRequest.getLastName())
+                        .build();
+                studentService.save(studentService.mapToDto(student));
+                break;
+            case "COMPANY":
                 Company company = Company.builder()
-                          .email(userRequest.getUsername())
-                          .name(userRequest.getName())
-                          .build();
+                        .email(userRequest.getUsername())
+                        .name(userRequest.getName())
+                        .build();
                 companyService.save(companyService.mapToDto(company));
                 break;
-           case "LECTURER":
-               Lecturer lecturer = Lecturer.builder()
-                       .email(userRequest.getUsername())
-                       .firstName(userRequest.getFirstName())
-                       .lastName(userRequest.getLastName())
-                       .build();
-               lecturerService.save(lecturerService.mapToDto(lecturer));
-               break;
-           case "COMMISSION":
-               Commission commission = Commission.builder()
-                       .email(userRequest.getUsername())
-                       .firstName(userRequest.getFirstName())
-                       .lastName(userRequest.getLastName())
-                       .build();
-               commissionService.save(commissionService.mapToDto(commission));
-               break;
+            case "LECTURER":
+                Lecturer lecturer = Lecturer.builder()
+                        .email(userRequest.getUsername())
+                        .firstName(userRequest.getFirstName())
+                        .lastName(userRequest.getLastName())
+                        .build();
+                lecturerService.save(lecturerService.mapToDto(lecturer));
+                break;
+            case "COMMISSION":
+                Commission commission = Commission.builder()
+                        .email(userRequest.getUsername())
+                        .firstName(userRequest.getFirstName())
+                        .lastName(userRequest.getLastName())
+                        .build();
+                commissionService.save(commissionService.mapToDto(commission));
+                break;
+        }
 
-       }
-       User user = User.builder()
-               .username(userRequest.getUsername())
-               .title(userRequest.getTitle())
-               .password(passwordEncoder.encode(userRequest.getPassword()))
-               .role(Role.valueOf(userRequest.getTitle()))
-               .build();
+        User user= User.builder()
+                    .username(userRequest.getUsername())
+                    .title(userRequest.getTitle())
+                    .password(passwordEncoder.encode(userRequest.getPassword()))
+                    .role(Role.valueOf(userRequest.getTitle()))
+                    .build();
 
-       userRepository.save(user);
-        user.setPassword("");
 
-       return ApiResponse.success(user, "Successfully saved");
-   }
+
+
+
+        userRepository.save(user);
+
+        System.out.println("User saved: " + user);
+
+        return ApiResponse.success(user, "Successfully saved");
+    }
 
     public ApiResponse auth(UserRequest userRequest) {
         User existingUser = userRepository.findByUsernameAndTitle(userRequest.getUsername(), userRequest.getTitle())
