@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.dto;
 
 import com.isyeriegitimi.backend.model.Company;
+import com.isyeriegitimi.backend.model.Mentor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +26,6 @@ public class StudentDto {
     private String about;
     private String password;
     private Company company;
+    private Mentor mentor;
     private String identityNumber;
 }

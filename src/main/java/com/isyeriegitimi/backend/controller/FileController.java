@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +65,10 @@ public class FileController {
     public ResponseEntity<ApiResponse<?>> deleteFile(@PathVariable UUID fileId){
         fileService.deleteFile(fileId);
         return ResponseEntity.ok(ApiResponse.success(null,"File deleted successfully"));
+    }
+    @GetMapping("/weeklyReports/{studentId}")
+    public ResponseEntity<ApiResponse<List<FileInfo>>> getWeeklyReports(@PathVariable UUID studentId){
+        return ResponseEntity.ok(ApiResponse.success(fileService.getWeeklyReportByStudentId(studentId),"Files fetched successfully"));
     }
 
 }

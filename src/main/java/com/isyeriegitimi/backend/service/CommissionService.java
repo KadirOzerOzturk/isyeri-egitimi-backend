@@ -9,6 +9,8 @@ import com.isyeriegitimi.backend.repository.CommissionRepository;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.security.service.AuthenticationService;
+import com.isyeriegitimi.backend.security.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class CommissionService {
 
     @Autowired
     private  CommissionRepository commissionRepository;
+    @Autowired
+    private UserService userService;
 
 
 
@@ -46,13 +50,26 @@ public class CommissionService {
             throw new InternalServerErrorException("An error occurred while fetching the commission: " + e.getMessage());
         }
     }
+     @Transactional
     public void update(UUID commissionId, CommissionDto commissionDto) {
         try {
             Optional<Commission> commission = commissionRepository.findById(commissionId);
             if (commission.isEmpty()) {
                 throw new ResourceNotFoundException("Commission", "id", commissionId.toString());
             }
-            commissionRepository.save(mapToEntity(commissionDto));
+            Commission existingCommission = commission.get();
+            String oldEmail = existingCommission.getEmail();
+            String newEmail = commissionDto.getEmail();
+            existingCommission.setCommissionNumber(commissionDto.getCommissionNumber());
+            existingCommission.setEmail(newEmail);
+            existingCommission.setAbout(commissionDto.getAbout());
+            existingCommission.setLastName(commissionDto.getLastName());
+            existingCommission.setFirstName(commissionDto.getFirstName());
+            commissionRepository.save(existingCommission);
+            if (!oldEmail.equals(newEmail)) {
+                System.out.println("Updating user email from " + oldEmail + " to " + newEmail);
+                userService.updateUsernameByEmail(oldEmail, newEmail);
+            }
 
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the commission: " + e.getMessage());

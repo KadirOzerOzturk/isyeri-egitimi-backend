@@ -74,23 +74,49 @@
             vertical-align: top;
             overflow: visible;
         }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header-text {
+            text-align: center;
+
+            margin: 0 auto;
+            text-wrap: nowrap;
+        }
+
+        .qr-code {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            width: 60px;
+            height: auto;
+            background: white;
+        }
+
     </style>
 </head>
 
 <body>
-<div >
+<div class="header">
 
-    <img th:src="${qr}" alt="qr"
-         style="  width: 50px; height: auto;background: white; ">
+    <div class="header-text">
+        <h1 style="padding-top: 3pt; text-indent: 0pt; text-align: center;">GAZİ ÜNİVERSİTESİ REKTÖRLÜĞÜ</h1>
+        <h1 style="padding-top: 3pt; text-indent: 0pt; text-align: center;">TEKNOLOJİ FAKÜLTESİ</h1>
+        <h1 style="text-indent: 0pt; text-align: center;text-wrap: nowrap">İŞYERİ EĞİTİMİ YAPACAK ÖĞRENCİ BEYAN VE TAAHHÜTNAMESİ</h1>
+        <h1 style="text-indent: 0pt; line-height: 300%; text-align: center;">TEKNOLOJİ FAKÜLTESİ DEKANLIĞI’NA</h1>
+    </div>
 
+    <img th:src="${qr}" alt="qr" class="qr-code">
 </div>
-<h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;">GAZİ ÜNİVERSİTESİ REKTÖRLÜĞÜ</h1>
-<h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;" >TEKNOLOJİ FAKÜLTESİ</h1>
-<h1 style="text-indent: 0pt;text-align: center;">İŞYERİ EĞİTİMİ YAPACAK ÖĞRENCİ
-    BEYAN VE TAAHHÜTNAMESİ </h1>
-<h1 style="text-indent: 0pt;line-height: 300%;text-align: center;">TEKNOLOJİ FAKÜLTESİ DEKANLIĞI’NA</h1>
+
 <p style="padding-left: 5pt;text-indent: 36pt;text-align: justify;">5510 Sayılı Kanunun 5/b maddesi uyarınca
-    .…/..../20... tarihi itibariyle … hafta süreli İşyeri Eğitimimi ................................... da yapmak istiyorum.</p>
+    [[${startingDate}]] tarihi itibariyle [[${duration}]] hafta süreli İşyeri Eğitimimi [[${companyName}]] da yapmak istiyorum.</p>
 <p style="padding-top: 13pt;padding-left: 5pt;text-indent: 36pt;text-align: justify;">Aşağıda işaretlediğim beyanın
     doğruluğunu, beyan ettiğim durumumda herhangi bir değişiklik olması halinde değişikliği ve İşyeri Eğitimin
     süresince almış olduğum rapor ve izinleri 2 gün (en geç) içinde tarafınıza bildireceğimi kabul ederim. Beyanımın
@@ -98,9 +124,17 @@
     gecikme faizinin tarafımca ödeneceğini taahhüt ederim.</p>
 <p style="text-indent: 0pt;text-align: left;"><br /></p>
 <p style="text-indent: 0pt;text-align: left;" />
-<label><input type="checkbox" /> Ailemden, annem/babam üzerinden veya kamu/özel sektörde çalışmamdan dolayı genel sağlık sigortası kapsamında <b>sağlık hizmeti alıyorum</b>.</label>
+<label>
+    <input type="checkbox" name="insurance" value="true"
+           th:checked="${insurance == 'true'}" />
+    Ailemden, annem/babam üzerinden veya kamu/özel sektörde çalışmamdan dolayı genel sağlık sigortası kapsamında <b>sağlık hizmeti alıyorum</b>.
+</label>
 <br><br>
-<label><input type="checkbox" /> Ailemden, annem/babam üzerinden, genel sağlık sigortası kapsamında <b>sağlık hizmeti almıyorum</b>.</label>
+<label>
+    <input type="checkbox" name="insurance" value="false"
+           th:checked="${insurance == 'false'}" />
+    Ailemden, annem/babam üzerinden, genel sağlık sigortası kapsamında <b>sağlık hizmeti almıyorum</b>.
+</label>
 <p style="text-indent: 0pt;text-align: left;"><br /></p>
 <h2 style="padding-left: 53pt;text-indent: 0pt;text-align: left;">ÖĞRENCİNİN</h2>
 <p style="text-indent: 0pt;text-align: left;"><br /></p>
@@ -182,7 +216,7 @@
         <td
                 style="width:344pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
            <span th:each="signature : ${signatures}">
-                <span style="padding-left: 18px;padding-top: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'COMPANY'}">
+                <span style="padding-left: 18px;padding-top: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'STUDENT'}">
                     E-Onaylı
                 </span>
             </span>

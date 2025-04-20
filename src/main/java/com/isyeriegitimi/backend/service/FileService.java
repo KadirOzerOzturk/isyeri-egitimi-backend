@@ -206,4 +206,13 @@ public class FileService {
             throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
         }
     }
+
+    public List<FileInfo> getWeeklyReportByStudentId(UUID studentId) {
+        try{
+            List<FileInfo> weeklyReports=fileInfoRepository.findAllByFileNameContainingIgnoreCaseAndOwnerId("weekly",studentId);
+            return weeklyReports;
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
+        }
+    }
 }

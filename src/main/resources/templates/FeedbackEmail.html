@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{subject}} - Geri Bildirim</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #dddddd;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 640px;
+            margin: 40px auto;
+            background-color: #F9FAFB; /* bg-white */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e1e7ed;
+        }
+
+        .email-header {
+            background: #224279; /* dark-blue to light-blue */
+            padding: 30px;
+            text-align: center;
+        }
+
+        .email-header img {
+            max-width: 100px;
+            margin-bottom: 10px;
+            background: aliceblue;
+            padding: 8px;
+            border-radius: 100%;
+        }
+
+        .email-header h1 {
+            color: #f4f7fa;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .email-body {
+            padding: 30px 40px;
+            color: #333;
+        }
+
+        .email-body p {
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #224279;
+        }
+
+        .email-footer {
+            background-color: #f4f7fa;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #e2e2e2;
+        }
+
+        @media screen and (max-width: 680px) {
+            .email-body {
+                padding: 20px;
+            }
+
+            .email-container {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <h1>Geri Bildirim - Gazi Üniversitesi İşyeri Eğitimi Platformu</h1>
+    </div>
+
+    <div class="email-body">
+        <p>Merhaba <span class="highlight">{{name}} {{surname}}</span>,</p>
+
+        <p><strong>Konu:</strong> {{subject}}</p>
+
+        <p><strong>Mesaj:</strong></p>
+        <p>{{message}}</p>
+
+        <p><strong>Kullanıcı E-posta Adresi:</strong> {{email}}</p>
+
+        <p style="margin-top: 30px;">Saygılarımızla,<br><strong>Kurumsal Destek Ekibi</strong></p>
+    </div>
+
+    <div class="email-footer">
+        Bu e-posta otomatik olarak gönderilmiştir. Lütfen yanıtlamayınız.
+    </div>
+</div>
+</body>
+</html>

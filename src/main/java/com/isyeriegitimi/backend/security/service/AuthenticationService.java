@@ -1,22 +1,17 @@
 package com.isyeriegitimi.backend.security.service;
 
 import com.isyeriegitimi.backend.model.*;
-import com.isyeriegitimi.backend.repository.CommissionRepository;
-import com.isyeriegitimi.backend.repository.CompanyRepository;
-import com.isyeriegitimi.backend.repository.LecturerRepository;
-import com.isyeriegitimi.backend.repository.StudentRepository;
+import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.dto.PasswordChangeRequest;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.dto.UserResponse;
 import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.security.model.User;
 import com.isyeriegitimi.backend.security.repository.UserRepository;
-import com.isyeriegitimi.backend.service.CommissionService;
-import com.isyeriegitimi.backend.service.CompanyService;
-import com.isyeriegitimi.backend.service.LecturerService;
-import com.isyeriegitimi.backend.service.StudentService;
+import com.isyeriegitimi.backend.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.sl.draw.geom.GuideIf;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,7 +38,7 @@ public class AuthenticationService {
     private final CompanyRepository companyRepository;
     private final CommissionRepository commissionRepository;
     private final LecturerRepository lecturerRepository;
-
+    private final MentorRepository mentorRepository;
 
 
     public ApiResponse save(UserRequest userRequest) {
@@ -133,7 +128,15 @@ public class AuthenticationService {
                 return ApiResponse.error("Student not found", 404);
             }
             user = student.orElseThrow(() -> new RuntimeException("Student not found"));
+        } else if (existingUser.getTitle().equals(String.valueOf(Role.MENTOR))) {
+            Optional<Mentor> mentor = mentorRepository.findByEmail(existingUser.getUsername());
+            if (mentor.isEmpty()) {
+                return ApiResponse.error("Mentor not found", 404);
+
+            }
+            user = mentor.orElseThrow(() -> new RuntimeException("Mentor not found"));
         }
+
 
         UserResponse userResponse = UserResponse.builder().user(user).token(token).build();
         return ApiResponse.success(userResponse, "Successfully logged in");

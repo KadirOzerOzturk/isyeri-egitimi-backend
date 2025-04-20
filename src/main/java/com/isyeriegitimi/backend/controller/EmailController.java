@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.controller;
 
+import com.isyeriegitimi.backend.dto.FeedbackDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.Email;
 import com.isyeriegitimi.backend.service.EmailService;
@@ -30,5 +31,13 @@ public class EmailController {
         emailService.sendEmail(email);
         return ResponseEntity.ok(ApiResponse.success(null, "Email sent successfully"));
 
+    }
+    @PostMapping("/feedback")
+    public ResponseEntity<ApiResponse<?>> sendFeedback(@RequestBody FeedbackDto feedback) throws MessagingException {
+        // Geri bildirim e-posta gönderimi
+        emailService.sendFeedbackEmail(feedback);
+
+        // Başarıyla gönderildi mesajı döndürüyoruz
+        return ResponseEntity.ok(ApiResponse.success(null, "Feedback sent successfully"));
     }
 }

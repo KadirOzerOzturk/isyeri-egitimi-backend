@@ -5,21 +5,23 @@ import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.repository.CompanyRepository;
-import com.isyeriegitimi.backend.security.dto.UserRequest;
-import com.isyeriegitimi.backend.security.enums.Role;
-import com.isyeriegitimi.backend.security.service.AuthenticationService;
+import com.isyeriegitimi.backend.security.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
+
 
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
 
 
-    public CompanyService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    private final UserService userService;
 
+    public CompanyService(CompanyRepository companyRepository, UserService userService) {
+        this.companyRepository = companyRepository;
+        this.userService = userService;
     }
 
     public List<Company> getAllCompanies() {
@@ -41,12 +43,29 @@ public class CompanyService {
 
 
 
+    @Transactional
     public void update(Company company) {
+        // Check if the company exists by ID
         if (!companyRepository.existsById(company.getCompanyId())) {
             throw new ResourceNotFoundException("Company", "Company ID", company.getCompanyId().toString());
         }
+
         try {
-            companyRepository.save(company);
+            Company existingCompany = companyRepository.findById(company.getCompanyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Company", "Company ID", company.getCompanyId().toString()));
+
+            existingCompany.setName(company.getName());
+            existingCompany.setAddress(company.getAddress());
+            existingCompany.setAbout(company.getAbout());
+            existingCompany.setEmail(company.getEmail());
+            existingCompany.setSector(company.getSector());
+            String oldEmail = existingCompany.getEmail();
+            String newEmail = company.getEmail();
+
+            if (!oldEmail.equals(newEmail)) {
+                userService.updateUsernameByEmail(oldEmail, newEmail);
+            }
+            companyRepository.save(existingCompany);
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the company: " + e.getMessage());
         }

@@ -138,22 +138,44 @@
             font-size: 12px;
             text-align: center;
         }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header-text {
+            text-align: center;
+            max-width: 70%;
+            margin: 0 auto;
+        }
+
+        .qr-code {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            width: 60px;
+            height: auto;
+            background: white;
+        }
     </style>
 
 </head>
 
 
 <body>
-<div >
 
-    <img th:src="${qr}" alt="qr"
-         style="  width: 50px; height: auto;background: white; ">
-
-</div>
-<div style="text-align: center;">
-    <h1 style="margin: 0; padding-top: 4pt; padding-bottom: 4pt;">
+<div class="header">
+    <h1 class="header-text">
         GAZİ ÜNİVERSİTESİ TEKNOLOJİ FAKÜLTESİ
     </h1>
+
+    <img th:src="${qr}" alt="qr" class="qr-code">
+</div>
+
 </div>
 
 <table class="header-table" style="width: 100%; border-collapse: collapse;">

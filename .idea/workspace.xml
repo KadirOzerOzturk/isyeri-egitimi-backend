@@ -4,18 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Add functionality to fetch all applications and enhance user role handling">
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Add endpoint to fetch company photos and enhance file retrieval functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/EmailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/MentorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/MentorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/StudentDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/StudentDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FileInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/MentorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/MentorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CommissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CommissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/CompanyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/EmailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/ApplicationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/CompanyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/controller/CompanyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/CommissionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/CommissionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/CompanyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/CompanyRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/LecturerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/LecturerRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/LecturerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/LecturerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/MentorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/MentorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/SearchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form3.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Form3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/taahutname.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/taahutname.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/repository/StudentRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,42 +90,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JUnit.AnnouncementServiceTest.executor": "Run",
-    "JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria.executor": "Run",
-    "JUnit.LoginTest.executor": "Run",
-    "JavaScript Debug.form3.html.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.BackendApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/isyeri-egitimi-backend/src/main/resources/static",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JUnit.AnnouncementServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AnnouncementServiceTest.whenDeleteAnnouncement_thenCascadingDeleteAnnouncementCriteria.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.form3.html.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oztur/OneDrive/Masaüstü/Projeler/IsyeriProjeKodlar/isyeri-egitimi-backend/src/main/resources/static&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.isyeriegitimi.backend.dto" />
@@ -403,7 +418,8 @@
       <workItem from="1744895003564" duration="10315000" />
       <workItem from="1744920028038" duration="5002000" />
       <workItem from="1744973581341" duration="8685000" />
-      <workItem from="1745048882538" duration="19070000" />
+      <workItem from="1745048882538" duration="22643000" />
+      <workItem from="1745146537309" duration="23797000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -757,7 +773,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745082353636</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="feat: Add endpoint to fetch company photos and enhance file retrieval functionality">
+      <option name="closed" value="true" />
+      <created>1745082817585</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1745082817585</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,7 +799,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gitignore modified" />
     <MESSAGE value="post pics done" />
     <MESSAGE value="post system refactored" />
     <MESSAGE value="spring security" />
@@ -800,6 +823,7 @@
     <MESSAGE value="feat: Implement email sending functionality with enhanced template and error handling" />
     <MESSAGE value="feat: Enhance file upload functionality with image compression and improved update handling" />
     <MESSAGE value="feat: Add functionality to fetch all applications and enhance user role handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add functionality to fetch all applications and enhance user role handling" />
+    <MESSAGE value="feat: Add endpoint to fetch company photos and enhance file retrieval functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add endpoint to fetch company photos and enhance file retrieval functionality" />
   </component>
 </project>

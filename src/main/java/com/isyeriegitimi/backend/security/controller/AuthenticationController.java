@@ -30,7 +30,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> auth(@RequestBody UserRequest userRequest) {
-        System.out.println("hibernate version : "+org.hibernate.Version.getVersionString());
 
         ApiResponse response = authenticationService.auth(userRequest);
 

@@ -23,4 +23,5 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
     void deleteByOwnerIdAndOwnerRole(UUID ownerId, String ownerRole);
     void deleteByOwnerId(UUID ownerId);
 
+    List<FileInfo> findAllByFileNameContainingIgnoreCaseAndOwnerId(String fileName, UUID ownerId);
 }

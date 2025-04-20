@@ -6,17 +6,9 @@ import com.isyeriegitimi.backend.security.dto.UserDto;
 import com.isyeriegitimi.backend.security.model.User;
 import com.isyeriegitimi.backend.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.CharacterData;
-
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
-import static org.springframework.beans.MethodInvocationException.ERROR_CODE;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -102,4 +94,7 @@ public class UserService {
             throw new InternalServerErrorException("An error occurred while updating the user's username: " + e.getMessage());
         }
     }
+
+
+
 }

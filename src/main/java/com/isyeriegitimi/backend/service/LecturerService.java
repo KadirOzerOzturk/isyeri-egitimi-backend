@@ -11,6 +11,7 @@ import com.isyeriegitimi.backend.repository.StudentsInGroupRepository;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
 import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.security.service.AuthenticationService;
+import com.isyeriegitimi.backend.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class LecturerService {
     private  LecturerRepository lecturerRepository;
     @Autowired
     private  StudentsInGroupRepository studentsInGroupRepository;
+    @Autowired
+    private UserService userService;
 
 
 
@@ -51,11 +54,24 @@ public class LecturerService {
 
     public void updateLecturer(UUID lecturerId, LecturerDto lecturerDto) {
         try {
-           Lecturer existingLecturer= lecturerRepository.findById(lecturerId)
-                    .orElseThrow(()-> new ResourceNotFoundException("Lecturer", "lecturerId", lecturerId.toString()));
-            Lecturer lecturer = mapToLecturerEntity(lecturerDto);
-            lecturer.setLecturerId(lecturerId);
-            lecturerRepository.save(lecturer);
+           Optional<Lecturer> existingLecturer= lecturerRepository.findById(lecturerId);
+           if (existingLecturer.isPresent()) {
+               Lecturer lecturer = existingLecturer.get();
+               String oldEmail = lecturer.getEmail();
+               String newEmail = lecturerDto.getEmail();
+               lecturer.setEmail(newEmail);
+               lecturer.setAbout(lecturerDto.getAbout());
+               lecturer.setLecturerNumber(lecturerDto.getLecturerNumber());
+               lecturer.setFirstName(lecturerDto.getFirstName());
+               lecturer.setLastName(lecturerDto.getLastName());
+               lecturer.setFaculty(lecturerDto.getFaculty());
+               lecturerRepository.save(lecturer);
+               if (!oldEmail.equals(newEmail)) {
+                   userService.updateUsernameByEmail(oldEmail, newEmail);
+               }
+           }else {
+               throw new ResourceNotFoundException("Lecturer", "lecturerId", lecturerId.toString());
+           }
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the lecturer: " + e.getMessage());
 

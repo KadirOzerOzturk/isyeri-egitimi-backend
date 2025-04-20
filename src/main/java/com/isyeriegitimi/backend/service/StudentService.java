@@ -4,8 +4,10 @@ import com.isyeriegitimi.backend.dto.LecturerDto;
 import com.isyeriegitimi.backend.dto.StudentDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
+import com.isyeriegitimi.backend.model.Mentor;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentInGroup;
+import com.isyeriegitimi.backend.repository.MentorRepository;
 import com.isyeriegitimi.backend.repository.StudentRepository;
 import com.isyeriegitimi.backend.repository.StudentsInGroupRepository;
 import com.isyeriegitimi.backend.security.dto.UserDto;
@@ -28,15 +30,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    @Autowired
+
     private StudentRepository studentRepository;
-    @Autowired
+
     private StudentsInGroupRepository studentsInGroupRepository;
-    @Autowired
     private UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private MentorRepository mentorRepository;
 
-
+    public StudentService(StudentRepository studentRepository, StudentsInGroupRepository studentsInGroupRepository, UserService userService, MentorRepository mentorRepository) {
+        this.studentRepository = studentRepository;
+        this.studentsInGroupRepository = studentsInGroupRepository;
+        this.userService = userService;
+        this.mentorRepository = mentorRepository;
+    }
 
     public Optional<Student> getStudentByStudentNo(String studentNo){
         try {
@@ -71,9 +77,7 @@ public class StudentService {
                 // Check if the email has changed
                 String oldEmail = existingStudent.getEmail();
                 String newEmail = studentDto.getEmail();
-                logger.info("oldEmail: {}", oldEmail);
-                logger.info("newEmail: {}", newEmail);
-                // Update student details
+
                 existingStudent.setStudentNumber(studentDto.getStudentNumber());
                 existingStudent.setFirstName(studentDto.getFirstName());
                 existingStudent.setLastName(studentDto.getLastName());
@@ -91,8 +95,6 @@ public class StudentService {
                 if (!oldEmail.equals(newEmail)) {
                     System.out.println("Updating user email from " + oldEmail + " to " + newEmail);
                     userService.updateUsernameByEmail(oldEmail, newEmail);
-                } else {
-                    System.out.println("Email did not change. No update to User table.");
                 }
 
                 return "Student updated successfully";
@@ -148,7 +150,7 @@ public class StudentService {
             throw new InternalServerErrorException("An error occurred while saving the student: " + e.getMessage());
         }
     }
-    public Student mapDtoToEntity(StudentDto studentDto) {
+    public static Student mapDtoToEntity(StudentDto studentDto) {
         if (studentDto == null) {
             return null;
         }
@@ -164,11 +166,11 @@ public class StudentService {
         student.setAbout(studentDto.getAbout());
         student.setCompany(studentDto.getCompany());
         student.setPassword(studentDto.getPassword());
-
+        student.setMentor(studentDto.getMentor());
         return student;
     }
 
-    public StudentDto mapToDto(Student student) {
+    public static StudentDto mapToDto(Student student) {
         if (student == null) {
             return null;
         }
@@ -185,6 +187,7 @@ public class StudentService {
         studentDto.setAbout(student.getAbout());
         studentDto.setCompany(student.getCompany());
         studentDto.setIdentityNumber(student.getIdentityNumber());
+        studentDto.setMentor(student.getMentor());
 
 
         return studentDto;
@@ -194,14 +197,29 @@ public class StudentService {
     public List<StudentDto> getStudentsByCompanyId(UUID companyId) {
         try {
             List<Student> studentList = studentRepository.findByCompanyCompanyId(companyId);
-            if (studentList.isEmpty()) {
-                throw new ResourceNotFoundException("Student", "Company ID", companyId.toString());
+            if (studentList.isEmpty()){
+                return Collections.emptyList();
             }
             List<StudentDto> studentDtoList = studentList.stream()
                     .map(student -> mapToDto(student))
                     .collect(Collectors.toList());
             return studentDtoList;
         } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
+    }
+
+    public void assignMentorToStudent(UUID studentId, UUID mentorId) {
+        try {
+            Student student = studentRepository.findById(studentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Student","id",studentId.toString()));
+
+            Mentor mentor = mentorRepository.findById(mentorId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Mentor","id",mentorId.toString()));
+
+            student.setMentor(mentor);
+            studentRepository.save(student);
+        }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
     }

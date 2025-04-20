@@ -160,15 +160,8 @@ public class PdfReportService {
 
         String encodedPdfData = Base64.getEncoder().encodeToString(pdfOutputStream.toByteArray());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode ownersArray = objectMapper.createArrayNode();
-        ObjectNode ownerObject = objectMapper.createObjectNode();
-        ownerObject.put("id", studentId.toString());
-        ownerObject.put("role", Role.STUDENT.toString());
-
-        ownersArray.add(ownerObject);
         FileInfo fileInfo = FileInfo.builder()
-                .fileName("form1-" + studentId)
+                .fileName("form1" )
                 .fileType("application/pdf")
                 .ownerId(studentId)
                 .ownerRole(Role.STUDENT.toString())
@@ -180,48 +173,119 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public  ByteArrayOutputStream generateForm2ByStudentId(UUID studentId) {
-
+    public ByteArrayOutputStream generateForm2ByStudentId(UUID studentId, UUID formId) throws Exception {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if (studentOptional.isEmpty()) {
             throw new RuntimeException("Student not found with ID: " + studentId);
         }
+
+        List<FormAnswer> formAnswers = formAnswerRepository.findByStudentIdAndFormId(studentId, formId);
         Student student = studentOptional.get();
+        List<FormSignature> signatures = formSignatureRepository.findAllByFormIdAndStudentId(formId, studentId);
+
+        String startingDate = null;
+        String duration = null;
+        String companyName = null;
+        String insurance = null;
+
+        for (FormAnswer answer : formAnswers) {
+            String question = answer.getFormQuestion().getQuestionText();
+            switch (question) {
+                case "Başlangıç Tarihi":
+                    startingDate = answer.getAnswer();
+                    break;
+                case "İşyeri Eğitimi Yapılacak Süre (HAFTA)":
+                    duration = answer.getAnswer();
+                    break;
+                case "İşyeri Eğitimi Yapılacak Firmanın Adı":
+                    System.out.println("company "+ answer.getAnswer());
+                    companyName = answer.getAnswer();
+                    break;
+                case "Ailemden, annem/babam üzerinden veya kamu/özel sektörde çalışmamdan dolayı genel sağlık sigortası kapsamında sağlık hizmeti alıyorum.":
+                    if ("Evet".equalsIgnoreCase(answer.getAnswer())) {
+                        insurance = "true";
+                    }
+                    break;
+                case "Ailemden, annem/babam üzerinden, genel sağlık sigortası kapsamında sağlık hizmeti almıyorum.":
+                    if ("Evet".equalsIgnoreCase(answer.getAnswer())) {
+                        insurance = "false";
+                    }
+                    break;
+            }
+        }
+
+        QrInfo qr = generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
+        context.setVariable("qr", "data:image/png;base64," + qr.getImage());
         context.setVariable("student", student);
         context.setVariable("date", new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        context.setVariable("startingDate", startingDate);
+        context.setVariable("duration", duration);
+        context.setVariable("companyName", companyName);
+        context.setVariable("insurance", insurance);
+        context.setVariable("signatures",signatures);
         String htmlContent = templateEngine.process("taahutname", context);
 
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
 
-
         return pdfOutputStream;
     }
-    public ByteArrayOutputStream generateForm3ByStudentId(UUID formId, UUID studentId) {
+
+    public ByteArrayOutputStream generateForm3ByStudentId(UUID formId, UUID studentId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         StudentGroup studentGroup = studentsInGroupRepository.findByStudent_StudentId(studentId)
                 .orElseThrow(() -> new RuntimeException("Student group not found"))
                 .getStudentGroup();
-        List<FormAnswer> formAnswers = formAnswerRepository.findByUserIdAndUserRole(UUID.fromString("92ab7d1e-0710-4a82-9be4-3b429cf33ded"), "LECTURER");
+        List<FormAnswer> formAnswers = formAnswerRepository.findByStudentIdAndFormId(studentId, formId);
+        List<FormSignature> signatures = formSignatureRepository.findAllByFormIdAndStudentId(formId, studentId);
+
+        QrInfo qr = generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
-
+        context.setVariable("qr", "data:image/png;base64," + qr.getImage());
+        String startingDate = null;
+        String departments = null;
+        String visitDate = null;
+        String mentorImpression= null;
+        String lecturerImpression= null;
         for (FormAnswer answer : formAnswers) {
-            String questionText = answer.getFormQuestion().getQuestionText();
-            String answerValue = answer.getAnswer();
+            String question = answer.getFormQuestion().getQuestionText();
+            switch (question) {
+                case "İşyeri Eğitimine Başlama Tarihi":
+                    startingDate = answer.getAnswer();
+                    break;
+                case "İşyerinde Çalıştığı Bölümler":
+                    departments = answer.getAnswer();
+                    break;
+                case "İşyeri Ziyaret Edilen Tarih":
+                    visitDate = answer.getAnswer();
+                    break;
+                case "İŞYERİ YETKİLİSİ/GÖREVLİSİNİN ÖĞRENCİ HAKKINDAKİ İZLENİMLERİ":
 
-            String variableName = convertToVariableName(questionText);
+                    mentorImpression = answer.getAnswer();
 
-            System.out.println("Variable Name: " + variableName + " = " + answerValue);
+                    break;
+                case "İZLEYİCİ ÖĞRETİM ÜYESİNİN ÖĞRENCİ HAKKINDAKİ İZLENİMLERİ":
 
-            context.setVariable(variableName, answerValue);
+                    lecturerImpression =answer.getAnswer();
+
+                    break;
+            }
+
         }
+
+
 
         context.setVariable("student", student.get());
         context.setVariable("lecturer", studentGroup.getLecturer());
-
+        context.setVariable("startingDate", startingDate);
+        context.setVariable("departments", departments);
+        context.setVariable("visitDate", visitDate);
+        context.setVariable("mentorImpression", mentorImpression);
+        context.setVariable("lecturerImpression", lecturerImpression);
+        context.setVariable("signatures",signatures);
         String htmlContent = templateEngine.process("form3", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);

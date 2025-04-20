@@ -3,14 +3,8 @@ package com.isyeriegitimi.backend.service;
 
 import com.isyeriegitimi.backend.dto.SearchResultDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
-import com.isyeriegitimi.backend.model.Commission;
-import com.isyeriegitimi.backend.model.Company;
-import com.isyeriegitimi.backend.model.Lecturer;
-import com.isyeriegitimi.backend.model.Student;
-import com.isyeriegitimi.backend.repository.CommissionRepository;
-import com.isyeriegitimi.backend.repository.CompanyRepository;
-import com.isyeriegitimi.backend.repository.LecturerRepository;
-import com.isyeriegitimi.backend.repository.StudentRepository;
+import com.isyeriegitimi.backend.model.*;
+import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.enums.Role;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -26,13 +20,14 @@ public class SearchService {
     private final LecturerRepository lecturerRepository;
     private final CommissionRepository commissionRepository;
     private final CompanyRepository companyRepository;
+    private final MentorRepository mentorRepository;
 
-
-    public SearchService(StudentRepository studentRepository, LecturerRepository lecturerRepository, CommissionRepository commissionRepository, CompanyRepository companyRepository) {
+    public SearchService(StudentRepository studentRepository, LecturerRepository lecturerRepository, CommissionRepository commissionRepository, CompanyRepository companyRepository, MentorRepository mentorRepository) {
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
         this.commissionRepository = commissionRepository;
         this.companyRepository = companyRepository;
+        this.mentorRepository = mentorRepository;
     }
 
     @Transactional
@@ -42,9 +37,16 @@ public class SearchService {
             List<Commission> commissionList = commissionRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchText, searchText);
             List<Company> companyList = companyRepository.findByNameContainingIgnoreCase(searchText);
             List<Lecturer> lecturerList = lecturerRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchText, searchText);
-
+            List<Mentor> mentorList = mentorRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(searchText,searchText);
             List<SearchResultDto> searchResultDtoList = new ArrayList<>();
 
+            for (Mentor mentor : mentorList) {
+                SearchResultDto dto = new SearchResultDto();
+                dto.setId(mentor.getId());
+                dto.setName(mentor.getFirstName()+" "+mentor.getLastName());
+                dto.setRole(String.valueOf(Role.MENTOR));
+                searchResultDtoList.add(dto);
+            }
             for (Student student : studentList) {
                 SearchResultDto dto = new SearchResultDto();
                 dto.setId(student.getStudentId());
