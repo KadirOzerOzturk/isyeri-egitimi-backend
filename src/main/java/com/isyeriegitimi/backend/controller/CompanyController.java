@@ -38,14 +38,8 @@ public class CompanyController {
     @PutMapping("/update/{companyId}")
     public ResponseEntity<ApiResponse<String>> updateCompany(@RequestBody CompanyDto companyDto, @PathVariable UUID companyId) {
         try {
-            Company company =new Company();
-            company.setName(companyDto.getName());
-            company.setAddress(companyDto.getAddress());
-            company.setEmail(companyDto.getEmail());
-            company.setCompanyId(companyDto.getCompanyId());
-            company.setAbout(companyDto.getAbout());
-            company.setSector(companyDto.getSector());
-            companyService.update(company);
+
+            companyService.update(companyDto, companyId);
             return ResponseEntity.ok(ApiResponse.success("Company updated successfully", "Update successful"));
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(ex.getMessage(), HttpStatus.NOT_FOUND.value()));

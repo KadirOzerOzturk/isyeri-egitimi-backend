@@ -85,7 +85,7 @@ public class UserService {
             Optional<User> userOpt = userRepository.findByUsername(oldEmail);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
-                user.setUsername(newEmail); // Update username
+                user.setUsername(newEmail);
                 userRepository.save(user);
             } else {
                 throw new ResourceNotFoundException("User", "email", oldEmail);

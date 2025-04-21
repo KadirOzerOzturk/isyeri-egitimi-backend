@@ -19,4 +19,6 @@ public class CompanyDto {
     private String address;
     private String sector;
     private String about;
+    private String website;
+    private String phone;
 }

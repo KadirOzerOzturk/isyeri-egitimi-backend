@@ -60,30 +60,36 @@ public class MentorService {
             throw new InternalServerErrorException("An error occurred while creating the mentor. Error: " + e.getMessage());
         }
     }
-    public void updateMentor(MentorDto mentorDto,UUID mentorId) {
-        try {
-            Optional<Mentor> mentor = mentorRepository.findById(mentorId);
-            if (mentor.isPresent()) {
-                Mentor existingMentor = mentor.get();
-                existingMentor.setFirstName(mentorDto.getFirstName());
-                existingMentor.setLastName(mentorDto.getLastName());
-                existingMentor.setEmail(mentorDto.getEmail());
-                existingMentor.setCompany(mentorDto.getCompany());
-                existingMentor.setPhone(mentorDto.getPhone());
-                String oldEmail = existingMentor.getEmail();
-                String newEmail = mentorDto.getEmail();
-                if (!oldEmail.equals(newEmail)) {
-                    System.out.println("Updating user email from " + oldEmail + " to " + newEmail);
-                    userService.updateUsernameByEmail(oldEmail, newEmail);
-                }
-                mentorRepository.save(existingMentor);
-            }else {
-                throw new ResourceNotFoundException("Mentor", "ID", mentorId.toString());
-            }
-        } catch (Exception e) {
-            throw new InternalServerErrorException("An error occurred while updating the student: " + e.getMessage());
-        }
-    }
+   @Transactional
+   public void updateMentor(MentorDto mentorDto, UUID mentorId) {
+       try {
+           Optional<Mentor> mentor = mentorRepository.findById(mentorId);
+           if (mentor.isPresent()) {
+               Mentor existingMentor = mentor.get();
+               String oldEmail = existingMentor.getEmail();
+               String newEmail = mentorDto.getEmail();
+               existingMentor.setFirstName(mentorDto.getFirstName());
+               existingMentor.setLastName(mentorDto.getLastName());
+               existingMentor.setEmail(mentorDto.getEmail());
+               existingMentor.setCompany(mentorDto.getCompany());
+               existingMentor.setPhone(mentorDto.getPhone());
+               existingMentor.setAbout(mentorDto.getAbout());
+
+
+
+               if (newEmail != null && !oldEmail.equals(newEmail)) {
+                   System.out.println("Updating user email from " + oldEmail + " to " + newEmail);
+                   userService.updateUsernameByEmail(oldEmail, newEmail);
+               }
+
+               mentorRepository.save(existingMentor);
+           } else {
+               throw new ResourceNotFoundException("Mentor", "ID", mentorId.toString());
+           }
+       } catch (Exception e) {
+           throw new InternalServerErrorException("An error occurred while updating the mentor: " + e.getMessage());
+       }
+   }
     public List<StudentDto> getStudentsByMentor(UUID mentorId) {
         try{
             List< Student > studentList = studentRepository.findByMentorId(mentorId);
@@ -123,6 +129,7 @@ public class MentorService {
         mentor.setCompany(mentorDto.getCompany());
         mentor.setEmail(mentorDto.getEmail());
         mentor.setPhone(mentorDto.getPhone());
+        mentor.setAbout(mentorDto.getAbout());
         return mentor;
 
     }
@@ -134,8 +141,21 @@ public class MentorService {
         mentorDto.setCompany(mentor.getCompany());
         mentorDto.setEmail(mentor.getEmail());
         mentorDto.setPhone(mentor.getPhone());
+        mentorDto.setAbout(mentor.getAbout());
         return mentorDto;
     }
 
 
+    public MentorDto getMentorById(UUID id) {
+        try {
+            Optional<Mentor> mentor = mentorRepository.findById(id);
+            if (mentor.isPresent()) {
+                return mapToDto(mentor.get());
+            } else {
+                throw new ResourceNotFoundException("Mentor", "ID", id.toString());
+            }
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the mentor: " + e.getMessage());
+        }
+    }
 }

@@ -49,9 +49,9 @@ public class ApplicationController {
         return ResponseEntity.ok(ApiResponse.success(null, "Application updated successfully."));
     }
 
-    @DeleteMapping("/delete/{studentNo}/{announcementId}")
-    public ResponseEntity<ApiResponse<?>> deleteApplication(@PathVariable String studentNo,@PathVariable UUID announcementId){
-        applicationService.deleteApplication(studentNo,announcementId);
+    @DeleteMapping("/delete/{applicationId}")
+    public ResponseEntity<ApiResponse<?>> deleteApplication(@PathVariable UUID applicationId){
+        applicationService.deleteApplication(applicationId);
         return ResponseEntity.ok(ApiResponse.success(null, "Application deleted successfully."));
     }
     @GetMapping("/pending/{confirmingRole}")

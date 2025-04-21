@@ -34,4 +34,8 @@ public class Company {
 
     @Column(name = "about")
     private String about;
+
+    private String website;
+    private String phone;
+
 }

@@ -36,7 +36,7 @@ public class ApplicationService {
             return applications;
         }
         catch (Exception e) {
-            throw new InternalServerErrorException("Applications could not be fetched.");
+            throw new InternalServerErrorException("An error occurred while fetching the applications: " + e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class ApplicationService {
 
             return applications;
         }catch (Exception e){
-            throw new InternalServerErrorException("Applications could not be fetched : " + e.getMessage());
+            throw new InternalServerErrorException("An error occurred while fetching the applications: " + e.getMessage());
         }
     }
 
@@ -67,15 +67,15 @@ public class ApplicationService {
                 .build();
         applicationRepository.save(application);
     } catch (Exception e) {
-        throw new InternalServerErrorException("Application could not be saved.");
+        throw new InternalServerErrorException("An error occurred while saving the application: " + e.getMessage());
     }
 }
-
-    public void deleteApplication(String studentNo, UUID announcementId) {
+    @Transactional
+    public void deleteApplication(UUID applicationId) {
         try {
-            applicationRepository.deleteAllByStudentStudentNumberAndAnnouncementAnnouncementId(studentNo,announcementId);
+            applicationRepository.deleteById(applicationId);
         }catch (Exception e){
-            throw new InternalServerErrorException("Application could not be deleted.");
+            throw new InternalServerErrorException("An error occurred while deleting the applications: " + e.getMessage());
         }
     }
 
@@ -87,7 +87,8 @@ public class ApplicationService {
             return applications;
         }
         catch (Exception e){
-            return null;
+            throw new InternalServerErrorException("An error occurred while fetching the applications: " + e.getMessage());
+
         }
     }
     @Transactional

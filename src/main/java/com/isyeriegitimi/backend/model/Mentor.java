@@ -21,6 +21,8 @@ public class Mentor {
     private String lastName;
     private String email;
     private String phone;
+    private String about;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = true)
     private Company company;

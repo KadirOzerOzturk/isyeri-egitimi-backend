@@ -10,8 +10,11 @@ import com.isyeriegitimi.backend.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SkillService {
@@ -24,13 +27,10 @@ public class SkillService {
         this.studentRepository = studentRepository;
     }
 
-
-
-
     public void saveSkill(SkillDto skillDto){
         try {
-            Student student=studentRepository.findByStudentNumber(skillDto.getStudent().getStudentNumber())
-                    .orElseThrow(()-> new ResourceNotFoundException("Student","studentNumber",skillDto.getStudent().getStudentNumber()));
+            Student student=studentRepository.findById(skillDto.getStudentId())
+                    .orElseThrow(()-> new ResourceNotFoundException("Student","student id",skillDto.getStudentId().toString()));
 
             Skill skill=Skill
                     .builder()
@@ -46,27 +46,46 @@ public class SkillService {
         }
     }
 
-    public List<Skill> getSkills(UUID studentId) {
+    public List<SkillDto> getSkills(UUID studentId) {
         try {
-
             List<Skill> skillList = skillRepository.findAllByStudent_StudentId(studentId);
 
-            return skillList;
+            return skillList.stream()
+                    .map(this::mapToDto)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while fetching the skills: " + e.getMessage());
         }
     }
 
-    public void deleteSkill(UUID studentId, UUID skillId) {
+
+    public void deleteSkill(UUID skillId) {
         try {
-            Skill skill=skillRepository.findByStudent_StudentIdAndSkillId(studentId,skillId);
-            if(skill==null){
-                throw new ResourceNotFoundException("Skill","studentNo",studentId.toString());
+            Optional<Skill> skill=skillRepository.findById(skillId);
+            if(skill.isEmpty()){
+                throw new ResourceNotFoundException("Skill","skillId",skillId.toString());
             }
-            skillRepository.delete(skill);
+            skillRepository.deleteById(skillId);
 
         }catch (Exception e){
             throw new RuntimeException("Error removing skill", e);
         }
+    }
+    private SkillDto mapToDto(Skill skill) {
+        SkillDto skillDto = new SkillDto();
+        skillDto.setSkillId(skill.getSkillId());
+        skillDto.setDescription(skill.getDescription());
+        skillDto.setLevel(skill.getLevel());
+        skillDto.setStudentId(skill.getStudent().getStudentId());
+        return skillDto;
+    }
+    private Skill mapToEntity(SkillDto skillDto) {
+
+        Skill skill = new Skill();
+        skill.setSkillId(skillDto.getSkillId());
+        skill.setDescription(skillDto.getDescription());
+        skill.setLevel(skillDto.getLevel());
+        skill.setStudent(studentRepository.findById(skillDto.getStudentId()).get());
+        return skill;
     }
 }

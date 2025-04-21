@@ -9,6 +9,7 @@ import com.isyeriegitimi.backend.security.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -44,24 +45,22 @@ public class CompanyService {
 
 
     @Transactional
-    public void update(Company company) {
-        // Check if the company exists by ID
-        if (!companyRepository.existsById(company.getCompanyId())) {
-            throw new ResourceNotFoundException("Company", "Company ID", company.getCompanyId().toString());
-        }
-
+    public void update(CompanyDto companyDto, UUID companyId) {
         try {
-            Company existingCompany = companyRepository.findById(company.getCompanyId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Company", "Company ID", company.getCompanyId().toString()));
-
-            existingCompany.setName(company.getName());
-            existingCompany.setAddress(company.getAddress());
-            existingCompany.setAbout(company.getAbout());
-            existingCompany.setEmail(company.getEmail());
-            existingCompany.setSector(company.getSector());
+            Optional<Company> company = companyRepository.findById(companyId);
+            if (company.isEmpty()) {
+                throw new ResourceNotFoundException("Company", "Company ID", companyId.toString());
+            }
+            Company existingCompany = company.get();
             String oldEmail = existingCompany.getEmail();
-            String newEmail = company.getEmail();
-
+            String newEmail = companyDto.getEmail();
+            existingCompany.setName(companyDto.getName());
+            existingCompany.setAddress(companyDto.getAddress());
+            existingCompany.setAbout(companyDto.getAbout());
+            existingCompany.setEmail(companyDto.getEmail());
+            existingCompany.setSector(companyDto.getSector());
+            existingCompany.setPhone(companyDto.getPhone());
+            existingCompany.setWebsite(companyDto.getWebsite());
             if (!oldEmail.equals(newEmail)) {
                 userService.updateUsernameByEmail(oldEmail, newEmail);
             }
@@ -71,6 +70,7 @@ public class CompanyService {
         }
     }
 
+    @Transactional
     public void delete(UUID companyId) {
         if (!companyRepository.existsById(companyId)) {
             throw new ResourceNotFoundException("Company", "Company ID", companyId.toString());

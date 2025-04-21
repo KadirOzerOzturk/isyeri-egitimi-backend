@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller.Announcement;
 
 import com.isyeriegitimi.backend.dto.FavoriteAnnouncementDto;
+import com.isyeriegitimi.backend.dto.FavoriteAnnouncementRequest;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.FavoriteAnnouncement;
 import com.isyeriegitimi.backend.service.FavoriteAnnouncementService;
@@ -30,14 +31,11 @@ public class FavoriteAnnouncementController {
     }
 
     @PostMapping("/setFavorite")
-    public ResponseEntity<ApiResponse<UUID>> setFavorite(@RequestBody FavoriteAnnouncementDto favoriteAnnouncementDto) {
-        try {
+    public ResponseEntity<ApiResponse<UUID>> setFavorite(@RequestBody FavoriteAnnouncementRequest favoriteAnnouncementRequest) {
 
-            return ResponseEntity.ok(ApiResponse.success(favoriteAnnouncementService.save(favoriteAnnouncementDto), "Favorite saved successfully"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ApiResponse.error("Error saving favorite", HttpStatus.INTERNAL_SERVER_ERROR.value()));
-        }
+
+            return ResponseEntity.ok(ApiResponse.success(favoriteAnnouncementService.save(favoriteAnnouncementRequest), "Favorite saved successfully"));
+
     }
 
     @DeleteMapping("/{studentId}/{announcementId}")

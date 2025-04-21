@@ -20,5 +20,6 @@ public class MentorDto {
     private String email;
     private String phone;
     private Company company;
+    private String about;
 
 }

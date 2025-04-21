@@ -26,11 +26,14 @@ public class FormQuestionController {
         return ResponseEntity.ok(ApiResponse.success(formQuestionService.getAllQuestions(), "Questions fetched successfully."));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/form/{id}")
     public ResponseEntity<ApiResponse<List<FormQuestion>>> getQuestionsByFormId(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.success(formQuestionService.getQuestionsByFormId(id), "Questions fetched successfully."));
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<FormQuestion>> getQuesitonById(@PathVariable UUID id) {
+        return ResponseEntity.ok(ApiResponse.success(formQuestionService.getQuestionById(id), "Questions fetched successfully."));
+    }
     @PostMapping
     public ResponseEntity<ApiResponse<UUID>> createQuestion(@RequestBody FormQuestion question) throws JsonProcessingException {
         logger.info("Recieved request to create question {}", question);
@@ -43,7 +46,6 @@ public class FormQuestionController {
         return ResponseEntity.ok(ApiResponse.success(null,"Questions created successfully"));
 
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<FormQuestion>> updateQuestion(@PathVariable UUID id, @RequestBody FormQuestion updatedQuestion) {

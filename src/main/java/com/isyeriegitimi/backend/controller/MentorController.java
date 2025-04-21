@@ -30,6 +30,11 @@ public class MentorController {
     public ResponseEntity<ApiResponse<UUID>> saveMentor(@RequestBody MentorDto mentorDto) {
         return ResponseEntity.ok(ApiResponse.success(mentorService.createMentor(mentorDto),"Mentor created successfully"));
     }
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponse<MentorDto>> getMentor(@PathVariable UUID id) {
+        return ResponseEntity.ok(ApiResponse.success(mentorService.getMentorById(id),"Mentor fetched successfully"));
+    }
+
     @PutMapping("/update/{mentorId}")
     public ResponseEntity<ApiResponse<?>> updateMentor(@RequestBody MentorDto mentorDto,@PathVariable UUID mentorId) {
         mentorService.updateMentor(mentorDto,mentorId);

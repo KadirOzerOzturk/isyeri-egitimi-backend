@@ -9,8 +9,7 @@ import java.util.UUID;
 public class SkillDto {
 
     private UUID skillId;
-
-    private Student student;
+    private UUID studentId;
     private String description;
     private String level;
 
