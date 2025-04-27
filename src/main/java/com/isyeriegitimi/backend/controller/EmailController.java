@@ -40,4 +40,5 @@ public class EmailController {
         // Başarıyla gönderildi mesajı döndürüyoruz
         return ResponseEntity.ok(ApiResponse.success(null, "Feedback sent successfully"));
     }
+
 }

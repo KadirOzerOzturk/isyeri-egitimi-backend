@@ -108,6 +108,8 @@ public class ApplicationService {
             application.setApplicationStatus("Komisyon onayı bekleniyor.");
         }else if (pendingRole.equals("DONE")) {
             application.setApplicationStatus("Onaylandı.");
+            Student student= studentRepository.findById(application.getStudent().getStudentId()).get();
+            student.setCompany(application.getCompany());
         }
         applicationRepository.save(application);
 

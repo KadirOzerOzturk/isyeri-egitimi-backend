@@ -65,6 +65,7 @@ public class CommissionService {
             existingCommission.setAbout(commissionDto.getAbout());
             existingCommission.setLastName(commissionDto.getLastName());
             existingCommission.setFirstName(commissionDto.getFirstName());
+            existingCommission.setTitle(commissionDto.getTitle());
             commissionRepository.save(existingCommission);
             if (!oldEmail.equals(newEmail)) {
                 System.out.println("Updating user email from " + oldEmail + " to " + newEmail);
@@ -103,6 +104,7 @@ public class CommissionService {
         commissionDto.setEmail(commission.getEmail());
         commissionDto.setCommissionNumber(commission.getCommissionNumber());
         commissionDto.setAbout(commission.getAbout());
+        commissionDto.setTitle(commission.getTitle());
         return commissionDto;
     }
     public Commission mapToEntity(CommissionDto commissionDto){
@@ -113,7 +115,7 @@ public class CommissionService {
         commission.setCommissionNumber(commissionDto.getCommissionNumber());
         commission.setEmail(commissionDto.getEmail());
         commission.setAbout(commissionDto.getAbout());
-
+        commission.setTitle(commissionDto.getTitle());
 
         return  commission;
     }

@@ -70,16 +70,16 @@ public class FavoriteAnnouncementService {
         }
     }
     @Transactional
-    public void deleteFavoriteAnnouncement(UUID studentId, UUID announcementId) {
+    public void delete(UUID favoriteId) {
         try {
+            Optional<FavoriteAnnouncement> favorite = favoriteAnnouncementRepository.findById(favoriteId);
+            if (favorite.isEmpty()) {
+                throw new ResourceNotFoundException("Favorite","id",favoriteId.toString());
+            }
+            favoriteAnnouncementRepository.deleteById(favoriteId);
 
-            FavoriteAnnouncement favoriteAnnouncement = favoriteAnnouncementRepository.findByStudent_StudentIdAndAnnouncement_AnnouncementId(studentId, announcementId)
-                    .orElseThrow(() -> new RuntimeException("Favorite announcement not found"));
-            favoriteAnnouncementRepository.delete(favoriteAnnouncement);
-        } catch (Exception e) {
-            throw new InternalServerErrorException("Error removing favorite" + e.getMessage());
+        }catch (Exception e){
+            throw new InternalServerErrorException("Error deleting favorite" + e.getMessage());
         }
     }
-
-
 }

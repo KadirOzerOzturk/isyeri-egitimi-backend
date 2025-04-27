@@ -36,4 +36,6 @@ public class Lecturer {
 
     @Column(name = "lecturer_number", unique = true)
     private String lecturerNumber;
+    private String title;
+
 }

@@ -1,5 +1,7 @@
 package com.isyeriegitimi.backend.security.service;
 
+import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
+import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.dto.PasswordChangeRequest;
@@ -11,6 +13,7 @@ import com.isyeriegitimi.backend.security.repository.UserRepository;
 import com.isyeriegitimi.backend.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.apache.poi.sl.draw.geom.GuideIf;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +43,7 @@ public class AuthenticationService {
     private final CommissionRepository commissionRepository;
     private final LecturerRepository lecturerRepository;
     private final MentorRepository mentorRepository;
-
+    private final EmailService emailService;
 
     public ApiResponse save(UserRequest userRequest) {
         Optional<User> existingUser = userRepository.findByUsername(userRequest.getUsername());
@@ -163,4 +167,70 @@ public class AuthenticationService {
         return ApiResponse.error("An error occurred while changing the password", 500);
     }
 }
+
+    public void forgotPassword(String email) {
+        try {
+            Optional<User> userOptional = userRepository.findByUsername(email);
+            if (userOptional.isEmpty()) {
+                throw new ResourceNotFoundException("User", "email", email);
+            }
+
+            User user = userOptional.get();
+            String token = UUID.randomUUID().toString();
+            user.setResetToken(token);
+            user.setResetTokenExpiry(LocalDateTime.now().plusHours(1));
+            userRepository.save(user);
+
+            String resetLink = "http://localhost:3000/reset-password?token=" + token;
+
+            Email resetEmail = new Email();
+            resetEmail.setTo(email);
+            resetEmail.setName(user.getUsername()); // isim veya e-posta adresi
+            resetEmail.setSubject("Şifre Sıfırlama Talebi");
+
+            emailService.sendResetPasswordEmail(resetEmail, resetLink);
+
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Şifre sıfırlama e-postası gönderilirken hata oluştu: " + e.getMessage());
+        }
+    }
+
+    public void resetPassword(String token, String newPassword) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new InternalServerErrorException("Reset token is required");
+        }
+
+        try {
+            Optional<User> userOptional = userRepository.findByResetToken(token);
+            if (userOptional.isEmpty()) {
+                throw new ResourceNotFoundException("User", "token", token);
+            }
+
+            User user = userOptional.get();
+
+            if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+                throw new InternalServerErrorException("Reset token expired");
+            }
+
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setResetToken(null);
+            user.setResetTokenExpiry(null);
+            userRepository.save(user);
+
+            Email resetConfirmationEmail = new Email();
+            resetConfirmationEmail.setTo(user.getUsername());
+            resetConfirmationEmail.setSubject("Şifre Başarıyla Sıfırlandı");
+            resetConfirmationEmail.setMessage("Şifreniz başarıyla sıfırlandı. Eğer bu işlemi siz yapmadıysanız hemen bizimle iletişime geçin.");
+
+            String confirmationLink = "http://localhost:8080/login-options";
+
+            emailService.sendResetPasswordEmail(resetConfirmationEmail, confirmationLink);
+
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Şifre sıfırlanırken hata oluştu: " + e.getMessage());
+        }
+    }
+
+
+
 }

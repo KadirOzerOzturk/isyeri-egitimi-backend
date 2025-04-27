@@ -1,8 +1,7 @@
 package com.isyeriegitimi.backend.dto;
 
 
-import com.isyeriegitimi.backend.model.Company;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,9 @@ public class MentorDto {
     private String lastName;
     private String email;
     private String phone;
-    private Company company;
+    private UUID companyId;
     private String about;
+    private String title;
+
 
 }

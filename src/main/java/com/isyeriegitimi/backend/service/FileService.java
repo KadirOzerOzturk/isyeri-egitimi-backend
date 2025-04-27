@@ -65,25 +65,25 @@ public class FileService {
                 ImageWriteParam param = writer.getDefaultWriteParam();
                 if (param.canWriteCompressed()) {
                     param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                    param.setCompressionQuality(0.5f); // Compression quality
+                    param.setCompressionQuality(0.5f);
                 }
 
                 writer.write(null, new IIOImage(originalImage, null, null), param);
                 ios.close();
                 writer.dispose();
 
-                // Convert the compressed image to Base64
                 String compressedBase64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
                 fileInfo.setData(compressedBase64);
             }
 
-            // Save the file and return its ID (without modification if it's not an image)
+
             return fileInfoRepository.save(fileInfo).getId();
 
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while uploading the file: " + e.getMessage());
         }
     }
+
 
     public List<FileInfo> getFiles() {
         try {
@@ -137,7 +137,7 @@ public class FileService {
             FileInfo fileInfo = fileInfoRepository.findByFileNameAndOwnerIdAndOwnerRole(fileName, userId, userRole)
                     .orElseThrow(() -> new ResourceNotFoundException("File not found by given id: " + userId));
 
-            // Convert to DTO
+
             return FileInfoDto.builder()
                     .id(fileInfo.getId())
                     .fileName(fileInfo.getFileName())
@@ -197,6 +197,30 @@ public class FileService {
             throw new InternalServerErrorException("An error occurred while deleting the file: " + e.getMessage());
         }
     }
+    @Transactional
+    public void deleteFileIfExists(UUID userId, String userRole, String fileName) {
+        try {
+            Optional<FileInfo> fileInfo = fileInfoRepository.findByFileNameAndOwnerIdAndOwnerRole(fileName, userId, userRole);
+            if (fileInfo.isEmpty()){
+                return;
+            }
+            FileLog fileLog = FileLog.builder()
+                    .fileName(fileInfo.get().getFileName())
+                    .fileType(fileInfo.get().getFileType())
+                    .ownerId(fileInfo.get().getOwnerId())
+                    .ownerRole(fileInfo.get().getOwnerRole())
+                    .data(fileInfo.get().getData())
+                    .barcodeNumber(fileInfo.get().getBarcodeNumber())
+                    .uploadDate(fileInfo.get().getUploadDate())
+                    .deleteDate(new Date())
+                    .build();
+            fileLogRepository.save(fileLog);
+            fileInfoRepository.deleteById(fileInfo.get().getId());
+        }
+        catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while deleting the file: " + e.getMessage());
+        }
+    }
 
     public List<FileInfo> getCompanyPhotos() {
         try {
@@ -213,6 +237,18 @@ public class FileService {
             return weeklyReports;
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the files: " + e.getMessage());
+        }
+    }
+
+    public String validateBarcode(String barcode) {
+        try {
+            Optional<FileInfo> fileInfo = fileInfoRepository.findByBarcodeNumber(barcode);
+            if (fileInfo.isEmpty()){
+                throw new ResourceNotFoundException("Barcode", "barcode", barcode);
+            }
+            return "File is valid";
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while validating the barcode: " + e.getMessage());
         }
     }
 }

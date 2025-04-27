@@ -23,9 +23,8 @@ public class UserService {
     private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "0123456789";
-    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+[]{}|;:,.<>?";
 
-    private static final String ALL_CHARACTERS = UPPER_CASE + LOWER_CASE + NUMBERS + SPECIAL_CHARACTERS;
+    private static final String ALL_CHARACTERS = UPPER_CASE + LOWER_CASE + NUMBERS ;
 
     public static String generatePassword(int length) {
         StringBuilder passwordBuilder = new StringBuilder();
@@ -33,13 +32,10 @@ public class UserService {
         passwordBuilder.append(getRandomCharacter(UPPER_CASE, random));
         passwordBuilder.append(getRandomCharacter(LOWER_CASE, random));
         passwordBuilder.append(getRandomCharacter(NUMBERS, random));
-        passwordBuilder.append(getRandomCharacter(SPECIAL_CHARACTERS, random));
         for (int i = 4; i < length; i++) {
             char randomChar = getRandomCharacter(ALL_CHARACTERS, random);
             passwordBuilder.append(randomChar);
         }
-
-        // Shuffle the password to randomize the order of characters.
         for (int i = 0; i < length; i++) {
             int randomIndex = random.nextInt(length);
             char temp = passwordBuilder.charAt(i);

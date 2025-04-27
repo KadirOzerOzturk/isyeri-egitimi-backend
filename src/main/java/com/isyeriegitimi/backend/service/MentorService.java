@@ -4,9 +4,11 @@ import com.isyeriegitimi.backend.dto.MentorDto;
 import com.isyeriegitimi.backend.dto.StudentDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
+import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.model.Email;
 import com.isyeriegitimi.backend.model.Mentor;
 import com.isyeriegitimi.backend.model.Student;
+import com.isyeriegitimi.backend.repository.CompanyRepository;
 import com.isyeriegitimi.backend.repository.MentorRepository;
 import com.isyeriegitimi.backend.repository.StudentRepository;
 import com.isyeriegitimi.backend.security.dto.UserRequest;
@@ -28,18 +30,26 @@ public class MentorService {
     private UserService userService;
     private AuthenticationService authenticationService;
     private StudentRepository studentRepository;
+    private CompanyRepository companyRepository;
 
-    public MentorService(MentorRepository mentorRepository, EmailService emailService, UserService userService, AuthenticationService authenticationService, StudentRepository studentRepository) {
+    public MentorService(MentorRepository mentorRepository, EmailService emailService, UserService userService,
+                         AuthenticationService authenticationService, StudentRepository studentRepository,
+                         CompanyRepository companyRepository) {
         this.mentorRepository = mentorRepository;
         this.emailService = emailService;
         this.userService = userService;
         this.authenticationService = authenticationService;
         this.studentRepository = studentRepository;
+        this.companyRepository = companyRepository;
     }
-
     @Transactional
     public UUID createMentor(MentorDto mentorDto) {
         try {
+            Optional<Company> company = companyRepository.findByCompanyId(mentorDto.getCompanyId());
+            if (company.isEmpty()) {
+                throw new ResourceNotFoundException("Company", "Company ID", mentorDto.getCompanyId().toString());
+            }
+
             Mentor mentor = mentorRepository.save(mapToMentor(mentorDto));
 
             String generatedPassword = UserService.generatePassword(6);
@@ -64,6 +74,13 @@ public class MentorService {
    public void updateMentor(MentorDto mentorDto, UUID mentorId) {
        try {
            Optional<Mentor> mentor = mentorRepository.findById(mentorId);
+              if (mentor.isEmpty()) {
+                throw new ResourceNotFoundException("Mentor", "ID", mentorId.toString());
+              }
+              Optional<Company> company = companyRepository.findByCompanyId(mentorDto.getCompanyId());
+                if (company.isEmpty()) {
+                    throw new ResourceNotFoundException("Company", "Company ID", mentorDto.getCompanyId().toString());
+                }
            if (mentor.isPresent()) {
                Mentor existingMentor = mentor.get();
                String oldEmail = existingMentor.getEmail();
@@ -71,7 +88,7 @@ public class MentorService {
                existingMentor.setFirstName(mentorDto.getFirstName());
                existingMentor.setLastName(mentorDto.getLastName());
                existingMentor.setEmail(mentorDto.getEmail());
-               existingMentor.setCompany(mentorDto.getCompany());
+               existingMentor.setCompany(company.get());
                existingMentor.setPhone(mentorDto.getPhone());
                existingMentor.setAbout(mentorDto.getAbout());
 
@@ -105,31 +122,33 @@ public class MentorService {
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
     }
-    public List<MentorDto> getMentorsByCompanyId(UUID companyId) {
+    public List<Mentor> getMentorsByCompanyId(UUID companyId) {
         try{
             List<Mentor> mentors = mentorRepository.findByCompanyCompanyId(companyId);
             List<MentorDto> mentorDtoList = List.of();
             if (mentors.isEmpty()) {
-                return mentorDtoList;
+                return mentors;
             }
-            mentorDtoList = mentors.stream().map(
-                    mentor -> mapToDto(mentor))
-                    .collect(Collectors.toList());
-            return mentorDtoList;
+            return mentors;
         }
         catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
     }
     private Mentor mapToMentor(MentorDto mentorDto) {
+        Optional<Company> company = companyRepository.findByCompanyId(mentorDto.getCompanyId());
+        if (company.isEmpty()) {
+            throw new ResourceNotFoundException("Company", "Company ID", mentorDto.getCompanyId().toString());
+        }
         Mentor mentor = new Mentor();
         mentor.setId(mentorDto.getId());
         mentor.setFirstName(mentorDto.getFirstName());
         mentor.setLastName(mentorDto.getLastName());
-        mentor.setCompany(mentorDto.getCompany());
+        mentor.setCompany(company.get());
         mentor.setEmail(mentorDto.getEmail());
         mentor.setPhone(mentorDto.getPhone());
         mentor.setAbout(mentorDto.getAbout());
+        mentor.setTitle(mentorDto.getTitle());
         return mentor;
 
     }
@@ -138,19 +157,20 @@ public class MentorService {
         mentorDto.setId(mentor.getId());
         mentorDto.setFirstName(mentor.getFirstName());
         mentorDto.setLastName(mentor.getLastName());
-        mentorDto.setCompany(mentor.getCompany());
+        mentorDto.setCompanyId(mentor.getCompany().getCompanyId());
         mentorDto.setEmail(mentor.getEmail());
         mentorDto.setPhone(mentor.getPhone());
         mentorDto.setAbout(mentor.getAbout());
+        mentorDto.setTitle(mentor.getTitle());
         return mentorDto;
     }
 
 
-    public MentorDto getMentorById(UUID id) {
+    public Mentor getMentorById(UUID id) {
         try {
             Optional<Mentor> mentor = mentorRepository.findById(id);
             if (mentor.isPresent()) {
-                return mapToDto(mentor.get());
+                return mentor.get();
             } else {
                 throw new ResourceNotFoundException("Mentor", "ID", id.toString());
             }

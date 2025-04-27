@@ -20,16 +20,18 @@ public class FormSignatureService {
     private final StudentRepository studentRepository;
     private final LecturerRepository lecturerRepository;
     private final CompanyRepository companyRepository;
+    private final MentorRepository mentorRepository;
 
     public FormSignatureService(FormSignatureRepository formSignatureRepository, FormRepository formRepository,
                                 CommissionRepository commissionRepository, StudentRepository studentRepository,
-                                LecturerRepository lecturerRepository, CompanyRepository companyRepository) {
+                                LecturerRepository lecturerRepository, CompanyRepository companyRepository, MentorRepository mentorRepository) {
         this.formSignatureRepository = formSignatureRepository;
         this.formRepository = formRepository;
         this.commissionRepository = commissionRepository;
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
         this.companyRepository = companyRepository;
+        this.mentorRepository = mentorRepository;
     }
 
     @Transactional
@@ -54,7 +56,11 @@ public class FormSignatureService {
             Company company = companyRepository.findById(userId)
                     .orElseThrow(() -> new ResourceNotFoundException("Company", "id", userId.toString()));
             actualUserId = company.getCompanyId();
+        } else if (userRole.equals(Role.MENTOR.toString())) {
+            Mentor mentor =mentorRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Mentor", "id", userId.toString()));
+            actualUserId=mentor.getId();
         }
+
 
         Role role = Role.valueOf(userRole);
 

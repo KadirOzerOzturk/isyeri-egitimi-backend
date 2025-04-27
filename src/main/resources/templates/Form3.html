@@ -261,17 +261,21 @@
     </p>
 </div>
 <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;" />
-<p style="padding-top: 9pt;padding-left: 253pt;text-indent: 0pt;line-height: 156%;text-align: left;">Adı Soyadı : [[${mentor?.firstName}]] [[${mentor?.lastName}]]</p>
+<p style="padding-top: 9pt;padding-left: 253pt;text-indent: 0pt;line-height: 156%;text-align: left;">Adı Soyadı : [[${mentor.firstName}]] [[${mentor.lastName}]]</p>
 <div style="display: flex; justify-content: space-between">
-    <p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Tarih </p>
-    <p style="text-indent: 0pt;line-height: 13pt;text-align: right;">: [[${date}]] </p>
+    <p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;padding-right: 12px">Tarih :  </p>
+    <p style="text-indent: 0pt; line-height: 13pt; text-align: right;">
+    <span th:each="signature : ${signatures}">
+        <span th:if="${signature.signedByRole == 'MENTOR' and signature.signedAt != null}"
+              th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span>
+    </span>
+    </p>
 
 </div>
-
 <p style="padding-left: 253pt; text-indent: 0pt; line-height: 13pt; text-align: left;">
     İmza/Kaşe:
     <span th:each="signature : ${signatures}">
-        <span th:if="${signature?.signed and signature?.userRole.toString() == 'MENTOR'}" >
+        <span th:if="(${signature} != null) and (${signature.signedBy != null}) and (${signature.signedByRole} == 'MENTOR')">
             E-Onaylı
         </span>
     </span>
@@ -293,7 +297,10 @@
     tarihinde izleme ziyaretinde bulundum.</p>
 <p style="padding-top: 8pt;padding-left: 253pt;text-indent: 0pt;line-height: 171%;text-align: left;">İzleyici
     Öğretim Üyesi : [[${lecturer.firstName}]] [[${lecturer.lastName}]]</p>
-<p style="padding-top: 8pt;padding-left: 253pt;text-indent: 0pt;line-height: 171%;text-align: left;" th:if="${signature?.signedBy != null and signature?.getSignedByRole().toString() == 'LECTURER'}" >Tarih/İmza : [[${visitDate}]]  E-Onaylı</p>
+<p style="padding-top: 8pt; padding-left: 253pt; text-indent: 0pt; line-height: 171%; text-align: left;"
+   th:if="${signature?.signedBy != null and signature?.getSignedByRole().toString() == 'LECTURER'}">
+    Tarih/İmza : <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span> E-Onaylı
+</p>
 <h2 style="padding-left: 5pt;text-indent: 0pt;line-height: 109%;text-align: left;">Not: <span class="s3">Bu form
             Bölüm Başkanlığına her izleme ayının son haftası içinde İzleyici Öğretim Üyesi tarafından teslim
             edilmelidir. Dönem sonunda Bölüm Başkanlığı tarafından İşyeri Eğitimi Komisyonu Başkanlığına teslim

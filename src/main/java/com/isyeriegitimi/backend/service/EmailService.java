@@ -73,4 +73,46 @@ public class EmailService {
             throw new InternalServerErrorException("Failed to send feedback email: " + e.getMessage());
         }
     }
+
+    public void sendResetPasswordEmail(Email email, String resetLink) {
+        try {
+            Context context = new Context();
+            context.setVariable("name", email.getName());
+            context.setVariable("resetLink", resetLink);
+            context.setVariable("subject", "Şifre Sıfırlama Talebi");
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            String htmlContent = templateEngine.process("resetPassword", context);
+
+            helper.setTo(email.getTo());
+            helper.setFrom("gaziisyeri@gmail.com");
+            helper.setSubject("Şifre Sıfırlama Talebi");
+            helper.setText(htmlContent, true);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new InternalServerErrorException("Failed to send reset password email: " + e.getMessage());
+        }
+    }
+    public void sendPasswordResetSuccessMail(String toEmail, String name) {
+        Context context = new Context();
+        context.setVariable("name", name);
+        context.setVariable("message", "Şifreniz başarıyla değiştirildi. Artık yeni şifrenizle giriş yapabilirsiniz.");
+
+        String htmlContent = templateEngine.process("reset-password-success", context);
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setTo(toEmail);
+            helper.setSubject("Şifreniz Başarıyla Değiştirildi");
+            helper.setText(htmlContent, true);
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new IllegalStateException("Mail gönderilemedi: " + e.getMessage());
+        }
+    }
 }

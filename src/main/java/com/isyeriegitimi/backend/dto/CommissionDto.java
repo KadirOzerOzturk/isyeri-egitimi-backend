@@ -19,4 +19,6 @@ public class CommissionDto {
     private String commissionNumber;
     private String about;
     private String password;
+    private String title;
+
 }

@@ -3,6 +3,7 @@ package com.isyeriegitimi.backend.controller;
 import com.isyeriegitimi.backend.dto.MentorDto;
 import com.isyeriegitimi.backend.dto.StudentDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
+import com.isyeriegitimi.backend.model.Mentor;
 import com.isyeriegitimi.backend.repository.MentorRepository;
 import com.isyeriegitimi.backend.security.service.UserService;
 import com.isyeriegitimi.backend.service.MentorService;
@@ -30,8 +31,8 @@ public class MentorController {
     public ResponseEntity<ApiResponse<UUID>> saveMentor(@RequestBody MentorDto mentorDto) {
         return ResponseEntity.ok(ApiResponse.success(mentorService.createMentor(mentorDto),"Mentor created successfully"));
     }
-    @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<MentorDto>> getMentor(@PathVariable UUID id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Mentor>> getMentor(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.success(mentorService.getMentorById(id),"Mentor fetched successfully"));
     }
 
@@ -45,7 +46,7 @@ public class MentorController {
         return ResponseEntity.ok(ApiResponse.success(mentorService.getStudentsByMentor(mentorId),"Students fetched successfully"));
     }
     @GetMapping("/company/{companyId}")
-    public ResponseEntity<ApiResponse<List<MentorDto>>> getStudentsByCompany(@PathVariable UUID companyId) {
+    public ResponseEntity<ApiResponse<List<Mentor>>> getStudentsByCompany(@PathVariable UUID companyId) {
         return ResponseEntity.ok(ApiResponse.success(mentorService.getMentorsByCompanyId(companyId),"Mentors fetched successfully"));
     }
     @PostMapping("/assignMentor/{studentId}/{mentorId}")

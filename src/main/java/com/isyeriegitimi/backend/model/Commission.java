@@ -33,4 +33,6 @@ public class Commission {
 
     @Column(name = "about")
     private String about;
+    private String title;
+
 }

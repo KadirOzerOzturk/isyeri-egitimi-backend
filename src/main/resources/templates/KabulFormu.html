@@ -187,7 +187,7 @@
             İŞYERİ EĞİTİMİ <br> BAŞVURU VE KABUL FORMU
         </td>
         <td class="note-cell header-td" style="width: 20%; text-align: center;">
-            Resim Yapıştırarak <br> Fotokopi resim kullanmayınız.
+            <img src="[[${studentPhoto}]]" alt="Ogrenci Fotograf" style="max-width: 100px; height: auto;">
         </td>
     </tr>
 </table>
@@ -403,17 +403,16 @@
             <p class="s4" style="padding-top: 12pt;padding-left: 40pt;text-indent: 0pt;line-height: 12pt;text-align: left;">Unvan</p>
             <p class="s4" style="padding-left: 5pt;text-indent: 15pt;text-align: left;">Mühür ve İmza</p>
             <span th:each="signature : ${signatures}">
-                <span style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                    Tarih:
-                    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'COMPANY'}"
-                          th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}">
-                    </span>
+    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'COMPANY'}" style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+        Tarih:
+        <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span>
+    </span>
 
-                </span>
-                <span style="padding-left: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'COMPANY'}">
-                    E-Onaylı
-                </span>
-            </span>
+    <span style="padding-left: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'COMPANY'}">
+        E-Onaylı
+    </span>
+</span>
+
 
         </td>
     </tr>
@@ -458,16 +457,16 @@
                     doğru olduğunu bildiririm.</p>
                 <p style="text-indent: 0pt;text-align: left;"><br /></p>
                 <span th:each="signature : ${signatures}">
-                    <span style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                        Tarih:
-                        <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'STUDENT'}"
-                              th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}">
-                        </span>
-                    </span>
-                    <span style="padding-left: 18px;  display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'STUDENT'}">
-                        E-Onaylı
-                    </span>
-                </span>
+    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'STUDENT'}" style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+        Tarih:
+        <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span>
+    </span>
+
+    <span style="padding-left: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'STUDENT'}">
+        E-Onaylı
+    </span>
+</span>
+
             </td>
             <td
                 style="width:149pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -475,17 +474,15 @@
                     Soyadı, İmza</p>
                 <p style="text-indent: 0pt;text-align: left;"><br /></p>
                 <span th:each="signature : ${signatures}">
-                    <span style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
-                        Tarih:
-                        <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'COMMISSION'}"
-                              th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}">
-                        </span>
+    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'COMMISSION'}" style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+        Tarih:
+        <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span>
+    </span>
 
-                    </span>
-                    <span style="padding-left: 18px;  display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'COMMISSION'}">
-                        E-Onaylı
-                    </span>
-                </span>
+    <span style="padding-left: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'COMMISSION'}">
+        E-Onaylı
+    </span>
+</span>
             </td>
             <td
                 style="width:159pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -493,15 +490,15 @@
                     Soyadı, İmza</p>
                 <p style="text-indent: 0pt;text-align: left;"><br></p>
                 <span th:each="signature : ${signatures}">
-                    Tarih:
-                    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'MAJOR'}"
-                          th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}">
-                    </span>
+    <span th:if="${signature.signedAt != null and signature.getSignedByRole().toString() == 'MAJOR'}" style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">
+        Tarih:
+        <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span>
+    </span>
 
-                    <span style="padding-left: 18px;  display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'MAJOR'}">
-                        E-Onaylı
-                    </span>
-                </span>
+    <span style="padding-left: 18px; display: flex;" th:if="${signature.signedBy != null and signature.getSignedByRole().toString() == 'MAJOR'}">
+        E-Onaylı
+    </span>
+</span>
             </td>
         </tr>
     </table>

@@ -8,6 +8,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.isyeriegitimi.backend.dto.FileInfoDto;
 import com.isyeriegitimi.backend.model.*;
 import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.enums.Role;
@@ -28,8 +29,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.Signature;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -38,7 +41,8 @@ import java.util.List;
 @Service
 public class PdfReportService {
 
-    
+
+    private final FileInfoRepository fileInfoRepository;
     private WeeklyReportRepository weeklyReportRepository;
     private StudentsInGroupRepository studentsInGroupRepository;
     private StudentRepository studentRepository ;
@@ -50,7 +54,7 @@ public class PdfReportService {
     private FormSignatureRepository formSignatureRepository;
     private FormRepository formRepository;
 
-    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileService fileInfoService, FormSignatureRepository formSignatureRepository, FormRepository formRepository) {
+    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileService fileInfoService, FormSignatureRepository formSignatureRepository, FormRepository formRepository, FileInfoRepository fileInfoRepository) {
         this.weeklyReportRepository = weeklyReportRepository;
         this.studentsInGroupRepository = studentsInGroupRepository;
         this.studentRepository = studentRepository;
@@ -61,6 +65,7 @@ public class PdfReportService {
         this.fileInfoService = fileInfoService;
         this.formSignatureRepository = formSignatureRepository;
         this.formRepository = formRepository;
+        this.fileInfoRepository = fileInfoRepository;
     }
     private static QrInfo generateQR(String code) throws Exception {
 
@@ -137,6 +142,8 @@ public class PdfReportService {
 
         List<FormAnswer> formAnswers = formAnswerRepository.findByStudentIdAndFormId(studentId, formId);
         List<FormSignature> signatures = formSignatureRepository.findAllByFormIdAndStudentId(formId, studentId);
+        FileInfoDto studentPhoto = fileInfoService.getFile(studentId,"STUDENT","profilePhoto");
+        String base64img = "data:" + studentPhoto.getFileType() + ";base64," + studentPhoto.getData();
         QrInfo qr = generateQR(generateUnique12DigitNumber());
 
         Context context = new Context();
@@ -144,6 +151,7 @@ public class PdfReportService {
         context.setVariable("student", student.orElseThrow(() -> new RuntimeException("Öğrenci bulunamadı")));
         context.setVariable("answers", formAnswers);
         context.setVariable("signatures", signatures);
+        context.setVariable("studentPhoto",base64img);
 
         for (FormAnswer answer : formAnswers) {
             String questionText = answer.getFormQuestion().getQuestionText();
@@ -169,6 +177,7 @@ public class PdfReportService {
                 .uploadDate(new Date())
                 .barcodeNumber(qr.getCode())
                 .build();
+        fileInfoService.deleteFileIfExists(studentId,"STUDENT","form1");
         fileInfoService.uploadFile(fileInfo);
         return pdfOutputStream;
     }
@@ -229,7 +238,19 @@ public class PdfReportService {
 
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
+        String encodedPdfData = Base64.getEncoder().encodeToString(pdfOutputStream.toByteArray());
 
+        FileInfo fileInfo = FileInfo.builder()
+                .fileName("form2" )
+                .fileType("application/pdf")
+                .ownerId(studentId)
+                .ownerRole(Role.STUDENT.toString())
+                .data(encodedPdfData)
+                .uploadDate(new Date())
+                .barcodeNumber(qr.getCode())
+                .build();
+        fileInfoService.deleteFileIfExists(studentId,"STUDENT","form2");
+        fileInfoService.uploadFile(fileInfo);
         return pdfOutputStream;
     }
 
@@ -286,10 +307,24 @@ public class PdfReportService {
         context.setVariable("mentorImpression", mentorImpression);
         context.setVariable("lecturerImpression", lecturerImpression);
         context.setVariable("signatures",signatures);
+        context.setVariable("mentor",student.get().getMentor());
+
         String htmlContent = templateEngine.process("form3", context);
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
+        String encodedPdfData = Base64.getEncoder().encodeToString(pdfOutputStream.toByteArray());
 
+        FileInfo fileInfo = FileInfo.builder()
+                .fileName("form3" )
+                .fileType("application/pdf")
+                .ownerId(studentId)
+                .ownerRole(Role.STUDENT.toString())
+                .data(encodedPdfData)
+                .uploadDate(new Date())
+                .barcodeNumber(qr.getCode())
+                .build();
+        fileInfoService.deleteFileIfExists(studentId,"STUDENT","form3");
+        fileInfoService.uploadFile(fileInfo);
         return pdfOutputStream;
     }
 
@@ -351,15 +386,5 @@ public class PdfReportService {
 
         return pdfOutputStream;
     }
-//    private List<FormSignature> convertDateToString(List<FormSignature> signatures){
-//        List<FormSignature> signatureDisplays = new ArrayList<>();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // İstenilen tarih formatı
-//
-//        for (FormSignature signature : signatures) {
-//            String signedAtString = (signature.getSignedAt() != null) ? dateFormat.format(signature.getSignedAt()) : "";
-//            FormSignature display = new SignatureDisplay(signature, signedAtString);
-//            signatureDisplays.add(display);
-//        }
-//        return signatureDisplays;
-//    }
+
 }

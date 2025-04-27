@@ -24,4 +24,6 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, UUID> {
     void deleteByOwnerId(UUID ownerId);
 
     List<FileInfo> findAllByFileNameContainingIgnoreCaseAndOwnerId(String fileName, UUID ownerId);
+
+    Optional<FileInfo> findByBarcodeNumber(String barcode);
 }

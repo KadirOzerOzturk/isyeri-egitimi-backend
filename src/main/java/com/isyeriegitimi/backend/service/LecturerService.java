@@ -65,6 +65,7 @@ public class LecturerService {
                lecturer.setFirstName(lecturerDto.getFirstName());
                lecturer.setLastName(lecturerDto.getLastName());
                lecturer.setFaculty(lecturerDto.getFaculty());
+               lecturer.setTitle(lecturerDto.getTitle());
                lecturerRepository.save(lecturer);
                if (!oldEmail.equals(newEmail)) {
                    userService.updateUsernameByEmail(oldEmail, newEmail);
@@ -119,6 +120,7 @@ public class LecturerService {
                 .faculty(lecturerDto.getFaculty())
                 .about(lecturerDto.getAbout())
                 .lecturerNumber(lecturerDto.getLecturerNumber())
+                .title(lecturerDto.getTitle())
                 .build();
     }
 
@@ -131,6 +133,7 @@ public class LecturerService {
                 .faculty(lecturer.getFaculty())
                 .about(lecturer.getAbout())
                 .lecturerNumber(lecturer.getLecturerNumber())
+                .title(lecturer.getTitle())
                 .build();
     }
 

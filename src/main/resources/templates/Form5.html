@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="tr" lang="tr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>55e013ba-e93e-44df-814e-289f64a3b8d0</title>
+    <meta name="author" content="Mehmet" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+        p {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 11pt;
+            margin: 0pt;
+        }
+        .s1 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+        .s2 {
+            color: #f00;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 8pt;
+        }
+        table,
+        tbody {
+            vertical-align: top;
+            overflow: visible;
+        }
+
+        /* Flex container to ensure the content takes full height */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 50px; /* Ensure space for footer */
+        }
+
+        /* This class ensures that the table takes the available space and pushes footer to the bottom */
+        .content-table-wrapper {
+            flex-grow: 1;
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .content-table td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p style="padding-top: 3pt; text-align: center;">
+        İŞYERİ EĞİTİMİ ZAMAN CETVELİ
+    </p>
+    <p style="padding-top: 1pt; text-align: left;"></p>
+
+    <!-- Wrapper for the table to handle dynamic content height -->
+    <div class="content-table-wrapper">
+        <table class="content-table">
+            <thead>
+            <tr>
+                <td style="width: 76pt; text-align: center;">
+                    <p class="s1">Tarih</p>
+                </td>
+                <td style="width: 135pt; text-align: left;">
+                    <p class="s1">Çalıştığı Bölüm</p>
+                </td>
+                <td style="width: 276pt; text-align: left;">
+                    <p class="s1">Öğrencinin Çalıştığı Konular</p>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dynamically generated rows -->
+            <tr th:each="row : ${rows}">
+                <td><p th:text="${row.date}"></p></td>
+                <td><p th:text="${row.department}"></p></td>
+                <td><p th:text="${row.topics}"></p></td>
+            </tr>
+            <!-- If no rows, keep empty rows to maintain page structure -->
+            <tr th:if="${#lists.isEmpty(rows)}">
+                <td><p>&nbsp;</p></td>
+                <td><p>&nbsp;</p></td>
+                <td><p>&nbsp;</p></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer for signature -->
+    <div class="footer">
+        <table style="width: 100%; border: none;">
+            <tr>
+                <td colspan="2" style="width: 50%; text-align: left;">
+                    <p class="s1">Öğrencinin İmzası</p>
+                </td>
+                <td style="width: 50%; text-align: center;">
+                    <p class="s1">İşyeri Yetkilisi İmza/Kaşe</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<p class="s2" style="padding-left: 10pt; text-align: left;">
+    FORM: İE.5/Zaman Cetveli
+</p>
+</body>
+</html>

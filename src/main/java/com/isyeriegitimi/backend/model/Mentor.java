@@ -22,7 +22,7 @@ public class Mentor {
     private String email;
     private String phone;
     private String about;
-
+    private String title;
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = true)
     private Company company;

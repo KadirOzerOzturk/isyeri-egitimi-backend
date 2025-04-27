@@ -70,5 +70,8 @@ public class FileController {
     public ResponseEntity<ApiResponse<List<FileInfo>>> getWeeklyReports(@PathVariable UUID studentId){
         return ResponseEntity.ok(ApiResponse.success(fileService.getWeeklyReportByStudentId(studentId),"Files fetched successfully"));
     }
-
+    @GetMapping("/validate/{barcode}")
+    public ResponseEntity<ApiResponse<?>> validateBarcode(@PathVariable String barcode){
+        return ResponseEntity.ok(ApiResponse.success(fileService.validateBarcode(barcode),"File founded by barcode"));
+    }
 }
