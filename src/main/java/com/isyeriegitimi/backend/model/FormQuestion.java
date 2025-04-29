@@ -2,6 +2,7 @@ package com.isyeriegitimi.backend.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.isyeriegitimi.backend.converter.JsonNodeConverter;
+import com.isyeriegitimi.backend.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,8 +29,10 @@ public class FormQuestion implements Serializable {
 
     private int questionNumber;
     private String questionText;
-    private String questionType;
     @Column(name = "options", columnDefinition = "jsonb")
     @Convert(converter = JsonNodeConverter.class)
     private JsonNode options;
+    @Enumerated(EnumType.STRING)
+    private QuestionType questionType;
+    private String requiredFor;
 }

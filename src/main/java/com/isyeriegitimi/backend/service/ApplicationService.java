@@ -102,12 +102,12 @@ public class ApplicationService {
         application.setPendingRole(pendingRole);
         if (pendingRole.equals(String.valueOf(Role.COMPANY))) {
             application.setApplicationStatus("Firma onayı bekleniyor.");
-        } else if (pendingRole.equals(String.valueOf(Role.STUDENT))) {
-            application.setApplicationStatus("Öğrenci onayı bekleniyor.");
         } else if (pendingRole.equals(String.valueOf(Role.COMMISSION))) {
             application.setApplicationStatus("Komisyon onayı bekleniyor.");
-        }else if (pendingRole.equals("DONE")) {
-            application.setApplicationStatus("Onaylandı.");
+        }else if (pendingRole.equals(String.valueOf(Role.MAJOR))) {
+            application.setApplicationStatus("Bölüm başkanı onayı bekleniyor.");
+
+        }else {
             Student student= studentRepository.findById(application.getStudent().getStudentId()).get();
             student.setCompany(application.getCompany());
         }

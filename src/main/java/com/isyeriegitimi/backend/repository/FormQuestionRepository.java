@@ -14,15 +14,16 @@ import java.util.UUID;
 public interface FormQuestionRepository extends JpaRepository<FormQuestion, UUID> {
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO form_question (form_id, options, question_number, question_text, question_id) " +
-            "VALUES (:formId, CAST(:options AS jsonb), :questionNumber, :questionText, :questionId)",
+    @Query(value = "INSERT INTO form_question (form_id, options, question_number, question_text, question_id,question_type,required_for) " +
+            "VALUES (:formId, CAST(:options AS jsonb), :questionNumber, :questionText, :questionId,:questionType,:requiredFor)",
             nativeQuery = true)
     void insertQuestion(@Param("formId") UUID formId,
-                        @Param("options") String options, // options doğrudan JSON string olmalı
+                        @Param("options") String options,
                         @Param("questionNumber") int questionNumber,
                         @Param("questionText") String questionText,
-                        @Param("questionId") UUID questionId)
-;
+                        @Param("questionId") UUID questionId,
+                        @Param("questionType") String questionType,
+                        @Param("requiredFor") String requiredFor);
     @Query(value = "SELECT * FROM form_question WHERE question_id = :questionId", nativeQuery = true)
     FormQuestion getQuestionByQuestionId(@Param("questionId") UUID questionId);
 

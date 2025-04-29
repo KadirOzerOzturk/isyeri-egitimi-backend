@@ -50,8 +50,10 @@ public class FormQuestionService {
                     objectMapper.writeValueAsString(question.getOptions()),
                     question.getQuestionNumber(),
                     question.getQuestionText(),
-                    questionId
-            );
+                    questionId,
+                    question.getQuestionType().toString().toUpperCase(),
+                    question.getRequiredFor().toUpperCase()
+                    );
             return questionId;
         } catch (JsonProcessingException e) {
             throw new InternalServerErrorException("Error processing JSON: " + e.getMessage());
@@ -66,6 +68,8 @@ public class FormQuestionService {
             existingQuestion.setQuestionNumber(updatedQuestion.getQuestionNumber());
             existingQuestion.setQuestionText(updatedQuestion.getQuestionText());
             existingQuestion.setOptions(updatedQuestion.getOptions());
+            existingQuestion.setQuestionType(updatedQuestion.getQuestionType());
+            existingQuestion.setRequiredFor(updatedQuestion.getRequiredFor());
             return formQuestionRepository.save(existingQuestion);
         } catch (Exception e) {
             throw new InternalServerErrorException("An error occurred while updating the question: " + e.getMessage());
@@ -92,7 +96,9 @@ public class FormQuestionService {
                         objectMapper.writeValueAsString(question.getOptions()),
                         question.getQuestionNumber(),
                         question.getQuestionText(),
-                        questionId
+                        questionId,
+                        question.getQuestionType().toString().toUpperCase(),
+                        question.getRequiredFor().toUpperCase()
                 );
             }
         } catch (JsonProcessingException e) {

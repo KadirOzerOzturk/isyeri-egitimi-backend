@@ -2,11 +2,9 @@ package com.isyeriegitimi.backend.dto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.isyeriegitimi.backend.converter.JsonNodeConverter;
+import com.isyeriegitimi.backend.enums.QuestionType;
 import com.isyeriegitimi.backend.model.Form;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,4 +23,7 @@ public class FormQuestionDto {
     private int questionNumber;
     private String questionText;
     private JsonNode options;
+    private QuestionType questionTypeEnum;
+    private String questionType;
+    private String requiredFor;
 }
