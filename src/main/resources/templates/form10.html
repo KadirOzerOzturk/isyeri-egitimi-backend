@@ -83,6 +83,8 @@
         .footer {
             font-size: 8pt;
             text-align: right;
+            display: flex;
+            justify-content: space-between;
         }
 
         .checkbox-group {
@@ -203,15 +205,15 @@
         <table>
             <tr>
                 <td style="width: 25%">Yapılan Faaliyet</td>
-                <td style="width: 75%"></td>
+                <td style="width: 75%">[[${yapilanfaaliyet}]]</td>
             </tr>
             <tr>
                 <td>İş Birliği Yapılan Disiplinler/Kişiler</td>
-                <td></td>
+                <td>[[${isbirligiyapilandisiplinlerkisiler}]]</td>
             </tr>
             <tr>
                 <td>İş Birliği Konusu ve Yöntemi</td>
-                <td style="height: 100px;"></td>
+                <td style="height: 100px;">[[${isbirligikonusuveyontemi}]]</td>
             </tr>
         </table>
     </div>
@@ -228,7 +230,13 @@
     </div>
 
     <div class="footer">
-        <p>FORM : İE.10/ Farklı Disiplinlerle Birlikte Çalışma Formu Bilgi için: Mehmet Ali ÜNEY Tel: 0 (312) 2023431</p>
+        <p>FORM : İE.10/ Farklı Disiplinlerle Birlikte Çalışma Formu </p>
+        <div>
+            <p style="width: 100px;text-wrap: nowrap">Bilgi için: Mehmet Ali ÜNEY  </p>
+            <span>
+           Tel:0 (312) 2023431
+        </span>
+        </div>
     </div>
 </div>
 </body>

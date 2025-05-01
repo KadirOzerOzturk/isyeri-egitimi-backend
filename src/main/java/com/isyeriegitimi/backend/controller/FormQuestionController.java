@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.isyeriegitimi.backend.dto.FormQuestionDto;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.FormQuestion;
 import com.isyeriegitimi.backend.service.FormQuestionService;
@@ -41,7 +42,7 @@ public class FormQuestionController {
         return ResponseEntity.ok(ApiResponse.success(formQuestionService.createQuestion(question), "Question created successfully."));
     }
     @PostMapping("/bulk/{formId}")
-    public ResponseEntity<ApiResponse<?>> bulkCreate(@RequestBody List<FormQuestion> questions,@PathVariable UUID formId){
+    public ResponseEntity<ApiResponse<?>> bulkCreate(@RequestBody List<FormQuestionDto> questions, @PathVariable UUID formId){
         formQuestionService.bulkSave(questions,formId);
         return ResponseEntity.ok(ApiResponse.success(null,"Questions created successfully"));
 

@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.service;
 
+import com.isyeriegitimi.backend.dto.FormAnswerRequest;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.model.FormAnswer;
@@ -50,13 +51,13 @@ public class FormAnswerService {
             throw new InternalServerErrorException("An error occurred while submitting the answer: " + e.getMessage());
         }
     }
-    public void saveAnswers(List<FormAnswer> formAnswerRequests) {
+    public void saveAnswers(List<FormAnswerRequest> formAnswerRequests) {
         try {
             List<FormAnswer> answers = formAnswerRequests.stream().map(request -> {
                 FormAnswer existingAnswer = formAnswerRepository
                         .findByForm_IdAndFormQuestionQuestionIdAndUserIdAndStudentId(
-                                request.getForm().getId(),
-                                request.getFormQuestion().getQuestionId(),
+                                request.getFormId(),
+                                request.getQuestionId(),
                                 request.getUserId(),
                                 request.getStudentId()
 
@@ -70,9 +71,9 @@ public class FormAnswerService {
                 } else {
 
                     FormAnswer answer = new FormAnswer();
-                    answer.setForm(formRepository.findById(request.getForm().getId())
+                    answer.setForm(formRepository.findById(request.getFormId())
                             .orElseThrow(() -> new RuntimeException("Form bulunamadı!")));
-                    answer.setFormQuestion(formQuestionRepository.findById(request.getFormQuestion().getQuestionId())
+                    answer.setFormQuestion(formQuestionRepository.findById(request.getQuestionId())
                             .orElseThrow(() -> new RuntimeException("Form sorusu bulunamadı!")));
                     answer.setUserId(request.getUserId());
                     answer.setUserRole(request.getUserRole());

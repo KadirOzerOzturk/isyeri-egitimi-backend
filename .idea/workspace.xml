@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Add title field to Commission, Lecturer, and Mentor; implement password reset functionality and email notifications">
+    <list default="true" id="0d0c2be6-458b-40ba-8ee6-2785b9f4a495" name="Changes" comment="feat: Enhance application status handling and add question type to FormQuestion model">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormAnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormAnswerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/controller/FormQuestionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormQuestionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/dto/FormQuestionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormQuestion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/FormQuestion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormQuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/repository/FormQuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/enums/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/security/enums/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/enums/QuestionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/enums/QuestionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Announcement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/model/Announcement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/pdfReport/PdfReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormAnswerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/isyeriegitimi/backend/service/FormQuestionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormQuestion$FormQuestionBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormQuestion$FormQuestionBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormQuestion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/model/FormQuestion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Form3.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Form3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/KabulFormu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/WeeklyReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/form10.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/form10.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/isyeriegitimi/backend/service/ApplicationService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,9 +34,9 @@
         <option value="Record" />
         <option value="Interface" />
         <option value="Dockerfile" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -123,6 +129,7 @@
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend\aws-s3-bucket" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\isyeri-egitimi-backend\src\main\resources\templates" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\resources\templates" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\resources\static" />
       <recent name="C:\Users\oztur\OneDrive\Masaüstü\Projeler\IsyeriProjeKodlar\backend\src\main\java\com\isyeriegitimi\backend" />
@@ -416,7 +423,8 @@
       <workItem from="1745826100039" duration="242000" />
       <workItem from="1745827019406" duration="915000" />
       <workItem from="1745860934704" duration="9818000" />
-      <workItem from="1745919331372" duration="1118000" />
+      <workItem from="1745919331372" duration="1442000" />
+      <workItem from="1746096234020" duration="12717000" />
     </task>
     <task id="LOCAL-00001" summary="backend giris yapildi">
       <option name="closed" value="true" />
@@ -802,7 +810,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745767303920</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="feat: Enhance application status handling and add question type to FormQuestion model">
+      <option name="closed" value="true" />
+      <created>1745921639964</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1745921639964</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -820,7 +836,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: API responses standardized and better exception handling" />
     <MESSAGE value="fix: better exception handling" />
     <MESSAGE value="fix: Database column names standardized" />
     <MESSAGE value="feat: Implement form management with CRUD operations and JSON handling" />
@@ -845,6 +860,7 @@
     <MESSAGE value="feat: Add mentor association to Student and implement feedback email functionality" />
     <MESSAGE value="feat: Refactor application deletion and enhance error handling in services" />
     <MESSAGE value="feat: Add title field to Commission, Lecturer, and Mentor; implement password reset functionality and email notifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add title field to Commission, Lecturer, and Mentor; implement password reset functionality and email notifications" />
+    <MESSAGE value="feat: Enhance application status handling and add question type to FormQuestion model" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Enhance application status handling and add question type to FormQuestion model" />
   </component>
 </project>

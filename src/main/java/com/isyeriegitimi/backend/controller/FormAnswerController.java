@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.controller;
 
+import com.isyeriegitimi.backend.dto.FormAnswerRequest;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.model.FormAnswer;
 import com.isyeriegitimi.backend.service.FormAnswerService;
@@ -43,7 +44,7 @@ public class FormAnswerController {
         return ResponseEntity.ok(ApiResponse.success(null, "Answer deleted successfully."));
     }
     @PostMapping("/submit")
-    public ResponseEntity<ApiResponse<?>> submitAnswers(@RequestBody List<FormAnswer> answers) {
+    public ResponseEntity<ApiResponse<?>> submitAnswers(@RequestBody List<FormAnswerRequest> answers) {
         formAnswerService.saveAnswers(answers);
         return ResponseEntity.ok(ApiResponse.success(null,"Form cevapları başarıyla kaydedildi."));
     }

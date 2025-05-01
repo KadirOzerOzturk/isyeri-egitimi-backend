@@ -2,6 +2,7 @@ package com.isyeriegitimi.backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isyeriegitimi.backend.dto.FormQuestionDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.FormQuestion;
@@ -87,17 +88,20 @@ public class FormQuestionService {
         }
     }
 
-    public void bulkSave(List<FormQuestion> questions, UUID formId) {
+    public void bulkSave(List<FormQuestionDto> questions, UUID formId) {
         try {
-            for (FormQuestion question : questions){
+            for (FormQuestionDto question : questions) {
                 UUID questionId = UUID.randomUUID();
+                System.out.println("Question type: " + question.getQuestionType());
+                System.out.println("Required for: " + question.getRequiredFor());
+
                 formQuestionRepository.insertQuestion(
-                        question.getForm().getId(),
+                        formId,
                         objectMapper.writeValueAsString(question.getOptions()),
                         question.getQuestionNumber(),
                         question.getQuestionText(),
                         questionId,
-                        question.getQuestionType().toString().toUpperCase(),
+                        question.getQuestionType().toUpperCase(),
                         question.getRequiredFor().toUpperCase()
                 );
             }
@@ -105,4 +109,5 @@ public class FormQuestionService {
             throw new RuntimeException(e);
         }
     }
+
 }

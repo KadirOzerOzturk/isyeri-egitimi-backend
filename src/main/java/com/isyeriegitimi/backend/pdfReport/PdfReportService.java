@@ -300,13 +300,14 @@ public class PdfReportService {
 
 
         context.setVariable("student", student.get());
+        context.setVariable("signatures",signatures);
         context.setVariable("lecturer", studentGroup.getLecturer());
         context.setVariable("startingDate", startingDate);
         context.setVariable("departments", departments);
         context.setVariable("visitDate", visitDate);
         context.setVariable("mentorImpression", mentorImpression);
         context.setVariable("lecturerImpression", lecturerImpression);
-        context.setVariable("signatures",signatures);
+
         context.setVariable("mentor",student.get().getMentor());
 
         String htmlContent = templateEngine.process("form3", context);
@@ -387,4 +388,49 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
+    public ByteArrayOutputStream generateForm10ByStudentId(UUID formId, UUID studentId) throws Exception {
+
+        Optional<Student> student = studentRepository.findById(studentId);
+
+        List<FormAnswer> formAnswers = formAnswerRepository.findByStudentIdAndFormId(studentId, formId);
+        List<FormSignature> signatures = formSignatureRepository.findAllByFormIdAndStudentId(formId, studentId);
+        FileInfoDto studentPhoto = fileInfoService.getFile(studentId,"STUDENT","profilePhoto");
+        String base64img = "data:" + studentPhoto.getFileType() + ";base64," + studentPhoto.getData();
+        QrInfo qr = generateQR(generateUnique12DigitNumber());
+
+        Context context = new Context();
+        context.setVariable("qr", "data:image/png;base64," + qr.getImage());
+        context.setVariable("student", student.orElseThrow(() -> new RuntimeException("Öğrenci bulunamadı")));
+        context.setVariable("answers", formAnswers);
+        context.setVariable("signatures", signatures);
+        context.setVariable("studentPhoto",base64img);
+
+        for (FormAnswer answer : formAnswers) {
+            String questionText = answer.getFormQuestion().getQuestionText();
+            String answerValue = answer.getAnswer();
+            String variableName = convertToVariableName(questionText);
+
+            System.out.println("Variable Name: " + variableName + " = " + answerValue);
+            context.setVariable(variableName, answerValue);
+        }
+
+        String htmlContent = templateEngine.process("form10", context);
+        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+        HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
+
+        String encodedPdfData = Base64.getEncoder().encodeToString(pdfOutputStream.toByteArray());
+
+        FileInfo fileInfo = FileInfo.builder()
+                .fileName("form10" )
+                .fileType("application/pdf")
+                .ownerId(studentId)
+                .ownerRole(Role.STUDENT.toString())
+                .data(encodedPdfData)
+                .uploadDate(new Date())
+                .barcodeNumber(qr.getCode())
+                .build();
+        fileInfoService.deleteFileIfExists(studentId,"STUDENT","form10");
+        fileInfoService.uploadFile(fileInfo);
+        return pdfOutputStream;
+    }
 }

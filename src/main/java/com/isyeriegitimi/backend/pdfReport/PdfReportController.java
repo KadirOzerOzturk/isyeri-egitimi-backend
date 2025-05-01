@@ -20,11 +20,6 @@ public class PdfReportController {
     @Autowired
     private PdfReportService pdfReportService;
 
-    @GetMapping("/download/weekly-report/{studentId}")
-    public ResponseEntity<ApiResponse<FileInfoDto>> downloadWeeklyReports(@PathVariable UUID studentId) throws IOException {
-        byte[] pdfContents = pdfReportService.generateWeeklyReportPdf(studentId).toByteArray();
-        return createFileResponse(pdfContents, "weekly_reports.pdf", "application/pdf");
-    }
 
     @GetMapping("/download/form1/{studentId}/{formId}")
     public ResponseEntity<ApiResponse<FileInfoDto>> downloadForm1(@PathVariable UUID studentId, @PathVariable UUID formId) throws Exception {
@@ -61,7 +56,11 @@ public class PdfReportController {
         byte[] pdfContents = pdfReportService.generateSurveyByStudentId(studentId, surveyId).toByteArray();
         return createFileResponse(pdfContents, "degerlendirmeAnketi.pdf", "application/pdf");
     }
-
+    @GetMapping("/download/form10/{studentId}/{formId}")
+    public ResponseEntity<ApiResponse<FileInfoDto>> downloadForm10(@PathVariable UUID studentId, @PathVariable UUID formId) throws Exception {
+        byte[] pdfContents = pdfReportService.generateForm10ByStudentId(formId, studentId).toByteArray();
+        return createFileResponse(pdfContents, "form10.pdf", "application/pdf");
+    }
     private ResponseEntity<ApiResponse<FileInfoDto>> createFileResponse(byte[] pdfContents, String fileName, String fileType) {
         String base64Data = Base64.getEncoder().encodeToString(pdfContents);
 

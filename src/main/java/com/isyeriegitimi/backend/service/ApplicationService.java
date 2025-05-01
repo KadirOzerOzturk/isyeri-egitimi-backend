@@ -106,7 +106,6 @@ public class ApplicationService {
             application.setApplicationStatus("Komisyon onayı bekleniyor.");
         }else if (pendingRole.equals(String.valueOf(Role.MAJOR))) {
             application.setApplicationStatus("Bölüm başkanı onayı bekleniyor.");
-
         }else {
             Student student= studentRepository.findById(application.getStudent().getStudentId()).get();
             student.setCompany(application.getCompany());

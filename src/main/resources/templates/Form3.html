@@ -244,10 +244,11 @@
                 style="width:170pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
             <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Öğrencinin İmzası</p>
         </td>
-        <td
-                style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-            <p style="text-indent: 0pt;text-align: left;" th:if="${signature?.signedBy != null and signature?.getSignedByRole()?.toString() == 'STUDENT'}"
-            > E-Onaylı</p>
+        <td style="width:326pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+        <span th:each="signature : ${signatures}">
+        <span th:if="${signature.signedByRole == 'STUDENT' and signature.signedAt != null}"
+              th:text="E-Onaylı "> </span>
+    </span>
         </td>
     </tr>
 </table>
@@ -283,8 +284,8 @@
 
 
 <p style="padding-top: 4pt;text-indent: 0pt;text-align: left;"><br /></p>
-<h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İZLEYİCİ ÖĞRETİM ÜYESİNİN ÖĞRENCİ HAKKINDAKİ
-    İZLENİMLERİ</h1>
+    <h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">İZLEYİCİ ÖĞRETİM ÜYESİNİN ÖĞRENCİ HAKKINDAKİ
+        İZLENİMLERİ</h1>
 <p style="text-indent: 0pt;text-align: left;"><br /></p>
 <div class="textbox">
     <p class="s2">
@@ -297,10 +298,17 @@
     tarihinde izleme ziyaretinde bulundum.</p>
 <p style="padding-top: 8pt;padding-left: 253pt;text-indent: 0pt;line-height: 171%;text-align: left;">İzleyici
     Öğretim Üyesi : [[${lecturer.firstName}]] [[${lecturer.lastName}]]</p>
-<p style="padding-top: 8pt; padding-left: 253pt; text-indent: 0pt; line-height: 171%; text-align: left;"
-   th:if="${signature?.signedBy != null and signature?.getSignedByRole().toString() == 'LECTURER'}">
-    Tarih/İmza : <span th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')}"></span> E-Onaylı
-</p>
+<div style="display: flex; justify-content: space-between">
+    <p style="padding-left: 253pt;text-indent: 0pt;line-height: 13pt;text-align: left;padding-right: 12px">Tarih, İmza/Kaşe: </p>
+    <p style="text-indent: 0pt; line-height: 13pt; text-align: right;">
+    <span th:each="signature : ${signatures}">
+        <span th:if="${signature.signedByRole == 'LECTURER' and signature.signedAt != null}"
+              th:text="${#dates.format(signature.signedAt, 'dd/MM/yyyy')} +${'   '}+ ${'E-Onaylı'} "> </span>
+    </span>
+    </p>
+
+</div>
+
 <h2 style="padding-left: 5pt;text-indent: 0pt;line-height: 109%;text-align: left;">Not: <span class="s3">Bu form
             Bölüm Başkanlığına her izleme ayının son haftası içinde İzleyici Öğretim Üyesi tarafından teslim
             edilmelidir. Dönem sonunda Bölüm Başkanlığı tarafından İşyeri Eğitimi Komisyonu Başkanlığına teslim
