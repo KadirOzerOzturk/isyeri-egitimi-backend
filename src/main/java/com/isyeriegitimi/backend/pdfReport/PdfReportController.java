@@ -54,7 +54,7 @@ public class PdfReportController {
     @GetMapping("/download/survey/{surveyId}/student/{studentId}")
     public ResponseEntity<ApiResponse<FileInfoDto>> downloadStudentSurvey(@PathVariable UUID surveyId, @PathVariable UUID studentId) throws Exception {
         byte[] pdfContents = pdfReportService.generateSurveyByStudentId(studentId, surveyId).toByteArray();
-        return createFileResponse(pdfContents, "degerlendirmeAnketi.pdf", "application/pdf");
+        return createFileResponse(pdfContents, "anket.pdf", "application/pdf");
     }
     @GetMapping("/download/form10/{studentId}/{formId}")
     public ResponseEntity<ApiResponse<FileInfoDto>> downloadForm10(@PathVariable UUID studentId, @PathVariable UUID formId) throws Exception {

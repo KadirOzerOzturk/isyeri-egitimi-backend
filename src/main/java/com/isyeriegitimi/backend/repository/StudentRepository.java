@@ -1,5 +1,6 @@
 package com.isyeriegitimi.backend.repository;
 
+import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,4 +19,6 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
     List<Student> searchByFirstNameOrLastName(String firstName, String lastName);
     List<Student> findByMentorId(UUID mentorId);
     List<Student> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String searchText, String searchText1);
+
+    List<Student> findAllByCompanyIsNotNull();
 }

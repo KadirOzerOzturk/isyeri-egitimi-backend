@@ -4,14 +4,18 @@ import com.isyeriegitimi.backend.dto.SurveyDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
 import com.isyeriegitimi.backend.model.Survey;
+import com.isyeriegitimi.backend.model.SurveyQuestion;
 import com.isyeriegitimi.backend.repository.SurveyQuestionRepository;
 import com.isyeriegitimi.backend.repository.SurveyRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 @Service
 public class SurveyService {
@@ -66,4 +70,29 @@ public class SurveyService {
         }
     }
 
+    public List<SurveyDto> getSurveysByRole(String userRole) {
+        try {
+            List<Survey> surveyList= surveyRepository.findAllByRequiredFor(userRole);
+            if(surveyList.isEmpty()){
+                return Collections.emptyList();
+            }
+            return surveyList.stream().map(this::mapToDto).toList();
+        }catch (Exception e){
+            throw new InternalServerErrorException("Surveys could not be fetched. Reason: " + e.getMessage());
+        }
+    }
+
+
+    private SurveyDto mapToDto(Survey survey) {
+        try {
+            SurveyDto surveyDto = new SurveyDto();
+            surveyDto.setDescription(survey.getDescription());
+            surveyDto.setTitle(survey.getTitle());
+            surveyDto.setId(survey.getId());
+            surveyDto.setRequiredFor(survey.getRequiredFor());
+            return surveyDto;
+        }catch (Exception e){
+            throw new InternalServerErrorException("Survey could not be mapped. Reason: " + e.getMessage());
+        }
+    }
 }

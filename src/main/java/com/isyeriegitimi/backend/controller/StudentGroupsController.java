@@ -48,4 +48,5 @@ public class StudentGroupsController {
         return ResponseEntity.ok(ApiResponse.success(null,"Lecturer assigned successfully"));
     }
 
+
 }

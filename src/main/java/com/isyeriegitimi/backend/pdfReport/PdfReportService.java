@@ -1,9 +1,5 @@
 package com.isyeriegitimi.backend.pdfReport;
 
-import aj.org.objectweb.asm.ClassWriter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -14,12 +10,9 @@ import com.isyeriegitimi.backend.repository.*;
 import com.isyeriegitimi.backend.security.enums.Role;
 import com.isyeriegitimi.backend.service.FileService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -29,10 +22,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.Signature;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -53,8 +44,10 @@ public class PdfReportService {
     private FileService fileInfoService;
     private FormSignatureRepository formSignatureRepository;
     private FormRepository formRepository;
+    private ApplicationRepository  applicationRepository;
 
-    public PdfReportService(WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileService fileInfoService, FormSignatureRepository formSignatureRepository, FormRepository formRepository, FileInfoRepository fileInfoRepository) {
+    public PdfReportService(FileInfoRepository fileInfoRepository, WeeklyReportRepository weeklyReportRepository, StudentsInGroupRepository studentsInGroupRepository, StudentRepository studentRepository, FormAnswerRepository formAnswerRepository, SurveyQuestionRepository surveyQuestionRepository, SurveyAnswerRepository surveyAnswerRepository, SpringTemplateEngine templateEngine, FileService fileInfoService, FormSignatureRepository formSignatureRepository, FormRepository formRepository, ApplicationRepository applicationRepository) {
+        this.fileInfoRepository = fileInfoRepository;
         this.weeklyReportRepository = weeklyReportRepository;
         this.studentsInGroupRepository = studentsInGroupRepository;
         this.studentRepository = studentRepository;
@@ -65,8 +58,9 @@ public class PdfReportService {
         this.fileInfoService = fileInfoService;
         this.formSignatureRepository = formSignatureRepository;
         this.formRepository = formRepository;
-        this.fileInfoRepository = fileInfoRepository;
+        this.applicationRepository = applicationRepository;
     }
+
     private static QrInfo generateQR(String code) throws Exception {
 
         int imageSize = 200;
@@ -145,10 +139,21 @@ public class PdfReportService {
         FileInfoDto studentPhoto = fileInfoService.getFile(studentId,"STUDENT","profilePhoto");
         String base64img = "data:" + studentPhoto.getFileType() + ";base64," + studentPhoto.getData();
         QrInfo qr = generateQR(generateUnique12DigitNumber());
-
+        Optional<Company> company=null;
+        if(student.get().getCompany() != null) {
+            company = Optional.of(student.get().getCompany());
+        }else {
+            List<Application> application = applicationRepository.findAllByStudent_StudentId(studentId);
+            for(Application app : application) {
+                if(app.getAcceptingCompany() != null) {
+                    company = Optional.of(app.getAcceptingCompany());
+                }
+            }
+        }
         Context context = new Context();
         context.setVariable("qr", "data:image/png;base64," + qr.getImage());
         context.setVariable("student", student.orElseThrow(() -> new RuntimeException("Öğrenci bulunamadı")));
+        context.setVariable("company",company.orElseThrow(() -> new RuntimeException("Şirket bulunamadı")));
         context.setVariable("answers", formAnswers);
         context.setVariable("signatures", signatures);
         context.setVariable("studentPhoto",base64img);
@@ -368,25 +373,43 @@ public class PdfReportService {
         return pdfOutputStream;
     }
 
-    public ByteArrayOutputStream generateSurveyByStudentId(UUID studentId,UUID surveyId) throws Exception {
+    public ByteArrayOutputStream generateSurveyByStudentId(UUID studentId, UUID surveyId) throws Exception {
         Optional<Student> student = studentRepository.findById(studentId);
         List<SurveyAnswer> surveyAnswers = surveyAnswerRepository.findBySurveyIdAndUserId(surveyId, studentId);
-        List<SurveyQuestion> surveyQuestions = surveyQuestionRepository.findBySurvey_Id(surveyAnswers.get(0).getSurvey().getId()); ;
-        BufferedImage barcodeImage = generateEAN13BarcodeImage();
-        String barcodeBase64 = convertBufferedImageToBase64(barcodeImage);
-        Context context = new Context();
-        context.setVariable("barcode", "data:image/png;base64," + barcodeBase64);
-        context.setVariable("student", student.get());
-        context.setVariable("answers", surveyAnswers);
-        context.setVariable("questions", surveyQuestions);
+        List<SurveyQuestion> surveyQuestions = surveyQuestionRepository.findBySurvey_Id(surveyId);
 
+
+        QrInfo qr = generateQR(generateUnique12DigitNumber());
+
+
+
+        Context context = new Context();
+        context.setVariable("qr", "data:image/png;base64," + qr.getImage());
+        context.setVariable("student", student.orElse(null));
+        context.setVariable("answers", surveyAnswers);
+        context.setVariable("questions",surveyQuestions);
+
+        Map<UUID, String> answersMap = new HashMap<>();
+        for (SurveyAnswer answer : surveyAnswers) {
+            if (!answersMap.containsKey(answer.getSurveyQuestion().getQuestionId())) {
+                answersMap.put(answer.getSurveyQuestion().getQuestionId(), answer.getAnswer());
+            }
+        }
+
+        context.setVariable("answersMap", answersMap);
+        System.out.println("answersMap: " + answersMap);
         String htmlContent = templateEngine.process("anket", context);
+
+
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
         HtmlConverter.convertToPdf(htmlContent, pdfOutputStream);
-        System.out.println("HTML Content: " + htmlContent);
+
+
+
 
         return pdfOutputStream;
     }
+
 
     public ByteArrayOutputStream generateForm10ByStudentId(UUID formId, UUID studentId) throws Exception {
 

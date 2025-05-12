@@ -1,6 +1,7 @@
 package com.isyeriegitimi.backend.controller;
 
 import com.isyeriegitimi.backend.dto.SurveyAnswerDto;
+import com.isyeriegitimi.backend.dto.SurveyAnswerRequest;
 import com.isyeriegitimi.backend.model.ApiResponse;
 import com.isyeriegitimi.backend.service.SurveyAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,12 @@ public class SurveyAnswerController {
 
 
     @PostMapping("/submit")
-    public ResponseEntity<ApiResponse<?>> saveAnswers(@RequestBody List<SurveyAnswerDto> answerDtoList) {
+    public ResponseEntity<ApiResponse<?>> saveAnswers(@RequestBody List<SurveyAnswerRequest> answerDtoList) {
         surveyAnswerService.saveAnswers(answerDtoList);
         return ResponseEntity.ok(ApiResponse.success(null, "Answers saved successfully"));
     }
     @PutMapping("/update")
-    public ResponseEntity<ApiResponse<?>> updateAnswers(@RequestBody List<SurveyAnswerDto> answerDtoList) {
+    public ResponseEntity<ApiResponse<?>> updateAnswers(@RequestBody List<SurveyAnswerRequest> answerDtoList) {
         surveyAnswerService.updateAnswers(answerDtoList);
         return ResponseEntity.ok(ApiResponse.success(null, "Answers updated successfully"));
     }

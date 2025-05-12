@@ -49,11 +49,11 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // Tüm endpointlere CORS izinleri verir
-                        .allowedOrigins("http://localhost:3000")  // React frontend'in çalıştığı URL
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")  // İzin verilen HTTP metodları
-                        .allowedHeaders("*")  // İzin verilen başlıklar
-                        .allowCredentials(true);  // Kimlik doğrulama bilgileri (cookie, token vb.)
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000","http://13.48.43.117,http://13.48.43.117:3000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

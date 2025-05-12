@@ -37,5 +37,7 @@ public class Company {
 
     private String website;
     private String phone;
+    @Column(name = "active",nullable = true)
+    private boolean active;
 
 }

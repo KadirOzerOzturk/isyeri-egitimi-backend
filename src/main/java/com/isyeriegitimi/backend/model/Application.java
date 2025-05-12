@@ -28,8 +28,11 @@ public class Application {
     private Announcement announcement;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @JoinColumn(name = "accepting_company")
+    private Company acceptingCompany;
+    @ManyToOne
+    @JoinColumn(name = "accepting_commission")
+    private Commission acceptingCommission;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

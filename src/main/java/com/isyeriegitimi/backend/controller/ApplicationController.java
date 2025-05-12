@@ -43,9 +43,14 @@ public class ApplicationController {
         applicationService.saveApplication(studentId, announcementId);
         return ResponseEntity.ok(ApiResponse.success(null, "Application saved successfully."));
     }
-    @PutMapping("/update/{applicationId}/{pendingRole}")
-    public ResponseEntity<ApiResponse<?>> updateApplication( @PathVariable String pendingRole,@PathVariable UUID applicationId) {
-        applicationService.updateApplication( pendingRole, applicationId);
+    @PutMapping("/update/{applicationId}/{pendingRole}/{userId}")
+    public ResponseEntity<ApiResponse<?>> updateApplication( @PathVariable String pendingRole,@PathVariable UUID applicationId,@PathVariable UUID userId) {
+        applicationService.updateApplication( pendingRole, applicationId,userId);
+        return ResponseEntity.ok(ApiResponse.success(null, "Application updated successfully."));
+    }
+    @PutMapping("/update/{applicationId}/{userId}")
+    public ResponseEntity<ApiResponse<?>> refuseApplication( @PathVariable UUID applicationId,@PathVariable UUID userId) {
+        applicationService.refuseApplication( applicationId,userId);
         return ResponseEntity.ok(ApiResponse.success(null, "Application updated successfully."));
     }
 
@@ -57,6 +62,14 @@ public class ApplicationController {
     @GetMapping("/pending/{confirmingRole}")
     public ResponseEntity<ApiResponse<List<Application>>> getPendingApplications(@PathVariable String confirmingRole){
         return ResponseEntity.ok(ApiResponse.success(applicationService.getPendingApplicationsByRole(confirmingRole),"Applications fetched successfully."));
+    }
+    @GetMapping("isApplied/{studentId}/{announcementId}")
+    public ResponseEntity<ApiResponse<?>> isApplied(@PathVariable UUID studentId,@PathVariable UUID announcementId){
+        return ResponseEntity.ok(ApiResponse.success(applicationService.isApplied(studentId,announcementId),"Applications fetched successfully."));
+    }
+    @GetMapping("/student/accepted/{companyId}")
+    public ResponseEntity<ApiResponse<?>> getAcceptedApplications(@PathVariable UUID companyId){
+        return ResponseEntity.ok(ApiResponse.success(applicationService.getAcceptedApplicationsByCompanyId(companyId),"Applications fetched successfully."));
     }
 
 

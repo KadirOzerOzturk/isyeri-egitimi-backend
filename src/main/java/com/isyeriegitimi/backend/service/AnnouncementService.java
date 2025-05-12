@@ -10,9 +10,9 @@ import com.isyeriegitimi.backend.repository.AnnouncementRepository;
 import com.isyeriegitimi.backend.repository.FavoriteAnnouncementRepository;
 import com.isyeriegitimi.backend.repository.FileInfoRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.util.random.RandomGenerator;
 
 @Service
 public class AnnouncementService {
@@ -56,7 +56,11 @@ public class AnnouncementService {
         return announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new ResourceNotFoundException("Announcement", "id", announcementId.toString()));
     }
+    public static int generateRandomIntIntRange(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
 
+    }
     public UUID save(AnnouncementDto announcementDto) {
         try {
             Date date = new Date();
@@ -64,7 +68,12 @@ public class AnnouncementService {
             calendar.setTime(date);
             calendar.add(Calendar.DAY_OF_MONTH, 30);
             Date endDate = calendar.getTime();
-
+            String number = "";
+            boolean unique = false;
+            while(!unique) {
+                number = String.valueOf(generateRandomIntIntRange(1000,10000));
+                unique = announcementRepository.existsByNo(number);
+            }
             Announcement announcement = Announcement.builder()
                     .company(announcementDto.getCompany())
                     .startDate(date)
@@ -72,6 +81,7 @@ public class AnnouncementService {
                     .title(announcementDto.getTitle())
                     .description(announcementDto.getDescription())
                     .postTitle(announcementDto.getPostTitle())
+                    .no(number)
                     .build();
 
             Announcement savedAnnouncement = announcementRepository.save(announcement);
@@ -121,6 +131,18 @@ public class AnnouncementService {
             announcementRepository.save(announcement);
         } catch (Exception e) {
             throw new InternalServerErrorException("Announcement could not be updated." +e.getMessage());
+        }
+    }
+
+    public Announcement getAnnouncementsByNo(String no) {
+        try {
+            Optional<Announcement> announcement=announcementRepository.findByNo(no);
+            if(announcement.isEmpty()){
+                throw new ResourceNotFoundException("Announcement", "no", no);
+            }
+            return announcement.get();
+        }catch (Exception e){
+            throw new InternalServerErrorException("Announcement could not be fetched. "+e.getMessage());
         }
     }
 }

@@ -45,11 +45,13 @@ public class FormService {
     public Map<String, Object> getSignedAndUnsignedForms(UUID userId, String userRole) {
         try {
             List<FormSignature> signedForms = formSignatureRepository.findBySignedByAndSignedByRole(userId, userRole);
+            signedForms.sort(Comparator.comparing(formSignature -> formSignature.getForm().getTitle()));
             List<Form> allForms = formRepository.findAll();
 
             List<Form> unsignedForms = allForms.stream()
                     .filter(form -> form.getRoles().contains(Role.valueOf(userRole)))
                     .filter(form -> signedForms.stream().noneMatch(sig -> sig.getForm().equals(form)))
+                    .sorted(Comparator.comparing(Form::getTitle))
                     .toList();
 
             Map<String, Object> response = new HashMap<>();
@@ -111,27 +113,6 @@ public class FormService {
         }
     }
 
-    private JsonNode addUserToJsonNode(JsonNode node, UUID userId, String title) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode arrayNode;
-
-        // If node is null, create a new ArrayNode
-        if (node == null || node.isNull()) {
-            arrayNode = objectMapper.createArrayNode();
-        } else {
-            arrayNode = (ArrayNode) node;
-        }
-
-        // Create a new user object
-        ObjectNode newUser = objectMapper.createObjectNode();
-        newUser.put("userId", userId.toString());
-        newUser.put("title", title);
-
-        // Add the user object to the array
-        arrayNode.add(newUser);
-
-        return arrayNode;
-    }
 
     public Map<String, Object> getSignedFormsByStudentId(UUID userId, String userRole, UUID studentId) {
         try {

@@ -30,5 +30,6 @@ public class Announcement {
     @Column(length = 3000)
     private String description;
     private String postTitle;
+    private String no;
 
 }

@@ -37,7 +37,11 @@ public class FavoriteAnnouncementController {
             return ResponseEntity.ok(ApiResponse.success(favoriteAnnouncementService.save(favoriteAnnouncementRequest), "Favorite saved successfully"));
 
     }
-
+    @DeleteMapping("/{studentId}/{announcementId}")
+    public ResponseEntity<ApiResponse<String>> deleteFavoriteByStudentIdAndAnnouncementId(@PathVariable UUID studentId, @PathVariable UUID announcementId) {
+            favoriteAnnouncementService.deleteByStudentIdAndAnnouncementId(studentId, announcementId);
+            return ResponseEntity.ok(ApiResponse.success(null, "Favorite removed successfully"));
+    }
     @DeleteMapping("/{favoriteId}")
     public ResponseEntity<ApiResponse<String>> deleteFavorite(@PathVariable UUID favoriteId) {
 

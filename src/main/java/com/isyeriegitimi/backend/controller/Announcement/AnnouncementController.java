@@ -42,6 +42,10 @@ public class AnnouncementController {
 
         return ResponseEntity.ok(ApiResponse.success(announcementService.getAnnouncementsById(announcementId), "Announcement fetched successfully."));
     }
+    @GetMapping("/byNo/{no}")
+    public ResponseEntity<ApiResponse<Announcement>> getAnnouncementsByNo(@PathVariable String no) {
+        return ResponseEntity.ok(ApiResponse.success(announcementService.getAnnouncementsByNo(no),"Announcement fetched successfully"));
+    }
 
     @PostMapping("/share")
     public ResponseEntity<ApiResponse<UUID>> shareAnnouncement(@RequestBody AnnouncementDto announcementDto) {

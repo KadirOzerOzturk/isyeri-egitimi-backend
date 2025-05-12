@@ -48,4 +48,8 @@ public class LecturerController {
     public ResponseEntity<ApiResponse<?>> saveLecturer(@RequestBody LecturerDto lecturerDto) {
         return ResponseEntity.ok(ApiResponse.success(lecturerService.save(lecturerDto), "Lecturer created successfully"));
     }
+    @GetMapping("/withoutGroup")
+    public ResponseEntity<ApiResponse<?>> withoutGroup(){
+        return ResponseEntity.ok(ApiResponse.success(lecturerService.getLecturersWithoutGroups(),"Lecturers fetched successfully"));
+    }
 }

@@ -15,6 +15,7 @@ import com.isyeriegitimi.backend.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,14 +23,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class LecturerService {
-    @Autowired
+
     private  LecturerRepository lecturerRepository;
-    @Autowired
     private  StudentsInGroupRepository studentsInGroupRepository;
-    @Autowired
     private UserService userService;
+    public  StudentGroupRepository studentGroupsRepository;
 
-
+    public LecturerService(LecturerRepository lecturerRepository, StudentsInGroupRepository studentsInGroupRepository, UserService userService, StudentGroupRepository studentGroupsRepository) {
+        this.lecturerRepository = lecturerRepository;
+        this.studentsInGroupRepository = studentsInGroupRepository;
+        this.userService = userService;
+        this.studentGroupsRepository = studentGroupsRepository;
+    }
 
     public Optional<Lecturer> getLecturerByLecturerNumber(String lecturerNumber) {
         try {
@@ -148,4 +153,28 @@ public class LecturerService {
     }
 
 
+    public List<LecturerDto> getLecturersWithoutGroups() {
+        try {
+            List<StudentGroup> groupList = studentGroupsRepository.findAll();
+            List<Lecturer> lecturerList = lecturerRepository.findAll();
+            List<Lecturer> withoutGroups = new ArrayList<>();
+
+            for (Lecturer lecturer : lecturerList) {
+                boolean hasGroup = false;
+                for (StudentGroup studentGroup : groupList) {
+                    if (lecturer.equals(studentGroup.getLecturer())) {
+                        hasGroup = true;
+                        break;
+                    }
+                }
+                if (!hasGroup) {
+                    withoutGroups.add(lecturer);
+                }
+            }
+
+            return withoutGroups.stream().map(this::mapToDto).toList();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("An error occurred while fetching the lecturers: " + e.getMessage());
+        }
+    }
 }

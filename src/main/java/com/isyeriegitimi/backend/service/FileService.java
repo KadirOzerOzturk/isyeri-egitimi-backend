@@ -41,13 +41,16 @@ public class FileService {
 
     public UUID uploadFile(FileInfo fileInfo) {
         try {
-            // Check if the file is an image
+            Optional<FileInfo> existFile = fileInfoRepository.findByFileNameAndOwnerIdAndOwnerRole(fileInfo.getFileName(), fileInfo.getOwnerId(), fileInfo.getOwnerRole());
+            if (existFile.isPresent()){
+                fileInfo.setId(existFile.get().getId());
+            }
             if (fileInfo.getFileType().startsWith("image")) {
                 byte[] imageBytes = Base64.getDecoder().decode(fileInfo.getData());
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
                 BufferedImage originalImage = ImageIO.read(inputStream);
 
-                // Proceed only if the image was successfully read
+
                 if (originalImage == null) {
                     throw new IllegalStateException("Invalid image data");
                 }

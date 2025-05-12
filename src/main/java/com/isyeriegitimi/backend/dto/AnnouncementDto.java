@@ -17,4 +17,5 @@ public class AnnouncementDto {
     private String description;
     private String postTitle;
     private List<String> announcementCriteria;
+    private String no;
 }

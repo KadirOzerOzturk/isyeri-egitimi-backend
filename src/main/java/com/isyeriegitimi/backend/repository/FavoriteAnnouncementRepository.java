@@ -13,4 +13,5 @@ public interface FavoriteAnnouncementRepository extends JpaRepository<FavoriteAn
     Optional<FavoriteAnnouncement> findByStudent_StudentIdAndAnnouncement_AnnouncementId(UUID studentId, UUID announcementId);
     Optional<FavoriteAnnouncement> findByAnnouncement_AnnouncementId(UUID announcementId);
     void deleteAllByAnnouncement_AnnouncementId(UUID announcementId);
+    void deleteByStudent_StudentIdAndAnnouncement_AnnouncementId(UUID studentId, UUID announcementId);
 }

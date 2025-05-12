@@ -1,8 +1,11 @@
 package com.isyeriegitimi.backend.model;
 
+import com.isyeriegitimi.backend.converter.RoleListJsonConverter;
+import com.isyeriegitimi.backend.security.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,5 +21,5 @@ public class Survey {
     private UUID id;
     private String title ;
     private String description;
-
+    private String requiredFor;
 }

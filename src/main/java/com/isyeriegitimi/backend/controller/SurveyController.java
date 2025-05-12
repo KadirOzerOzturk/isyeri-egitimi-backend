@@ -40,5 +40,9 @@ public class SurveyController {
         surveyService.deleteSurvey(id);
         return ResponseEntity.ok(ApiResponse.success(null, "Survey deleted successfully."));
     }
+    @GetMapping("/getByRole/{userRole}")
+    public ResponseEntity<ApiResponse<List<SurveyDto>>> getSurveysByRole(@PathVariable String userRole){
+        return ResponseEntity.ok(ApiResponse.success(surveyService.getSurveysByRole(userRole),"Surveys fetched successfully"));
+    }
 
 }

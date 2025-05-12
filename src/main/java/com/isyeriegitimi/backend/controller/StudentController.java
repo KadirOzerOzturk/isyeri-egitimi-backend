@@ -61,5 +61,11 @@ public class StudentController {
 
         return ResponseEntity.ok(ApiResponse.success(studentService.getStudentsByCompanyId(companyId),"Students fetched successfully"));
     }
+    @GetMapping("/getAll/hasCompany")
+    public ResponseEntity<ApiResponse<List<StudentDto>>> getAllStudentsWithCompany(){
+
+        return ResponseEntity.ok(ApiResponse.success(studentService.getAllStudentsWithCompany(),"Students fetched successfully"));
+    }
+
 
 }

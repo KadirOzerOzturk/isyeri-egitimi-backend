@@ -4,6 +4,7 @@ import com.isyeriegitimi.backend.dto.LecturerDto;
 import com.isyeriegitimi.backend.dto.StudentDto;
 import com.isyeriegitimi.backend.exceptions.InternalServerErrorException;
 import com.isyeriegitimi.backend.exceptions.ResourceNotFoundException;
+import com.isyeriegitimi.backend.model.Company;
 import com.isyeriegitimi.backend.model.Mentor;
 import com.isyeriegitimi.backend.model.Student;
 import com.isyeriegitimi.backend.model.StudentInGroup;
@@ -219,6 +220,22 @@ public class StudentService {
 
             student.setMentor(mentor);
             studentRepository.save(student);
+        }catch (Exception e){
+            throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
+        }
+    }
+
+    public List<StudentDto> getAllStudentsWithCompany() {
+        try{
+
+            List<Student> studentList = studentRepository.findAllByCompanyIsNotNull();
+            if (studentList.isEmpty()){
+                return Collections.emptyList();
+            }
+            List<StudentDto> studentDtoList = studentList.stream()
+                    .map(student -> mapToDto(student))
+                    .collect(Collectors.toList());
+            return studentDtoList;
         }catch (Exception e){
             throw new InternalServerErrorException("An error occurred while fetching the students: " + e.getMessage());
         }
